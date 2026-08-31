@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kodland Tutor Training — Choose your language</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.idx-langs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 30px}
+.idx-lang-btn{background:var(--card);border:1px solid var(--border);color:var(--text);border-radius:999px;padding:8px 16px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.idx-lang-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.idx-panel{display:none}
+.idx-panel.active{display:block}
+.idx-prompt{text-align:center;font-weight:700;font-size:14.5px;color:var(--text);margin:0 0 14px}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <p class="idx-prompt">🌐 Please select your native language before starting the training.</p>
+    <div class="idx-langs" id="idxLangs">
+      <button class="idx-lang-btn active" data-lang="en" onclick="showLang('en')">🇬🇧 English</button>
+      <button class="idx-lang-btn" data-lang="es" onclick="showLang('es')">🇪🇸 Español</button>
+      <button class="idx-lang-btn" data-lang="pt" onclick="showLang('pt')">🇧🇷 Português</button>
+      <button class="idx-lang-btn" data-lang="it" onclick="showLang('it')">🇮🇹 Italiano</button>
+      <button class="idx-lang-btn" data-lang="ru" onclick="showLang('ru')">🇷🇺 Русский</button>
+      <button class="idx-lang-btn" data-lang="ar" onclick="showLang('ar')">🇸🇦 العربية</button>
+      <button class="idx-lang-btn" data-lang="pl" onclick="showLang('pl')">🇵🇱 Polski</button>
+      <button class="idx-lang-btn" data-lang="id" onclick="showLang('id')">🇮🇩 Indonesia</button>
+      <button class="idx-lang-btn" data-lang="tr" onclick="showLang('tr')">🇹🇷 Türkçe</button>
+    </div>
+    <div class="idx-panel active" data-panel="en">
+      <div class="eyebrow">📊 Tutor Training Program</div>
+      <h1>Boost Your Students'<br><span class="h-pill">Attendance</span></h1>
+      <p>Welcome to this training! You're probably here for one of two reasons:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Your attendance percentage is low and you want to understand how to turn it around.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">You're about to start a new course and want to keep your students with you until the end.</span></div>
+      </div>
+      <p>Work through 5 modules, pass a final exam, and unlock the essentials checklist. Score 70%+ to move forward at every step.</p>
+      <a class="start-btn" href="en.html?start=1">🚀 Start Training</a>
+    </div>
+    <div class="idx-panel" data-panel="es">
+      <div class="eyebrow">📊 Programa de Capacitación para Tutores</div>
+      <h1>Aumenta la<br><span class="h-pill">Asistencia</span> de tus Estudiantes</h1>
+      <p>¡Bienvenido a esta capacitación! Probablemente estás aquí por una de estas dos razones:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Tu porcentaje de asistencia es bajo y quieres entender cómo revertirlo.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Estás por comenzar un nuevo curso y quieres mantener a tus estudiantes contigo hasta el final.</span></div>
+      </div>
+      <p>Recorre 5 módulos, aprueba un examen final y desbloquea la lista de esenciales. Necesitas 70% o más para avanzar en cada paso.</p>
+      <a class="start-btn" href="es.html?start=1">🚀 Comenzar Capacitación</a>
+    </div>
+    <div class="idx-panel" data-panel="pt">
+      <div class="eyebrow">📊 Programa de Treinamento de Tutores</div>
+      <h1>Aumente a<br><span class="h-pill">Frequência</span> dos Seus Alunos</h1>
+      <p>Bem-vindo(a) a este treinamento! Você provavelmente está aqui por um destes dois motivos:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Sua porcentagem de frequência está baixa e você quer entender como reverter isso.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Você está prestes a começar um novo curso e quer manter seus alunos com você até o final.</span></div>
+      </div>
+      <p>Percorra 5 módulos, passe em uma prova final e desbloqueie a checklist essencial. Tire 70% ou mais para avançar em cada etapa.</p>
+      <a class="start-btn" href="pt.html?start=1">🚀 Começar Treinamento</a>
+    </div>
+    <div class="idx-panel" data-panel="it">
+      <div class="eyebrow">📊 Programma di Formazione Tutor</div>
+      <h1>Aumenta la<br><span class="h-pill">Frequenza</span> dei Tuoi Studenti</h1>
+      <p>Benvenuto/a in questa formazione! Probabilmente sei qui per uno di questi due motivi:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">La tua percentuale di frequenza è bassa e vuoi capire come invertire la rotta.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Stai per iniziare un nuovo corso e vuoi tenere i tuoi studenti con te fino alla fine.</span></div>
+      </div>
+      <p>Completa 5 moduli, supera un esame finale e sblocca la checklist essenziale. Ottieni almeno il 70% per avanzare a ogni passaggio.</p>
+      <a class="start-btn" href="it.html?start=1">🚀 Inizia la Formazione</a>
+    </div>
+    <div class="idx-panel" data-panel="ru">
+      <div class="eyebrow">📊 Программа обучения тьюторов</div>
+      <h1>Повысь<br><span class="h-pill">посещаемость</span> своих учеников</h1>
+      <p>Добро пожаловать на это обучение! Скорее всего, ты здесь по одной из двух причин:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Твой процент посещаемости низкий, и ты хочешь понять, как это исправить.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Ты вот-вот начнёшь новый курс и хочешь удержать учеников до самого конца.</span></div>
+      </div>
+      <p>Пройди 6 модулей, сдай итоговый экзамен и открой справочник по основам посещаемости. Набирай 70%+, чтобы продвигаться на следующий этап.</p>
+      <a class="start-btn" href="ru.html?start=1">🚀 Начать обучение</a>
+    </div>
+    <div class="idx-panel" data-panel="ar" dir="rtl">
+      <div class="eyebrow">📊 برنامج تدريب المعلمين</div>
+      <h1>عزّز<br><span class="h-pill">حضور</span> طلابك</h1>
+      <p>مرحبًا بك في هذا التدريب! من المرجح أنك هنا لأحد سببين:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">نسبة الحضور لديك منخفضة، وتريد أن تفهم كيف يمكنك تحسينها.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">أنت على وشك بدء دورة جديدة وتريد أن يبقى طلابك معك حتى النهاية.</span></div>
+      </div>
+      <p>أكمل 5 وحدات تدريبية، اجتز الاختبار النهائي، وافتح قائمة الأساسيات. تحتاج إلى تحقيق 70% أو أكثر للمتابعة في كل خطوة.</p>
+      <a class="start-btn" href="ar.html?start=1">🚀 ابدأ التدريب</a>
+    </div>
+    <div class="idx-panel" data-panel="pl">
+      <div class="eyebrow">📊 Program szkoleniowy dla korepetytorów</div>
+      <h1>Zwiększ<br><span class="h-pill">frekwencję</span> swoich uczniów</h1>
+      <p>Witaj w tym szkoleniu! Prawdopodobnie trafiłeś tu z jednego z dwóch powodów:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Twój procent frekwencji jest niski i chcesz zrozumieć, jak to odwrócić.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Zaczynasz nowy kurs i chcesz zatrzymać swoich uczniów przy sobie aż do końca.</span></div>
+      </div>
+      <p>Przejdź przez 5 modułów, zdaj egzamin końcowy i odblokuj listę najważniejszych zasad. Zdobądź 70%+, aby przejść dalej na każdym etapie.</p>
+      <a class="start-btn" href="pl.html?start=1">🚀 Rozpocznij szkolenie</a>
+    </div>
+    <div class="idx-panel" data-panel="id">
+      <div class="eyebrow">📊 Program Pelatihan Tutor</div>
+      <h1>Tingkatkan<br><span class="h-pill">Kehadiran</span> Siswamu</h1>
+      <p>Selamat datang di pelatihan ini! Kamu mungkin ada di sini karena salah satu dari dua alasan ini:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Persentase kehadiranmu rendah dan kamu ingin tahu cara memperbaikinya.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Kamu akan segera memulai kelas baru dan ingin siswamu tetap bertahan sampai akhir.</span></div>
+      </div>
+      <p>Selesaikan 5 modul, lulus ujian akhir, dan buka checklist penting. Kamu perlu skor 70%+ untuk lanjut ke tahap berikutnya.</p>
+      <a class="start-btn" href="id.html?start=1">🚀 Mulai Pelatihan</a>
+    </div>
+    <div class="idx-panel" data-panel="tr">
+      <div class="eyebrow">📊 Eğitmen Eğitim Programı</div>
+      <h1>Öğrencilerinin<br><span class="h-pill">Katılımını</span> Artır</h1>
+      <p>Bu eğitime hoş geldin! Muhtemelen buraya şu iki nedenden biri için geldin:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt">Katılım yüzden düşük ve bunu nasıl düzelteceğini anlamak istiyorsun.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt">Yeni bir kursa başlamak üzeresin ve öğrencilerini sonuna kadar yanında tutmak istiyorsun.</span></div>
+      </div>
+      <p>5 modülü tamamla, final sınavını geç ve temel alışkanlıklar kontrol listesinin kilidini aç. Her adımda ilerlemek için %70 ve üzeri puan almalısın.</p>
+      <a class="start-btn" href="tr.html?start=1">🚀 Eğitime Başla</a>
+    </div>
+  </div>
+</div>
+<script>
+function showLang(lang){
+  document.querySelectorAll('.idx-lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  document.querySelectorAll('.idx-panel').forEach(p=>p.classList.toggle('active', p.dataset.panel===lang));
+  document.documentElement.lang=lang;
+  document.documentElement.dir = lang==='ar' ? 'rtl' : 'ltr';
+}
+</script>
+</body>
+</html>
