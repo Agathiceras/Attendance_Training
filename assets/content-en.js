@@ -4,7 +4,7 @@
 // which carries its own copy of UI_EN as the cross-language fallback for T().
 const PAGE_LANG='en';
 let MODULES=[
-{id:1,emoji:'📊',title:'Understanding the Metric: Attendance',desc:'The two measures behind the numbers — Back Office Attendance and Classroom Presence — the red/yellow absence types, your risk groups, and what HPR/LPR really mean today.',obj:'Understand how attendance and presence are actually measured today, know your risk group, and separate the causes you can influence from the ones you can\'t.',color:'#D3FF5F',
+{id:1,emoji:'📊',title:'Understanding the Metric: Attendance',desc:'The two measures behind the numbers — Back Office Attendance and Classroom Presence — the red and yellow absence types, the five risk groups, what HPR and LPR mean, and the three things that put you on our list.',obj:'Understand how attendance and presence are measured, know which risk group each of your students is in, know exactly what would put you on our list — and separate the causes you can influence from the ones you cannot.',color:'#D3FF5F',
  sections:[
   {t:'📐 Two Ways We Measure This',cards:[
     {type:'text',b:'A student can be <strong>missing from the lesson</strong>, or <strong>present but checked out</strong> — two completely different problems, so we use 2 measures:'},
@@ -21,26 +21,30 @@ let MODULES=[
       {ic:'📊',h:'3 · 30-day average',b:'Their Classroom Presence is the average of that across their lessons in the last 30 days — calculated per group and per course, so a student in two of your courses is measured separately in each.',color:'green'},
     ]},
     {type:'good',txt:'Lessons never recorded in Classroom (about 1%) still count for BO Attendance — a real absence never disappears just because Classroom missed it.'},
+    {type:'hi',h:'Who is counted',b:'Not every student appears in your numbers.<br><br>A student is only included once they have <strong>at least 3 scheduled lessons</strong> and <strong>a lesson in the last 14 days</strong>. So a single lesson can never swing your percentage, and students who left long ago stop distorting it.<br><br>If a student you teach is missing from your list, this is almost always why.'},
   ]},
   {t:'🟡🔴 Two Kinds of Absence',cards:[
     {type:'text',b:'On the Back Office side, an absence is not just an absence — treating an announced absence the same as a student who vanished without a word would be unfair, so we don\'t.'},
     {type:'img',src:'Images/image8_ENG.png'},
     {type:'doavoid',left:{h:'🟡 Yellow — announced or justified',items:['The family gave a reason in advance','A health issue, vacation, technical or scheduling problem, etc.','A situation the family is actively managing']},right:{h:'🔴 Red — no warning at all',items:['The student disappeared without a word','Nobody followed up before the next lesson','The kind of absence we want to eliminate entirely']}},
+    {type:'text',b:'Which one you select, and what you do next, is Module 6 — that module is the instruction manual for this page.'},
   ]},
-  {t:'🚦 Your Four Risk Groups',cards:[
-    {type:'text',b:'Put Attendance and Classroom Presence together and every student lands in one of these groups — in whichever group the <strong>worse</strong> of the two signals puts them, so nobody slips through when the signals disagree.'},
-    {type:'table',h:'Risk groups',tone:'danger',head:['Group','Absences','Classroom Presence','What it means'],rows:[
-      ['🔴 <strong>CRITICAL</strong>','1+ red, or 4+ yellow','&lt; 30%','Barely there, or gone entirely — act now'],
-      ['🟠 <strong>HIGH RISK</strong>','3 yellow','30% – 49.99%','Absences piling up and engagement dropping — close to dropping off'],
-      ['🟡 <strong>ALERT</strong>','2 yellow','50% – 74.99%','Slipping — needs attention'],
-      ['🔵 <strong>WATCH</strong>','1 yellow','75% – 84.99%','Early warning — the drift is just starting'],
-      ['🟢 <strong>Healthy</strong>','None','≥ 85%','Consistent presence and engagement'],
+  {t:'🚦 Your Five Risk Groups',cards:[
+    {type:'text',b:'Put Attendance and Classroom Presence together and every student lands in one of five groups — in whichever group the <strong>worse</strong> of the two signals puts them, so nobody slips through when the signals disagree.'},
+    {type:'text',b:'Read the two middle columns as <strong>alternatives, not conditions</strong>: a group is triggered by either the absences or the presence — whichever is worse. A student with no absences at all can sit in ALERT on presence alone, and a student with perfect presence can sit in CRITICAL on a single unexplained absence.'},
+    {type:'table',h:'Risk groups',tone:'danger',head:['Group','Back Office absences','Classroom Presence','What it means'],rows:[
+      ['🔴 <strong>CRITICAL</strong>','One or more red, or four or more yellow','—','An absence nobody explained, or absences piling up — we don\'t know whether this student is still with us'],
+      ['🟠 <strong>HIGH RISK</strong>','—','Below 50%','Turns up, but is barely in the room'],
+      ['🟡 <strong>ALERT</strong>','2–3 yellow','50% – 74.99%','Missing lessons the family explained — or in the room for only half of them'],
+      ['🔵 <strong>WATCH</strong>','—','75% – 84.99%','Present, but not fully engaged — the drift is just starting'],
+      ['🟢 <strong>Healthy</strong>','No red, at most 1 yellow','≥ 85%','Consistent presence and engagement'],
     ]},
-    {type:'warn',txt:'2 yellow absences is the tipping point — a student at ALERT can still be brought back. After that, the odds fall fast, which is exactly why Module 6 tells you what to do the moment a second absence happens.'},
+    {type:'warnbox',h:'A yellow absence is not a black mark. It is proof you did your job.',b:'One announced absence leaves a student Healthy. It takes two before a student is even in ALERT, and that is deliberate: the point where a drifting student can still be brought back is the second absence, which is exactly what Module 6 is about.<br><br>An unexplained (red) absence is different, and it counts immediately — not because red is worse behaviour, but because nobody knows what happened.'},
   ]},
   {t:'📈 HPR and LPR — What Your Numbers Actually Mean',cards:[
     {type:'text',b:'These are measured on <strong>Classroom Presence</strong> (not on a single flat attendance percentage):'},
-    {type:'twocol',left:{h:'📈 HPR — High Presence Rate',items:['Share of your students at ≥ 85%','Higher is better']},right:{h:'📉 LPR — Low Presence Rate',items:['Share of your students below 50%','Lower is better'],plain:true}},
+    {type:'twocol',left:{h:'📈 HPR — High Presence Rate',items:['Share of your students at 75% or above — that is everyone in 🟢 Healthy or 🔵 WATCH','Higher is better']},right:{h:'📉 LPR — Low Presence Rate',items:['Share of your students below 50% — everyone in 🟠 HIGH RISK','Lower is better'],plain:true}},
+    {type:'text',b:'Because the two rates are drawn straight from the groups above, the table and your card can never disagree: <strong>HPR is Healthy plus WATCH, LPR is HIGH RISK.</strong>'},
     {type:'text',b:'The bar held across all regions: <strong>LPR at or below 25.5%</strong> · <strong>HPR at or above 49.5%</strong>.'},
     {type:'hi',h:'The real goal isn\'t a rate — it\'s two outcomes',b:'🔴 <strong>Eliminate unexcused (red) absences.</strong> A red absence means a student vanished and nobody followed up — that should stop being possible.<br><br>🟡 <strong>Eliminate the drop-off that begins at the second excused absence.</strong> No student should quietly disappear, and none should be lost to two absences nobody answered.'},
   ]},
@@ -54,8 +58,17 @@ let MODULES=[
   {t:'🔍 What Causes a Student to Miss Class?',cards:[
     {type:'twocol',left:{h:'🌦️ External (outside your control)',items:['Vacations','Illness','Family issues','National holidays']},right:{h:'🎯 Internal (you can influence these)',items:['They\'re bored in class','They don\'t feel heard','They feel they\'re “not good” at this','They\'re confused and lost']}},
   ]},
+  {t:'🔔 When Would You Hear From Us?',cards:[
+    {type:'text',b:'Your students\' risk groups are one thing. What would make us reach out to <strong>you</strong> is another — and it is three situations, and nothing else.'},
+    {type:'table',head:['You\'ll hear from us when…','Because','What you\'ll get'],rows:[
+      ['Your HPR is below target or your LPR is above it','Too few of your students are fully present, or too many are barely there','A training on running the room — openings, participation, closings'],
+      ['Two or more of your students have two or more unexplained (red) absences — or, once you have 10 or more students, more than half your roster is carrying one','Absences are repeating and nobody knows why. One student with one red absence never puts you on the list — the pattern does','A training on the absence protocol — contacting families, recording the reason, extra lessons'],
+      ['One student has three or more red absences, or two or more students have four or more yellow each','Those students are close to leaving, whatever your overall numbers look like. This is the one case where explained absences count too, because four in a row is a pattern in itself','The names, immediately, and a training — this one is urgent'],
+    ]},
+    {type:'good',txt:'And what it is not: a message is not a warning and not a step in any disciplinary process. No decision about you is made by a number — the platform decides where we look first, then a person talks to you. If the data looks wrong to you, saying so is useful; some of it will turn out to be a recording gap rather than a teaching problem, and we would rather hear that from you than guess.'},
+  ]},
   {t:'⛓️ How does this affect you as a tutor?',cards:[
-    {type:'hi',h:'One missed class rarely stays just one missed class',b:'Misses class → gets discouraged → loses motivation to continue → the group falls apart → your income as a tutor drops.'},
+    {type:'hi',h:'One missed class rarely stays just one missed class',b:'Misses a class → falls behind → gets discouraged → stops seeing the point → leaves. And a group that loses two or three students stops feeling like a group to the ones who stay.<br><br>Every step earlier you interrupt that chain is a student kept — which is the only reason any of this is measured.'},
     {type:'text',b:'The good news: the internal causes — the ones we <em>can</em> change — are the focus of the rest of this training.'},
   ]},
  ]},
@@ -202,55 +215,67 @@ let MODULES=[
   ]},
  ]},
 
-{id:6,emoji:'📞',title:'What to Do When a Student Misses Class',desc:'Red vs. yellow, timing, what to log in BO, and the full escalation ladder — including how to request an extra lesson.',obj:'Know exactly what steps to take — and by when — with the student, the family, and Back Office, at every stage of a missed class.',color:'#D3FF5F',
+{id:6,emoji:'📞',title:'What to Do When a Student Misses Class',desc:'What you select in Back Office, how you personally make an absent student feel missed, and when Customer Service steps in instead.',obj:'Know exactly what to select in Back Office and when, how to reach out so a student feels missed and supported, and know when an administrative issue or an unresponsive family means it\'s time to loop in Customer Service.',color:'#D3FF5F',
  sections:[
-  {t:'🔁 Follow Up',cards:[
-    {type:'list',items:[
-      'Ask the parent or guardian how the student is doing, and mention that they were missed in class.',
-      'Share the class recording along with a short recap of the homework, so the student doesn\'t fall behind or lose motivation.',
-      'The next time the student attends, show them you noticed their absence — ask how they\'re doing and remind them where to find the recording and the homework.',
+  {t:'🎯 What You Select, and When',cards:[
+    {type:'text',b:'Before anything else: two clicks, and the whole metric depends on them. Module 1 explained what red and yellow mean. Here is exactly when you choose which.'},
+    {type:'redyellow',left:{h:'🔴 Select RED when…',items:['The student did not appear and nobody told you why. That is the only case.','Red is not a harsher label for the same event — it means we do not know what happened, which is what makes it the most dangerous state a student can be in.','Nobody can help a student whose problem is invisible.']},right:{h:'🟡 Select YELLOW when…',items:['Someone told you a reason — before or after the lesson. Then pick which of the six reasons it was, if you know it.','Those options are not paperwork: they are part of how the pattern gets understood, whether it\'s you or Customer Service who acts on it.','Five seconds from you, and a pattern that can be acted on.']}},
+    {type:'list',h:'The six reasons in BO',p:'Pick the closest one honestly — some expand into a more specific option once selected.',items:[
+      '🏥 <strong>Health issues</strong>','📚 <strong>Content issues</strong>','✈️ <strong>Vacation:</strong> traveling, school vacation, or holidays','💻 <strong>Technical issues:</strong> student\'s computer, the Kodland platform or Classroom, a power outage, or an internet connection problem','🗓️ <strong>Scheduling issues:</strong> moved to another group, or the lesson was rescheduled','📝 <strong>Other:</strong> school load / exams / homework, a family reason, or no specific reason shared (a comment is required)',
     ]},
-    {type:'agefriendly',intro:'Take a look at examples of how you can welcome back a student who missed class, based on age:',younger:'"There you are! I missed having you in class — I saved you a recording of everything we built, and I bet you\'re going to love the part where the slime starts bouncing."',older:'"Good to have you back. I sent over the recording and a quick recap of what we covered — nothing urgent, just whenever you get a chance to catch up."'},
-  ]},
-  {t:'⏱️ Timing: Don\'t Wait for the Third Absence',cards:[
-    {type:'text',b:'Module 1 introduced 🟡 yellow (announced/justified) and 🔴 red (no warning at all) absences. How fast you act — and what becomes possible — changes with the count.'},
+    {type:'warnbox',h:'And the line that protects all of it',b:'An absence you recorded honestly is never held against you. The only absence that hurts your numbers is the one nobody explained.'},
     {type:'simulation',title:'BO Simulation — Marking Attendance',src:'Simulacion_BO_Attendance_1.html'},
-    {type:'table',h:'What changes as absences add up',head:['Count','What it means','What you do'],rows:[
-      ['1st absence','🔵 WATCH — early warning, especially if it\'s red','Follow up directly the same day: share the recording, ask what happened.'],
-      ['2 in a row','🟡 ALERT — the tipping point','Don\'t wait for the third. This is also the point where an extra lesson becomes possible (see below).'],
-      ['3+ / any unanswered red','🟠 HIGH RISK or 🔴 CRITICAL','Escalate now through Tutors\' Evaluation in BO — this is no longer a private follow-up between you and the family.'],
+  ]},
+  {t:'🔁 Follow Up',cards:[
+    {type:'hi',h:'Make sure they know they were missed',b:'A message from you — not just an automated one — is what makes an absence feel noticed instead of invisible. A short, warm message goes a long way: you were missed today, here\'s where to find the recording, and the practice activities are there whenever you\'re ready — framed as something useful, not an obligation.'},
+    {type:'list',items:[
+      'Send a short message pointing to the recording and any extra practice activities on the platform — an opportunity to catch up, not a chore.',
+      'When the student returns, make it personal: ask if they got a chance to watch the recording, or if they need help finding it.',
+      'This part is yours. Customer Service steps in only for administrative issues, or if a family stops responding to your messages altogether.',
     ]},
-    {type:'warn',txt:'“Tell someone — don\'t wait for the third.” Two lessons in a row is exactly the point where a drifting student can still be brought back, and you\'re usually the only person who sees it early.'},
+  ]},
+  {t:'⏱️ Timing: What the Count Actually Triggers',cards:[
+    {type:'text',b:'These thresholds don\'t just trigger something you do — they also trigger consequences for the student, automatically, on Customer Service\'s side.'},
+    {type:'table',h:'What changes as absences add up',head:['Count','What happens to the student','Your part'],rows:[
+      ['1st absence','Nothing automatic yet','Message the student directly — recording, practice activities, a genuine "we missed you"'],
+      ['2nd–3rd absence','The student becomes eligible for an extra lesson, which CS can offer the family','Keep messaging directly; flag it to Customer Service if the family has gone quiet'],
+      ['4th absence or more','The student risks losing access to recordings, and moves closer to being withdrawn from the course','Loop in Customer Service — this is now an administrative matter'],
+    ]},
+    {type:'warn',txt:'The trigger for Customer Service isn\'t the absence count on its own — it\'s an administrative issue, or a family that stops answering you. Up to that point, this stays yours.'},
   ]},
   {t:'👨‍👩‍👧 Talking With Parents',cards:[
     {type:'imgtext',img:'Images/WhatsApp_module_6_ENG.png',items:[
       'Be kind and understanding, especially if the absence was due to illness or a family issue.',
       'If there\'s extra material available in the course, let them know.',
       'When the student does attend, use the moment to share their achievements in class with the parents.',
+      'Warmth costs nothing and it is the whole difference between a family that stays engaged with the course and one that quietly stops replying.',
     ]},
+    {type:'warnbox',h:'⚠️ What You Must Never Do',b:'Never suggest to a family that the student take a break from the course. Never discuss pricing with parents — that\'s Sales\' job. Never offer a 1-to-1 lesson without approval. And never inform a family about a cancellation or postponement without your TL\'s permission first.'},
   ]},
   {t:'📋 What to Log in Back Office',cards:[
-    {type:'list',h:'Every follow-up should leave a trace, not just a conversation',items:[
-      'Leave a BO comment on what the family told you — this is what turns a red absence into yellow.',
-      'If the family doesn\'t answer and it stays red, Customer Service picks it up from there — your comment is what tells them where things stand.',
-      'If you\'re requesting an extra lesson, use the pre-filled comment template together with the link to the student\'s profile — don\'t write it from scratch.',
+    {type:'list',h:'Now a short checklist — the mechanism itself is in the first section above',items:[
+      'Set the absence type and the reason. Yellow plus the matching reason from the six groups if you were told why; red if nobody told you anything.',
+      'Add a comment with anything relevant you know. Short is fine — this is what Customer Service reads if the case reaches them.',
     ]},
   ]},
-  {t:'🪜 If It Escalates: Requesting an Extra Lesson',cards:[
-    {type:'text',b:'<strong>Contacting your TL first is correct</strong> — here is the complete path:'},
-    {type:'flow',steps:[
-      {ic:'📋',h:'1 · Open Tutors\' Evaluation',b:'In BO, select “An additional class is required.” Two or more consecutive absences qualify — for Modules 1 and 8, one absence is enough. Maximum one extra lesson per student per month.',color:'blue'},
-      {ic:'💬',h:'2 · Inform your TL',b:'Send them a private Slack message so they can review and approve the case — this is the “contact your TL first” step.',color:'coral'},
-      {ic:'📞',h:'3 · Contact the family',b:'Only after approval, reach out directly to the family yourself to schedule the extra lesson (30 min, free of charge).',color:'green'},
-      {ic:'⏰',h:'4 · If the student doesn\'t join',b:'Send a WhatsApp reminder. If there\'s still no response, the lesson is cancelled after 15 minutes.',color:'blue'},
-      {ic:'✅',h:'5 · After the lesson',b:'You can update the student\'s attendance to green in BO.',color:'coral'},
+  {t:'🔀 And Then? Two Ways This Goes',cards:[
+    {type:'text',b:'You have marked the absence and sent your message. From here the situation goes one of two ways, and they need different things from you.'},
+    {type:'table',h:'They come back vs. they don\'t',head:['','✅ They come back','❌ They don\'t'],rows:[
+      ['<span class="rowic">⚡</span>Straight away','Show them you noticed they were gone — warmly, and privately, not in front of the group.','Send a second message, on a different note if the first went unanswered — still you, not Customer Service.'],
+      ['<span class="rowic">➡️</span>Then','Watch their presence, not just their attendance. If they turn up but stay at 40% in the room, that\'s Modules 2 to 4, not this one.','If the family goes quiet altogether, or it becomes an administrative matter, that\'s when Customer Service steps in.'],
+      ['<span class="rowic">🧑‍🤝‍🧑</span>Who else you involve','Nobody, unless an extra lesson is worth flagging.','Customer Service — but only once it\'s gone from "a student I\'m following up with" to "a family I can\'t reach."'],
+      ['<span class="rowic">👨‍👩‍👧</span>The parents','Share one concrete thing the student did in the lesson they came back to.','Keep it warm and low-pressure — you\'re still the one they hear from first.'],
     ]},
-    {type:'warnbox',h:'⚠️ If you started it, it stays with you',b:'If <strong>you</strong> initiated the case, do not redirect the student to Customer Service afterward — responsibility for seeing it through stays with you.'},
-    {type:'text',h:'🖥️ Try It Yourself',b:'Time to practice how you\'d handle this in BO with a real case:'},
-    {type:'simulation',title:'BO Simulation — Requesting an Extra Lesson',src:'Simulacion_BO_Attendance_2.html'},
+    {type:'redbox',h:'They came back, but they\'re still not really there.',b:'This is the most common outcome of all, and it is easy to file as solved because attendance recovered. It isn\'t solved: the student is now in the room and disengaged, which is a facilitation problem, not an absence problem.<br><br>That case belongs to Modules 2, 3 and 4 — how you open, who you call on, how you close.'},
+  ]},
+  {t:'🪜 If It Escalates: The Extra Lesson',cards:[
+    {type:'text',b:'Requesting an extra lesson isn\'t a flow you run yourself here — <strong>Customer Service creates the request</strong> once the thresholds above are met.'},
+    {type:'text',h:'🖥️ Try It Yourself',b:'Practice the part that\'s yours — marking attendance accurately — and see exactly what\'s already logged on a student\'s profile, so you know what Customer Service (or a colleague) has already tried:'},
+    {type:'simulation',title:'BO Simulation — Marking Attendance & Reading CS Notes',src:'Simulacion_BO_Attendance_Simplified.html'},
   ]},
   {t:'🕳️ The Student Who Never Showed Up At All',cards:[
-    {type:'hi',h:'This isn\'t a "missed class" — it\'s a different problem',b:'Some students never connect to a single lesson from day one. There\'s no "welcome back" for them — your first outreach <em>is</em> the first contact they\'ll have with you. Treat a no-show on lesson one as an immediate red flag, not something to wait out.'},
+    {type:'hi',h:'This isn\'t a "missed class" — it\'s a different problem',b:'Some students never connect to a single lesson from day one. Treat a no-show on lesson one as an immediate red flag, not something to wait out.'},
+    {type:'text',b:'Mark it red — nobody told you anything — and send that first "we missed you" message yourself, same as any other absence. If the family never responds at all, that\'s when Customer Service takes over.'},
   ]},
  ]},
 ];
@@ -278,11 +303,12 @@ let SELF_QUESTIONS=[
 ];
 let QUIZ={
 1:[
- {q:'What does HPR measure?',opts:['The % of your students with Classroom Presence below 50%','The % of your students with Classroom Presence at or above 85%','The % of your students who completed their homework'],c:1,fb:'HPR (High Presence Rate) is the share of your students at or above 85% Classroom Presence.'},
+ {q:'What does HPR measure?',opts:['The share of your students with Classroom Presence below 50%','The share of your students with Classroom Presence at 75% or above','The share of your students who completed their homework'],c:1,fb:'HPR (High Presence Rate) is the share of your students at 75% presence or above — everyone in 🟢 Healthy or 🔵 WATCH. The share below 50% is LPR.'},
  {q:'A student tells you they feel like they\'re "not good" at coding. Which category does this fall into?',opts:['An external cause, since it\'s about the subject, not the tutor','An internal cause — one you can influence through feedback and encouragement','Neither — it\'s a personality trait, not a real driver of attendance'],c:1,fb:'Feeling "not good" at the subject is one of the internal causes — the ones you can shift through how you teach and give feedback.'},
  {q:'A student is marked "attended" in Back Office, but the classroom log shows they were only connected for 40% of the lesson. How does this count?',opts:['As Present for both measures, since the BO record always overrides the classroom log','As Attendance (BO), since the lesson was recorded as attended — but NOT as Present for Classroom Presence, since 40% is below the 50% line','As an absence for both, since 40% doesn\'t meet either threshold'],c:1,fb:'Attendance (BO) and Classroom Presence are tracked separately: this student counts toward Attendance, but not toward Classroom Presence, since they never crossed the 50% line.'},
  {q:'Which of the following does BO Attendance actually track?',opts:['Whether a scheduled lesson happened and the student showed up, according to Back Office','How long the student stayed connected in the virtual classroom','The student\'s score on homework and classwork'],c:0,fb:'BO Attendance simply confirms whether a scheduled lesson happened and the student showed up — how engaged they were is a separate measure, Classroom Presence.'},
- {q:'In Back Office, what turns a red (unexcused) absence into a yellow one?',opts:['The tutor follows up with the family and logs what they said as a BO comment','72 hours passing without any action','The student\'s Classroom Presence score improving'],c:0,fb:'A red absence becomes yellow once the tutor contacts the family and records the reason as a BO comment — that\'s the whole mechanism.'},
+ {q:'In Back Office, what turns a red (unexcused) absence into a yellow one?',opts:['Once the reason becomes known, changing the absence to yellow and selecting that reason','72 hours passing without any action','Leaving a comment in Back Office, without changing the absence type'],c:0,fb:'What turns a red absence yellow is changing the type and picking the reason once it\'s known — whether you found out directly or Customer Service passed it along. A comment on its own, without changing the type, leaves it red.'},
+ {q:'One of your students has one announced (yellow) absence and Classroom Presence of 91%. Which group are they in?',opts:['ALERT — any absence moves a student into a risk group','WATCH — one absence is an early warning','Healthy — one explained absence with strong presence is not a risk signal'],c:2,fb:'One yellow absence with presence above 85% leaves a student Healthy. It takes two yellows to reach ALERT. An announced absence is a situation the family is managing — it is not a black mark on you or on them.'},
 ],
 2:[
  {q:'A student joins with camera on but stays visibly withdrawn — quiet, staring at the desk. How do you start?',opts:['You greet them warmly, ask a brief personal question about their week, and once they respond, ease into today\'s plan.','You open with an energetic greeting and move straight into recapping last class\'s project, trusting that the momentum of getting started will pull their attention back in.','You greet them and ask if everything\'s okay, then wait quietly for them to respond before deciding whether to start the lesson.'],c:0,fb:'A genuine personal check-in before diving in is what re-engages a withdrawn student — energy alone or a passive wait-and-see approach skips that step.'},
@@ -304,10 +330,12 @@ let QUIZ={
  {q:'You\'re reviewing submitted homework and one student\'s project is technically correct but nothing special. What do you write?',opts:['Just mark it “done” with no comment — it met the requirements, that\'s enough.','Leave a long list of everything that could be improved, no positives mentioned.','Leave a short, specific comment noting one thing they did well and one gentle suggestion — something the parent could also read.'],c:2,fb:'Reviewing homework is a feedback opportunity, not just a checkbox — it\'s also a chance to reinforce the bond with students and parents.'},
 ],
 6:[
- {q:'A student has now missed two lessons in a row, and there was no response to your outreach after the first one. What\'s the best next step?',opts:['Wait for a third absence before doing anything else, since two absences alone doesn\'t confirm a pattern.','Report it now through Tutors\' Evaluation — two in a row is the point where you act, not wait for a third.','Stop reaching out and let Customer Service take over the case without any input from you.'],c:1,fb:'Two absences in a row is the tipping point — don\'t wait for the third. That\'s exactly when the case should move from a private follow-up into Tutors\' Evaluation.'},
- {q:'A student missed class due to illness. How does the tutor talk to the parent?',opts:['Keep the conversation brief and neutral, avoiding personal questions about the illness so as not to intrude on the family\'s situation.','Express genuine concern for how the student is doing, mention any extra material available, and use their return to share something positive.','Focus mainly on catching the student up academically, since reassurance about the illness isn\'t really part of the tutor\'s role.'],c:1,fb:'Genuine warmth, practical help, and a positive note on their return covers the empathy this module asks for — staying neutral or purely academic misses it.'},
- {q:'A student who missed two classes returns and does great work today. How does the tutor use this with the parents?',opts:['Wait until the next scheduled check-in to mention it, to avoid contacting the family too many times in a short period.','Reach out around this class to share the specific achievement, reinforcing the positive turnaround for both student and parent.','Mention it briefly to the student only, since parents are usually more interested in attendance patterns than daily achievements.'],c:1,fb:'Sharing the achievement while it\'s fresh reinforces the turnaround for both student and parent — waiting or keeping it from the parent wastes the moment.'},
- {q:'Which of the following is <strong>NOT</strong> recommended when a student misses class?',opts:['Sharing the recording and a short homework recap so they don\'t fall behind','Following up with the parent to check in and mention the student was missed','Proposing an extra class directly to the parent without looping in your TL first'],c:2,fb:'An extra class always goes through your TL first — proposing it directly to the parent skips that required step.'},
+ {q:'A student misses a lesson with no warning. What\'s your role in the first 24 hours?',opts:['Nothing — Customer Service handles all contact','Send the student a warm message yourself, with the recording and any practice activities — framed as an opportunity, not an obligation','Wait to see if Customer Service reaches out first, then follow up if they don\'t'],c:1,fb:'Making the student feel missed is your job here — a personal message with the recording and practice activities goes further than a system notification ever could.'},
+ {q:'Why send a personal message about a missed lesson, when Customer Service will eventually step in anyway?',opts:['It\'s not really necessary — Customer Service will get there either way','So the student feels genuinely missed and supported, not just processed by a system — that\'s the difference between an automated flag and a person who noticed','Because Customer Service can\'t act until the tutor has messaged the student first'],c:1,fb:'Customer Service exists for administrative issues and unresponsive families — the personal message is what makes the student feel like a person was paying attention, not just a system.'},
+ {q:'When does Customer Service actually step in?',opts:['As soon as a single absence happens','Once it becomes an administrative matter, or a family stops responding to your messages altogether','Never — this is entirely the tutor\'s responsibility'],c:1,fb:'Up to that point, following up is yours. Customer Service comes in for administrative issues or when a family has gone genuinely silent — not for every absence.'},
+ {q:'Where do you check what\'s already been tried with a student before you follow up yourself?',opts:['You don\'t — there\'s no way to see that','In the student\'s profile, under Comments','Only by asking your TL directly'],c:1,fb:'Click the student\'s name to open their profile — Comments show what\'s already been logged, whether it was Customer Service or a colleague who left it.'},
+ {q:'A student missed Tuesday\'s lesson with no warning, so you marked it red. On Thursday you learn the student had flu. What do you do?',opts:['Leave it red — it was unannounced at the time, and changing it afterwards would misrepresent what happened','Change the absence to yellow, select "Health issues", and add a comment with what you learned','Add a comment with what you learned and leave the absence type as it is'],c:1,fb:'Red means "we don\'t know why". Once you know, change the type, select the reason, and comment. A comment on its own leaves the absence red.'},
+ {q:'A parent asks if their child can get an extra class. What do you tell them?',opts:['Schedule it directly since you know the family well','Let them know Customer Service manages extra-lesson requests','Tell them it\'s not possible'],c:1,fb:'Extra-lesson requests are created by Customer Service here, once the absence thresholds are met — not something you arrange directly.'},
 ],
 };
 let SORT_ITEMS=[

@@ -106,17 +106,72 @@ const CONTENT={
       "id": 1,
       "emoji": "📊",
       "title": "Entendiendo la Métrica: Asistencia",
-      "desc": "Cómo se mide la asistencia, qué significan LPR/HPR para ti, y los dos tipos de causas detrás de una clase perdida.",
-      "obj": "Entender cómo se mide la asistencia y separar las causas que puedes influir de las que no.",
+      "desc": "Las dos medidas detrás de los números — Asistencia en Back Office y Presencia en Clase — los tipos de ausencia roja y amarilla, los cinco grupos de riesgo, qué significan HPR y LPR, y las tres cosas que te ponen en nuestra lista.",
+      "obj": "Entender cómo se miden la asistencia y la presencia, saber en qué grupo de riesgo está cada uno de tus estudiantes, saber exactamente qué te pondría en nuestra lista — y separar las causas que puedes influir de las que no.",
       "color": "#D3FF5F",
       "sections": [
         {
-          "t": "📐 ¿Cómo se Mide?",
+          "t": "📐 Dos Formas de Medir Esto",
           "cards": [
-            {"type": "text", "b": "Clasificamos a los estudiantes (SS) en tres niveles según su porcentaje de asistencia."},
-            {"type": "table", "h": "Niveles de asistencia", "head": ["Nivel", "Rango"], "rows": [["🟢 Presencia Alta", "≥ 75%"], ["🟠 Presencia Media (Riesgo)", "50% – 74.99%"], ["❗ Presencia Baja (Alerta)", "&lt; 50%"]]},
-            {"type": "text", "h": "Desde la perspectiva del tutor", "b": "Dos indicadores resumen tu desempeño en esta métrica:<br><br><strong>LPR (Low Presence Rate):</strong> % de tus casos de estudiantes con asistencia por debajo de 50%.<br><strong>HPR (High Presence Rate):</strong> % de tus casos de estudiantes con asistencia igual o superior a 75%."},
-            {"type": "text", "b": "Los datos de asistencia se calculan con base en el registro de asistencia que la plataforma de clases capta automáticamente cuando un estudiante se une a la clase. La asistencia se confirma una vez que el estudiante participa en más del 50% de la lección. No se basa en los registros de asistencia ingresados en BO."}
+            {"type": "text", "b": "Un estudiante puede estar <strong>ausente de la clase</strong>, o <strong>presente pero desconectado</strong> — dos problemas completamente distintos, por eso usamos 2 medidas:"},
+            {"type": "table", "h": "Las dos medidas", "head": ["Medida", "La pregunta que responde", "De dónde viene"], "rows": [["🙋 <strong>Asistencia (BO)</strong>", "¿Vino el estudiante?", "Back Office — la lección estaba programada, y el estudiante llegó o no"], ["🎥 <strong>Presencia en Clase</strong>", "Cuando llegó, ¿realmente estuvo presente?", "Datos de Classroom — cuánto de la lección el estudiante estuvo realmente en la sala"]]},
+            {"type": "tip", "txt": "Por qué necesitamos ambas: Back Office es el único lugar que sabe que una lección <em>debía</em> ocurrir. Sin eso, un estudiante que nunca llegó no deja ningún registro — la ausencia es invisible. Classroom por sí solo únicamente mide qué tan comprometidos estuvieron los estudiantes que <em>sí</em> llegaron."}
+          ]
+        },
+        {
+          "t": "🧮 Cómo se Calcula la Presencia en Clase",
+          "cards": [
+            {"type": "flow", "steps": [
+              {"ic": "⏱️", "h": "1 · Tiempo conectado", "b": "Para cada lección, comparamos cuánto tiempo estuvo el estudiante realmente conectado contra la duración de la lección. Quedarse toda la lección → 100%. Irse a la mitad → cerca del 50%. Diez minutos de una lección de sesenta minutos → cerca del 17%.", "color": "blue"},
+              {"ic": "✅", "h": "2 · La línea del 50%", "b": "Un estudiante solo cuenta como <em>Presente</em> en esa lección si supera el 50%. Conectarse diez minutos y desaparecer no es asistencia, y no se cuenta como tal.", "color": "coral"},
+              {"ic": "📊", "h": "3 · Promedio de 30 días", "b": "Su Presencia en Clase es el promedio de eso a lo largo de sus lecciones en los últimos 30 días — calculado por grupo y por curso, así que un estudiante en dos de tus cursos se mide por separado en cada uno.", "color": "green"}
+            ]},
+            {"type": "good", "txt": "Las lecciones que nunca se registran en Classroom (cerca del 1%) igual cuentan para la Asistencia en BO — una ausencia real nunca desaparece solo porque Classroom no la captó."},
+            {"type": "hi", "h": "Quién se cuenta", "b": "No todos los estudiantes aparecen en tus números.<br><br>Un estudiante solo se incluye una vez que tiene <strong>al menos 3 lecciones programadas</strong> y <strong>una lección en los últimos 14 días</strong>. Así, una sola lección nunca puede mover tu porcentaje, y los estudiantes que se fueron hace tiempo dejan de distorsionarlo.<br><br>Si un estudiante que enseñas no aparece en tu lista, esta es casi siempre la razón."}
+          ]
+        },
+        {
+          "t": "🟡🔴 Dos Tipos de Ausencia",
+          "cards": [
+            {"type": "text", "b": "Del lado de Back Office, una ausencia no es solo una ausencia — tratar una ausencia avisada igual que a un estudiante que desapareció sin decir nada sería injusto, así que no lo hacemos."},
+            {"type": "img", "src": "Images/image8_ENG.png"},
+            {"type": "doavoid", "left": {"h": "🟡 Amarilla — avisada o justificada", "items": ["La familia dio una razón con anticipación", "Un problema de salud, vacaciones, técnico o de horario, etc.", "Una situación que la familia está gestionando activamente"]}, "right": {"h": "🔴 Roja — sin ningún aviso", "items": ["El estudiante desapareció sin decir nada", "Nadie dio seguimiento antes de la siguiente lección", "El tipo de ausencia que queremos eliminar por completo"]}},
+            {"type": "text", "b": "Cuál seleccionas, y qué haces después, es el Módulo 6 — ese módulo es el manual de instrucciones para esta página."}
+          ]
+        },
+        {
+          "t": "🚦 Tus Cinco Grupos de Riesgo",
+          "cards": [
+            {"type": "text", "b": "Junta Asistencia y Presencia en Clase y cada estudiante cae en uno de cinco grupos — en el grupo que corresponda a la <strong>peor</strong> de las dos señales, para que nadie se escape cuando las señales no coinciden."},
+            {"type": "text", "b": "Lee las dos columnas del medio como <strong>alternativas, no condiciones</strong>: un grupo se activa por las ausencias o por la presencia — lo que sea peor. Un estudiante sin ninguna ausencia puede estar en ALERTA solo por presencia, y un estudiante con presencia perfecta puede estar en CRÍTICO por una sola ausencia sin explicar."},
+            {"type": "table", "h": "Grupos de riesgo", "tone": "danger", "head": ["Grupo", "Ausencias en Back Office", "Presencia en Clase", "Qué significa"], "rows": [
+              ["🔴 <strong>CRÍTICO</strong>", "Una o más rojas, o cuatro o más amarillas", "—", "Una ausencia que nadie explicó, o ausencias que se acumulan — no sabemos si este estudiante sigue con nosotros"],
+              ["🟠 <strong>ALTO RIESGO</strong>", "—", "Menos del 50%", "Llega, pero apenas está presente"],
+              ["🟡 <strong>ALERTA</strong>", "2–3 amarillas", "50% – 74.99%", "Falta a lecciones que la familia explicó — o está en la sala solo la mitad del tiempo"],
+              ["🔵 <strong>VIGILANCIA</strong>", "—", "75% – 84.99%", "Presente, pero no del todo comprometido — el desapego apenas empieza"],
+              ["🟢 <strong>Saludable</strong>", "Ninguna roja, máximo 1 amarilla", "≥ 85%", "Presencia y compromiso consistentes"]
+            ]},
+            {"type": "warnbox", "h": "Una ausencia amarilla no es una marca negativa. Es prueba de que hiciste tu trabajo.", "b": "Una ausencia avisada deja a un estudiante en Saludable. Se necesitan dos para que un estudiante llegue siquiera a ALERTA, y eso es intencional: el punto donde un estudiante que se está alejando todavía se puede recuperar es la segunda ausencia, que es exactamente de lo que trata el Módulo 6.<br><br>Una ausencia sin explicar (roja) es diferente, y cuenta de inmediato — no porque roja sea peor comportamiento, sino porque nadie sabe qué pasó."}
+          ]
+        },
+        {
+          "t": "📈 HPR y LPR — Qué Significan Realmente tus Números",
+          "cards": [
+            {"type": "text", "b": "Estos se miden sobre la <strong>Presencia en Clase</strong> (no sobre un porcentaje de asistencia plano):"},
+            {"type": "twocol", "left": {"h": "📈 HPR — Tasa de Alta Presencia", "items": ["Proporción de tus estudiantes en 75% o más — es decir, todos en 🟢 Saludable o 🔵 Vigilancia", "Más alto es mejor"]}, "right": {"h": "📉 LPR — Tasa de Baja Presencia", "items": ["Proporción de tus estudiantes por debajo del 50% — todos en 🟠 Alto Riesgo", "Más bajo es mejor"], "plain": true}},
+            {"type": "text", "b": "Como las dos tasas salen directamente de los grupos de arriba, la tabla y tu tarjeta nunca pueden estar en desacuerdo: <strong>HPR es Saludable más Vigilancia, LPR es Alto Riesgo.</strong>"},
+            {"type": "text", "b": "El objetivo se mantuvo igual en todas las regiones: <strong>LPR en 25.5% o menos</strong> · <strong>HPR en 49.5% o más</strong>."},
+            {"type": "hi", "h": "La meta real no es una tasa — son dos resultados", "b": "🔴 <strong>Eliminar las ausencias sin justificar (rojas).</strong> Una ausencia roja significa que un estudiante desapareció y nadie dio seguimiento — eso debería dejar de ser posible.<br><br>🟡 <strong>Eliminar el abandono que comienza en la segunda ausencia justificada.</strong> Ningún estudiante debería desaparecer en silencio, y ninguno debería perderse por dos ausencias que nadie respondió."}
+          ]
+        },
+        {
+          "t": "🧭 El Efecto Práctico",
+          "cards": [
+            {"type": "text", "b": "Las dos medidas apuntan a problemas diferentes, con soluciones diferentes — por eso las separamos."},
+            {"type": "table", "head": ["Si esto está bajo…", "…el problema suele ser", "…y el trabajo ocurre"], "rows": [
+              ["<strong>Asistencia</strong> — no vienen", "Horarios, familia, motivación, un curso que dejó de sentirse relevante", "<strong>Fuera</strong> de la lección — contactar, marcar la alerta, involucrar a la familia o a Teaching Ops"],
+              ["<strong>Presencia en Clase</strong> — vienen pero no están", "Facilitación — la sala está pasiva, la participación recae en uno o dos estudiantes, o hay problemas técnicos de por medio", "<strong>Dentro</strong> de la lección — cómo abres, a quién le preguntas, cómo cierras"]
+            ]}
           ]
         },
         {
@@ -126,10 +181,22 @@ const CONTENT={
           ]
         },
         {
+          "t": "🔔 ¿Cuándo Sabrías de Nosotros?",
+          "cards": [
+            {"type": "text", "b": "Los grupos de riesgo de tus estudiantes son una cosa. Lo que haría que te contactemos a <strong>ti</strong> es otra — y son tres situaciones, y nada más."},
+            {"type": "table", "head": ["Sabrás de nosotros cuando…", "Porque", "Lo que recibirás"], "rows": [
+              ["Tu HPR está por debajo del objetivo o tu LPR está por encima", "Muy pocos de tus estudiantes están completamente presentes, o demasiados apenas están ahí", "Una capacitación sobre cómo manejar la sala — aperturas, participación, cierres"],
+              ["Dos o más de tus estudiantes tienen dos o más ausencias sin explicar (rojas) — o, si tienes 10 o más estudiantes, más de la mitad de tu grupo tiene una", "Las ausencias se repiten y nadie sabe por qué. Un estudiante con una sola ausencia roja nunca te pone en la lista — el patrón sí", "Una capacitación sobre el protocolo de ausencias — contactar familias, registrar la razón, clases extra"],
+              ["Un estudiante tiene tres o más ausencias rojas, o dos o más estudiantes tienen cuatro o más amarillas cada uno", "Esos estudiantes están cerca de irse, sin importar cómo se vean tus números generales. Este es el único caso donde las ausencias explicadas también cuentan, porque cuatro seguidas ya son un patrón en sí mismas", "Los nombres, de inmediato, y una capacitación — esta es urgente"]
+            ]},
+            {"type": "good", "txt": "Y lo que no es: un mensaje no es una advertencia ni un paso en ningún proceso disciplinario. Ninguna decisión sobre ti la toma un número — la plataforma decide dónde mirar primero, y luego una persona habla contigo. Si los datos te parecen incorrectos, decirlo es útil; parte de esto resultará ser un vacío de registro y no un problema de enseñanza, y preferimos escucharlo de ti que adivinar."}
+          ]
+        },
+        {
           "t": "⛓️ ¿Cómo te afecta esto como tutor?",
           "cards": [
-            {"type": "hi", "h": "Una clase perdida rara vez se queda en solo una clase perdida", "b": "Falta a clase → se desanima → pierde motivación para continuar → el grupo se desarma → tu ingreso como tutor baja."},
-            {"type": "text", "b": "La buena noticia: las causas internas — las que sí podemos cambiar — son el enfoque del resto de esta capacitación."}
+            {"type": "hi", "h": "Una clase perdida rara vez se queda en solo una clase perdida", "b": "Falta a una clase → se atrasa → se desanima → deja de ver el sentido → se va. Y un grupo que pierde dos o tres estudiantes deja de sentirse como un grupo para los que se quedan.<br><br>Cada paso antes en el que interrumpes esa cadena es un estudiante que se queda — que es la única razón por la que se mide todo esto."},
+            {"type": "text", "b": "La buena noticia: las causas internas — las que sí <em>podemos</em> cambiar — son el enfoque del resto de esta capacitación."}
           ]
         }
       ]
@@ -365,10 +432,24 @@ const CONTENT={
       "id": 6,
       "emoji": "📞",
       "title": "Qué Hacer Cuando un Estudiante Falta a Clase",
-      "desc": "Cómo dar seguimiento al estudiante y cómo hablar con los padres con empatía.",
-      "obj": "Saber exactamente qué pasos seguir — con el estudiante y con su familia — cuando ocurre una ausencia.",
+      "desc": "Qué seleccionas en Back Office y cuándo, qué tan rápido actuar, qué hacer cuando regresan y cuando no, y toda la escalera de escalación — incluyendo cómo pedir una clase extra.",
+      "obj": "Saber exactamente qué seleccionar en Back Office y cuándo, qué tan rápido actuar con el estudiante y la familia, qué hacer cuando regresan y cuando no, y toda la escalera de escalación — incluyendo cómo pedir una clase extra.",
       "color": "#D3FF5F",
       "sections": [
+        {
+          "t": "🎯 Qué Seleccionas, y Cuándo",
+          "cards": [
+            {"type": "text", "b": "Antes que nada: dos clics, y toda la métrica depende de ellos. El Módulo 1 explicó qué significan rojo y amarillo. Aquí está exactamente cuándo eliges cuál."},
+            {"type": "redyellow", "left": {"h": "🔴 Selecciona ROJO cuando…", "items": ["El estudiante no llegó y nadie te dijo por qué. Ese es el único caso.", "Rojo no es una etiqueta más dura para el mismo evento — significa que no sabemos qué pasó, lo que lo convierte en el estado más peligroso en el que puede estar un estudiante.", "Nadie puede ayudar a un estudiante cuyo problema es invisible."]}, "right": {"h": "🟡 Selecciona AMARILLO cuando…", "items": ["Alguien te dio una razón — antes o después de la lección. Luego elige cuál de las seis razones fue.", "Esas opciones no son papeleo: son la única forma en que aprendemos qué ausencias pudimos haber evitado de nuestro lado.", "Cinco segundos de tu parte, y un patrón sobre el que podemos actuar."]}},
+            {"type": "list", "h": "Las seis razones en BO", "p": "Elige la más cercana con honestidad — algunas se despliegan en una opción más específica una vez seleccionadas.", "items": [
+              "🏥 <strong>Problemas de salud</strong>", "📚 <strong>Problemas con el contenido</strong>", "✈️ <strong>Vacaciones:</strong> viaje, vacaciones escolares, o días festivos", "💻 <strong>Problemas técnicos:</strong> computadora del estudiante, la plataforma de Kodland o Classroom, un corte de luz, o un problema de conexión a internet", "🗓️ <strong>Problemas de horario:</strong> cambió de grupo, o la lección se reprogramó", "📝 <strong>Otro:</strong> carga escolar / exámenes / tareas, una razón familiar, o ninguna razón específica compartida (se requiere un comentario)"
+            ]},
+            {"type": "yellowbox", "h": "¿Marcaste rojo, y luego la familia responde? Cámbialo.", "b": "Cambia la ausencia a amarilla y selecciona la razón. Eso no es corregir un error — es el proceso funcionando: te comunicaste, obtuviste una respuesta, y el registro ahora coincide con la realidad.<br><br>También es lo más rápido que puedes hacer por tus propios números. Una ausencia sin explicar que sigue sin explicarse cuenta en tu contra. Esa misma ausencia, una vez que hablaste con la familia y registraste por qué, no lo hace."},
+            {"type": "hi", "h": "El comentario va encima de la selección, no en lugar de ella.", "b": "Escribe lo que la familia realmente te dijo. Si el caso después sale de tus manos — porque la familia nunca responde, o porque escala — el comentario es lo que Servicio al Cliente y tu TL leen para saber cómo van las cosas. Un caso sin comentario les llega en blanco."},
+            {"type": "warnbox", "h": "Y la línea que protege todo esto", "b": "Una ausencia que registraste con honestidad nunca se usa en tu contra. La única ausencia que perjudica tus números es la que nadie explicó. Si alguna vez te encuentras preguntándote qué color te hace ver mejor, la respuesta es: el verdadero — siempre."},
+            {"type": "simulation", "title": "Simulación de BO — Marcar Asistencia", "src": "Simulacion_BO_Attendance_1_ES.html"}
+          ]
+        },
         {
           "t": "🔁 Da Seguimiento",
           "cards": [
@@ -381,14 +462,74 @@ const CONTENT={
           ]
         },
         {
+          "t": "⏱️ Tiempos: No Esperes a la Tercera Ausencia",
+          "cards": [
+            {"type": "text", "b": "El Módulo 1 presentó las ausencias 🟡 amarilla y 🔴 roja. Qué tan rápido actúes — y qué se vuelve posible — cambia según el conteo. Y nota la asimetría: una ausencia roja te necesita el mismo día, mientras que una amarilla te da un poco más de margen."},
+            {"type": "table", "h": "Qué cambia conforme se acumulan las ausencias", "head": ["Conteo", "Qué haces", "Para cuándo"], "rows": [
+              ["Una ausencia roja", "Contacta a la familia, obtén la razón, luego cambia la ausencia a amarilla y selecciónala. Esta es la acción de mayor valor en todo el módulo.", "El mismo día. Nunca dejes una roja sin explicar más de 48 horas."],
+              ["Una ausencia amarilla", "Comparte la grabación y un breve resumen de la tarea para que no se atrasen. Nada que escalar.", "Antes de la siguiente lección"],
+              ["Dos seguidas", "No esperes a la tercera. Este es el punto de inflexión, y también el punto donde una clase extra se vuelve posible (ver la sección de escalación abajo).", "Dentro de las 48 horas de la segunda"],
+              ["Tres o más, o cualquier roja que nunca se respondió", "Escala a través de la Evaluación del Alumno en BO y avísale a tu TL. Esto ya no es un seguimiento privado entre tú y la familia.", "Ahora"]
+            ]},
+            {"type": "warn", "txt": "\"Avísale a alguien — no esperes a la tercera.\" Dos lecciones seguidas es exactamente el punto donde un estudiante que se está alejando todavía se puede recuperar, y usualmente eres la única persona que lo nota a tiempo."}
+          ]
+        },
+        {
           "t": "👨‍👩‍👧 Hablando con los Padres",
           "cards": [
             {"type": "imgtext", "img": "Images/WhatsApp_module_6_ES.png", "items": [
               "Sé amable y comprensivo, especialmente si la ausencia se debió a una enfermedad o un problema familiar.",
               "Si hay material adicional disponible en el curso, avísales.",
-              "Cuando el estudiante sí asista, aprovecha el momento para compartir sus logros en clase con los padres."
+              "Cuando el estudiante sí asista, aprovecha el momento para compartir sus logros en clase con los padres.",
+              "La calidez no cuesta nada y es toda la diferencia entre una familia que se mantiene comprometida con el curso y una que deja de responder en silencio."
+            ]}
+          ]
+        },
+        {
+          "t": "📋 Qué Registrar en Back Office",
+          "cards": [
+            {"type": "list", "h": "Ahora una lista corta — el mecanismo en sí está en la primera sección de arriba", "items": [
+              "Establece el tipo de ausencia y la razón. Amarilla más la razón correspondiente de los seis grupos si te dijeron por qué; roja si nadie te dijo nada.",
+              "Agrega un comentario con lo que la familia realmente dijo. Corto está bien. Esto es lo que tu TL y Servicio al Cliente leen si el caso sale de tus manos.",
+              "Si la familia nunca responde y sigue en rojo, Servicio al Cliente lo retoma — pero solo tu comentario les dice qué ya se intentó, así que un caso sin comentario les cuesta una llamada que tú ya hiciste.",
+              "Si estás pidiendo una clase extra, usa la plantilla de comentario prellenada junto con el enlace al perfil del estudiante — no la escribas desde cero."
+            ]}
+          ]
+        },
+        {
+          "t": "🔀 ¿Y Luego? Dos Caminos Posibles",
+          "cards": [
+            {"type": "text", "b": "Contactaste a la familia y registraste la ausencia. De aquí la situación sigue uno de dos caminos, y necesitan cosas diferentes de ti."},
+            {"type": "table", "h": "Regresan vs. no regresan", "head": ["", "✅ Regresan", "❌ No regresan"], "rows": [
+              ["<span class=\"rowic\">⚡</span>De inmediato", "Muéstrale que notaste que faltó — con calidez, y en privado, no frente al grupo. Un estudiante que regresa al silencio aprende que su ausencia no importó.", "Segundo contacto a la familia dentro de 48 horas, por un canal distinto al primero. Un mensaje sin respuesta no es una familia inalcanzable."],
+              ["<span class=\"rowic\">➡️</span>Después", "Observa su presencia, no solo su asistencia. Si llega pero se queda en 40% en la sala, el problema se movió dentro de la lección — eso son los Módulos 2 al 4, no este.", "Abre la Evaluación del Alumno en BO y avísale a tu TL. El caso sale del seguimiento privado aquí — ese es el punto de escalar, no un fracaso de tu parte."],
+              ["<span class=\"rowic\">🧑‍🤝‍🧑</span>A quién más involucras", "A tu TL, si el estudiante se atrasó lo suficiente como para necesitar una clase extra (ver la siguiente sección).", "A tu TL y a Servicio al Cliente. CS toma los intentos de contacto; tu comentario en BO les dice qué ya intentaste, así que escríbelo antes de entregar el caso."],
+              ["<span class=\"rowic\">👨‍👩‍👧</span>Los padres", "Comparte algo concreto que el estudiante hizo en la lección a la que regresó. Un logro específico vale más que \"le fue bien\" y también refuerza el cambio positivo para la familia.", "Mantenlos informados, y no prometas nada. Ninguna clase extra se ofrece antes de que tu TL la apruebe — \"déjame revisarlo\" es una respuesta completa."]
             ]},
-            {"type": "warnbox", "h": "⚠️ Antes de ofrecer una clase extra", "b": "Si crees que se necesita una clase extra o motivacional, <strong>contacta primero a tu TL</strong> para revisar el caso antes de proponerla al padre, madre o tutor."}
+            {"type": "redbox", "h": "Regresó, pero todavía no está realmente ahí.", "b": "Este es el resultado más común de todos, y es fácil archivarlo como resuelto porque la asistencia se recuperó. No está resuelto: el estudiante ahora está en la sala y desconectado, lo cual es un problema de facilitación, no de ausencia. Su Presencia en Clase lo mostrará antes que tú.<br><br>Ese caso pertenece a los Módulos 2, 3 y 4 — cómo abres, a quién le preguntas, cómo cierras."}
+          ]
+        },
+        {
+          "t": "🪜 Si Escala: Pedir una Clase Extra",
+          "cards": [
+            {"type": "text", "b": "<strong>Contactar primero a tu TL es correcto</strong> — aquí está el camino completo:"},
+            {"type": "flow", "steps": [
+              {"ic": "📋", "h": "1 · Abre la Evaluación del Alumno", "b": "En BO, selecciona \"Se necesita una clase adicional\" (esto abre un ticket de OMNI automáticamente). Dos o más ausencias consecutivas califican — para los Módulos 1 y 8, una ausencia es suficiente. Máximo una clase extra por estudiante al mes.", "color": "blue"},
+              {"ic": "💬", "h": "2 · Avísale a tu TL", "b": "Envíale un mensaje privado de Slack para que pueda revisar y aprobar el caso — este es el paso de \"contacta primero a tu TL\".", "color": "red"},
+              {"ic": "📞", "h": "3 · Contacta a la familia", "b": "Solo después de la aprobación, contacta directamente a la familia tú mismo para agendar la clase extra (30 min, sin costo).", "color": "green"},
+              {"ic": "⏰", "h": "4 · Si el estudiante no se conecta", "b": "Envía un recordatorio por WhatsApp. Si sigue sin haber respuesta, la clase se cancela después de 15 minutos.", "color": "orange"},
+              {"ic": "✅", "h": "5 · Después de la clase", "b": "Puedes actualizar la asistencia del estudiante a verde en BO.", "color": "purple"}
+            ]},
+            {"type": "warnbox", "h": "⚠️ Si tú lo iniciaste, se queda contigo", "b": "Si <strong>tú</strong> iniciaste el caso, no redirijas al estudiante a Servicio al Cliente después — la responsabilidad de darle seguimiento se queda contigo."},
+            {"type": "text", "h": "🖥️ Practícalo tú mismo", "b": "Es momento de practicar cómo manejarías esto en BO con un caso real:"},
+            {"type": "simulation", "title": "Simulación de BO — Pedir una Clase Extra", "src": "Simulacion_BO_Attendance_2_ES.html"}
+          ]
+        },
+        {
+          "t": "🕳️ El Estudiante Que Nunca Llegó",
+          "cards": [
+            {"type": "hi", "h": "Esto no es una \"clase perdida\" — es un problema diferente", "b": "Algunos estudiantes nunca se conectan a una sola lección desde el día uno. No hay un \"bienvenido de vuelta\" para ellos — tu primer contacto <em>es</em> el primer contacto que tendrán contigo. Trata la inasistencia en la primera lección como una alerta roja inmediata, no algo para esperar."},
+            {"type": "text", "b": "Márcalo en rojo — nadie te dijo nada — y sigue la misma regla de 48 horas. Una inasistencia en la primera lección es el rescate más temprano y más fácil que existe."}
           ]
         }
       ]
@@ -418,11 +559,12 @@ const CONTENT={
   ],
   "quiz": {
     "1": [
-      {"q": "¿Qué rango de asistencia se considera Presencia Baja (Alerta)?", "opts": ["Menos de 50%", "50%–74.99%", "75% o más"], "c": 0, "fb": "Presencia Baja (Alerta) significa una asistencia menor al 50% — el rango que necesita tu atención primero."},
-      {"q": "¿Qué mide el HPR?", "opts": ["El % de tus casos de estudiantes con asistencia por debajo de 50%", "El % de tus casos de estudiantes con asistencia igual o superior a 75%", "El % de tus estudiantes que completaron su tarea"], "c": 1, "fb": "El HPR (High Presence Rate) es la proporción de tus casos de estudiantes con una asistencia igual o superior a 75%."},
+      {"q": "¿Qué mide el HPR?", "opts": ["La proporción de tus estudiantes con Presencia en Clase por debajo del 50%", "La proporción de tus estudiantes con Presencia en Clase del 75% o más", "La proporción de tus estudiantes que completaron su tarea"], "c": 1, "fb": "HPR (Tasa de Alta Presencia) es la proporción de tus estudiantes con 75% de presencia o más — todos en 🟢 Saludable o 🔵 Vigilancia. La proporción por debajo del 50% es el LPR."},
       {"q": "Un estudiante te dice que siente que \"no es bueno\" en programación. ¿En qué categoría entra esto?", "opts": ["Una causa externa, ya que se trata del tema y no del tutor", "Una causa interna — una que puedes influir a través de la retroalimentación y el ánimo", "Ninguna de las dos — es un rasgo de personalidad, no un motivo real de inasistencia"], "c": 1, "fb": "Sentirse \"no bueno\" en la materia es una de las causas internas — las que puedes cambiar a través de cómo enseñas y das retroalimentación."},
-      {"q": "La plataforma de clases registra a un estudiante como presente durante el 40% de la lección, pero el tutor lo marcó manualmente como \"asistió\" en BO después. ¿Cómo se cuenta oficialmente esta asistencia?", "opts": ["Como asistida, ya que el registro en BO del tutor es el registro final", "Como no asistida — la asistencia oficial se basa en el registro automático de la plataforma de clases, y requiere más del 50% de la lección", "Depende de si el TL aprueba la modificación manual"], "c": 1, "fb": "La asistencia se calcula a partir del registro automático de la plataforma de clases, no de los registros manuales en BO — y requiere más del 50% de la lección."},
-      {"q": "¿Cuál de las siguientes <strong>NO</strong> es una de las causas internas de inasistencia cubiertas en este módulo?", "opts": ["El estudiante se aburre en clase", "El estudiante siente que \"no es bueno\" en esto", "Un día feriado nacional"], "c": 2, "fb": "Un día feriado nacional es una causa externa, fuera del control del tutor — las causas internas son en las que se enfoca esta capacitación."}
+      {"q": "Un estudiante aparece marcado como \"asistió\" en Back Office, pero el registro de Classroom muestra que solo estuvo conectado el 40% de la lección. ¿Cómo cuenta esto?", "opts": ["Como Presente para ambas medidas, ya que el registro de BO siempre tiene prioridad sobre el de Classroom", "Como Asistencia (BO), ya que la lección se registró como asistida — pero NO como Presente para Presencia en Clase, ya que 40% está por debajo de la línea del 50%", "Como ausencia para ambas, ya que el 40% no cumple con ninguno de los dos umbrales"], "c": 1, "fb": "Asistencia (BO) y Presencia en Clase se registran por separado: este estudiante cuenta para Asistencia, pero no para Presencia en Clase, ya que nunca cruzó la línea del 50%."},
+      {"q": "¿Cuál de las siguientes es lo que realmente registra la Asistencia en BO?", "opts": ["Si una lección programada ocurrió y el estudiante llegó, según Back Office", "Cuánto tiempo estuvo el estudiante conectado en el aula virtual", "La calificación del estudiante en tareas y trabajo en clase"], "c": 0, "fb": "La Asistencia en BO simplemente confirma si una lección programada ocurrió y el estudiante llegó — qué tan comprometido estuvo es una medida distinta, la Presencia en Clase."},
+      {"q": "En Back Office, ¿qué convierte una ausencia roja (sin justificar) en una amarilla?", "opts": ["Una vez que se conoce la razón, cambiar la ausencia a amarilla y seleccionar esa razón", "Que pasen 72 horas sin ninguna acción", "Dejar un comentario en Back Office, sin cambiar el tipo de ausencia"], "c": 0, "fb": "Lo que convierte una ausencia roja en amarilla es cambiar el tipo y elegir la razón una vez que se conoce — ya sea que lo hayas descubierto directamente o que Servicio al Cliente te lo haya pasado. Un comentario por sí solo, sin cambiar el tipo, la deja en rojo."},
+      {"q": "Uno de tus estudiantes tiene una ausencia amarilla (avisada) y una Presencia en Clase del 91%. ¿En qué grupo está?", "opts": ["ALERTA — cualquier ausencia mueve a un estudiante a un grupo de riesgo", "VIGILANCIA — una ausencia es una alerta temprana", "Saludable — una ausencia explicada con presencia sólida no es una señal de riesgo"], "c": 2, "fb": "Una ausencia amarilla con presencia por encima del 85% deja a un estudiante en Saludable. Se necesitan dos amarillas para llegar a ALERTA. Una ausencia avisada es una situación que la familia está gestionando — no es una marca negativa para ti ni para ellos."}
     ],
     "2": [
     {"q":"Un estudiante entra con la cámara encendida pero se queda visiblemente retraído — callado, mirando el escritorio. ¿Cómo empiezas?","opts":["Lo saludas con calidez, le haces una breve pregunta personal sobre su semana, y una vez que responde, entras poco a poco al plan del día.","Empiezas con un saludo enérgico y pasas directo a repasar el proyecto de la clase anterior, confiando en que el impulso de arrancar recuperará su atención.","Lo saludas y le preguntas si todo está bien, y luego esperas en silencio a que responda antes de decidir si empiezas la lección."],"c":0,"fb":"Un chequeo personal genuino antes de entrar de lleno es lo que vuelve a enganchar a un estudiante retraído — solo la energía o una actitud pasiva de esperar a ver qué pasa se saltan ese paso."},
@@ -444,10 +586,12 @@ const CONTENT={
       {"q": "Estás revisando las tareas entregadas y el proyecto de un estudiante es técnicamente correcto pero nada especial. ¿Qué escribes?", "opts": ["Solo lo marcas como \"hecho\" sin comentario — cumplió los requisitos, eso basta.", "Dejas una lista larga de todo lo que podría mejorar, sin mencionar nada positivo.", "Dejas un comentario breve y específico, señalando algo que hizo bien y una sugerencia amable — algo que el padre o madre también pueda leer."], "c": 2, "fb": "Revisar la tarea es una oportunidad de retroalimentación, no solo una casilla que marcar — también es una oportunidad para reforzar el vínculo con estudiantes y padres."}
     ],
     "6": [
-      {"q": "Has llamado y escrito a un padre dos veces esta semana porque su hijo faltó a dos clases seguidas, y aún no te responde. ¿Cuál es el mejor siguiente paso?", "opts": ["Dejar de insistir — ya lo intentaste dos veces, ahora depende del padre.", "Escalar de inmediato pidiéndole a tu TL que saque al estudiante de tu grupo porque claramente no le interesa.", "Enviar un mensaje más, cálido y sin presión, y compartir la grabación/resumen de la tarea para que el estudiante no se atrase más mientras esperas respuesta."], "c": 2, "fb": "Un seguimiento con empatía siempre es el siguiente paso — persistente pero cálido, en lugar de escalar o rendirte demasiado pronto."},
+      {"q": "Un estudiante ya faltó a dos lecciones seguidas, y no hubo respuesta a tu contacto después de la primera. ¿Cuál es el mejor siguiente paso?", "opts": ["Esperar una tercera ausencia antes de hacer cualquier otra cosa, ya que dos ausencias por sí solas no confirman un patrón.", "Reportarlo ahora a través de la Evaluación del Alumno — dos seguidas es el punto donde actúas, no esperas a la tercera.", "Dejar de contactar y dejar que Servicio al Cliente tome el caso sin ninguna intervención de tu parte."], "c": 1, "fb": "Dos ausencias seguidas es el punto de inflexión — no esperes a la tercera. Es exactamente cuando el caso debe pasar de un seguimiento privado a la Evaluación del Alumno."},
       {"q": "Un estudiante faltó a clase por enfermedad. ¿Cómo le habla el tutor al padre o madre?", "opts": ["Mantiene la conversación breve y neutral, evitando preguntas personales sobre la enfermedad para no invadir la situación de la familia.", "Expresa una preocupación genuina por cómo está el estudiante, menciona el material adicional disponible, y aprovecha su regreso para compartir algo positivo.", "Se enfoca principalmente en que el estudiante se ponga al día académicamente, ya que dar tranquilidad sobre la enfermedad no es realmente parte del rol del tutor."], "c": 1, "fb": "Calidez genuina, ayuda práctica y una nota positiva en su regreso cubren la empatía que pide este módulo — quedarse neutral o puramente académico se queda corto."},
       {"q": "Un estudiante que faltó a dos clases regresa y hace un trabajo excelente hoy. ¿Cómo usa el tutor esto con los padres?", "opts": ["Espera hasta el siguiente chequeo programado para mencionarlo, para no contactar a la familia demasiadas veces en poco tiempo.", "Se comunica alrededor de esta clase para compartir el logro específico, reforzando el cambio positivo tanto para el estudiante como para el padre.", "Se lo menciona brevemente solo al estudiante, ya que los padres suelen estar más interesados en los patrones de asistencia que en los logros diarios."], "c": 1, "fb": "Compartir el logro mientras está fresco refuerza el cambio positivo para el estudiante y el padre — esperar o no decírselo al padre desperdicia el momento."},
-      {"q": "¿Cuál de las siguientes <strong>NO</strong> se recomienda cuando un estudiante falta a clase?", "opts": ["Compartir la grabación y un breve resumen de la tarea para que no se atrase", "Dar seguimiento con el padre o madre para preguntar cómo está y mencionar que se le extrañó", "Proponerle una clase extra directamente al padre o madre sin avisar primero a tu TL"], "c": 2, "fb": "Una clase extra siempre pasa primero por tu TL — proponerla directamente al padre o madre se salta ese paso obligatorio."}
+      {"q": "¿Cuál de las siguientes <strong>NO</strong> se recomienda cuando un estudiante falta a clase?", "opts": ["Compartir la grabación y un breve resumen de la tarea para que no se atrase", "Dar seguimiento con el padre o madre para preguntar cómo está y mencionar que se le extrañó", "Proponerle una clase extra directamente al padre o madre sin avisar primero a tu TL"], "c": 2, "fb": "Una clase extra siempre pasa primero por tu TL — proponerla directamente al padre o madre se salta ese paso obligatorio."},
+      {"q": "Un estudiante faltó a la lección del martes sin ningún aviso, así que la marcaste en rojo. El jueves el padre o madre responde que el estudiante tuvo gripe. ¿Qué haces?", "opts": ["Dejarla en rojo — no fue avisada en su momento, y cambiarla después tergiversaría lo que pasó", "Cambiar la ausencia a amarilla, seleccionar \"Problemas de salud\", y agregar un comentario con lo que dijo el padre o madre", "Agregar un comentario con lo que dijo el padre o madre y dejar el tipo de ausencia como está"], "c": 1, "fb": "Rojo significa \"no sabemos por qué\". Una vez que lo sabes, el registro debe decirlo: cambia el tipo, selecciona la razón, y comenta. La opción 3 es el error más común — un comentario por sí solo deja la ausencia en rojo, así que el estudiante se queda en CRÍTICO y tus números todavía lo cargan."},
+      {"q": "Le has escrito a una familia dos veces sobre dos ausencias sin explicar y no ha habido ninguna respuesta. El caso va a pasar a Servicio al Cliente. ¿Qué es lo más importante antes de que salga de tus manos?", "opts": ["Que el comentario en BO registre lo que ya intentaste y cuándo, para que CS no repita tus llamadas", "Que sigas intentando por tu cuenta hasta obtener una respuesta, ya que la familia te conoce a ti y no a CS", "Que redirijas a la familia a CS y dejes que ellos manejen el reporte en Back Office"], "c": 0, "fb": "La entrega solo es tan buena como lo que CS puede leer. Tu comentario es el historial del caso — sin él, empiezan desde cero y la familia recibe las mismas preguntas dos veces. Y una vez que un caso es tuyo, no rediriges a la familia y te alejas: entregas la información, no la responsabilidad."}
     ]
   },
   "sortItems": [
