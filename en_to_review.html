@@ -117,7 +117,7 @@ function renderMenu(){
     const el=document.createElement('div');
     el.className='mc'; el.style.cursor='pointer';
     el.innerHTML=`<div class="mc-body">
-      <div class="mc-top"><div class="mc-num">${r.flag}</div><div class="mc-em">${r.emoji}</div></div>
+      <div class="mc-top"><div class="mc-em">${r.flag}</div></div>
       <div class="mc-title">${r.label}</div>
       <div class="rmc-desc">${r.desc}</div>
     </div>`;
@@ -133,7 +133,7 @@ function goMenu(){
 function openRegion(key){
   const r=REGIONS.find(x=>x.key===key);
   const m1=MODULES.find(m=>m.id===1);
-  let html=`<div class="region-tag">${r.flag} ${r.label}</div>`;
+  let html=`<div class="region-tag"><span style="letter-spacing:normal;text-transform:none;display:inline-block">${r.flag}</span> ${r.label}</div>`;
   html+=`<div class="meyebrow">MODULE 1 OF 2 — identical for every region</div><div class="mh1">${m1.emoji} ${m1.title}</div><div class="mobj"><strong>Objective:</strong> ${m1.obj}</div>`;
   m1.sections.forEach(s=>{html+=`<div class="sch">${s.t}</div>`;s.cards.forEach(c=>{html+=rc(c);});});
   html+=`<div class="mobj" style="margin-top:8px"><strong>Quiz (Module 1)</strong> — identical for every region, already corrected (75% HPR fix, 5 risk groups, mechanism, new risk-group question)${r.quiz1Q5?' — except Q5, adapted below since the tutor isn\'t the one who contacts the family in this region':''}.</div>`;
