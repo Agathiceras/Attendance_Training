@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1 & 6 — Regional Review (EN)</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.review-banner{background:var(--hi-bg);border-bottom:2px solid var(--hi-b);color:var(--hi-t);font-weight:700;font-size:13px;text-align:center;padding:10px 16px}
+.region-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;padding:32px 40px 60px;max-width:1200px;margin:0 auto}
+.rmc-desc{font-size:13.5px;color:var(--text2);line-height:1.6;margin-top:4px}
+.quizhead{font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:800;margin:40px 0 6px;color:var(--text)}
+.quizsub{font-size:13.5px;color:var(--text-muted);margin-bottom:20px}
+.qrcard{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:18px 21px;margin-bottom:14px;box-shadow:var(--shadow)}
+.qrcard .qrq{font-weight:700;font-size:14.5px;color:var(--text);margin-bottom:10px}
+.qropt{font-size:13.5px;color:var(--text2);padding:7px 10px;border-radius:8px;margin-bottom:4px;border:1px solid var(--border)}
+.qropt.correct{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t);font-weight:700}
+.qrfb{font-size:13px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)}
+.region-tag{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:999px;background:var(--hi-bg);color:var(--hi-t);margin-bottom:14px}
+</style>
+</head>
+<body>
+
+<div class="review-banner">📋 INTERNAL REVIEW COPY — English only. Not for tutors. Modules 1 &amp; 6 as they would read per region, pending approval before translation.</div>
+
+<div id="screen-menu">
+  <nav class="nav">
+    <span class="logo"><span class="logo-mark">kodland</span><span class="logo-div"></span><span class="logo-sub">Tutor Development Department</span></span>
+    <div class="nav-r"><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div style="max-width:1200px;margin:0 auto;padding:28px 40px 0">
+    <div class="meyebrow">CONTENT REVIEW</div>
+    <div class="mh1" style="margin-bottom:8px">Module 1 &amp; 6 — by region</div>
+    <div class="mobj">Click a region group to see Module 1 (identical across all regions) and Module 6 (region-specific — regulations, timing, escalation, and simulations) exactly as they'd read in English before translation.</div>
+  </div>
+  <div class="region-grid" id="regionGrid"></div>
+</div>
+
+<div id="screen-region" style="display:none">
+  <nav class="nav">
+    <span class="logo"><span class="logo-mark">kodland</span><span class="logo-div"></span><span class="logo-sub">Tutor Development Department</span></span>
+    <div class="nav-r"><button class="pbtn" onclick="goMenu()">← All regions</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="cbody" id="cbody"></div>
+</div>
+
+<script>
+function toggleTheme(){
+  const root=document.documentElement;
+  const cur=root.getAttribute('data-theme');
+  root.setAttribute('data-theme', cur==='dark'?'light':'dark');
+}
+
+/* ---------- Trimmed card renderer (copied from assets/engine.js rc(), no T()/LANG dependency — this file only ever needs the card types Module 1 & 6 actually use) ---------- */
+function rc(c){
+  if(c.type==='text')return`<div class="card">${c.h?`<h4>${c.h}</h4>`:''}<p>${c.b}</p></div>`;
+  if(c.type==='hi')return`<div class="card hi">${c.h?`<h4>${c.h}</h4>`:''}<p>${c.b}</p></div>`;
+  if(c.type==='warnbox')return`<div class="card danger">${c.h?`<h4>${c.h}</h4>`:''}<p>${c.b}</p></div>`;
+  if(c.type==='table'){
+    const head=c.head.map(h=>`<th>${h}</th>`).join('');
+    const rows=c.rows.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('');
+    const cls='card'+(c.tone==='danger'?' danger':'');
+    return`<div class="${cls}">${c.h?`<h4>${c.h}</h4>`:''}<div class="tbl-wrap"><table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  }
+  if(c.type==='img')return`<img src="${c.src}" alt="" style="display:block;width:100%;height:auto;border-radius:var(--r);margin-bottom:11px">`;
+  if(c.type==='cute')return`<div class="card cute"><h4>⭐ ${c.h||'Tip'}</h4><p>${c.b}</p></div>`;
+  if(c.type==='warn')return`<div class="callout cw"><span class="ci">⚠️</span><span>${c.txt}</span></div>`;
+  if(c.type==='tip')return`<div class="callout ct"><span class="ci">💡</span><span>${c.txt}</span></div>`;
+  if(c.type==='good')return`<div class="callout cg"><span class="ci">✅</span><span>${c.txt}</span></div>`;
+  if(c.type==='list'){
+    const li=c.items.map(i=>`<li>${i}</li>`).join('');
+    return`<div class="card">${c.h?`<h4>${c.h}</h4>`:''}${c.p?`<p style="margin-bottom:8px">${c.p}</p>`:''}<ul>${li}</ul></div>`;
+  }
+  if(c.type==='twocol'){
+    const li=items=>items.map(i=>`<li>${i}</li>`).join('');
+    const rightCls=c.right.plain?'card':'card hi';
+    const rightTitle=c.right.plain?`<h4>${c.right.h}</h4>`:`<h4 style="color:var(--hi-t)">${c.right.h}</h4>`;
+    return`<div class="two-col"><div class="card"><h4>${c.left.h}</h4><ul>${li(c.left.items)}</ul></div><div class="${rightCls}">${rightTitle}<ul>${li(c.right.items)}</ul></div></div>`;
+  }
+  if(c.type==='doavoid'){
+    const li=items=>items.map(i=>`<li>${i}</li>`).join('');
+    return`<div class="two-col"><div class="card ok"><h4>${c.left.h}</h4><ul>${li(c.left.items)}</ul></div><div class="card danger"><h4>${c.right.h}</h4><ul>${li(c.right.items)}</ul></div></div>`;
+  }
+  if(c.type==='flow'){
+    const steps=c.steps.map((s,i)=>{
+      const arrow=i<c.steps.length-1?'<div class="flow-arrow">→</div>':'';
+      return `<div class="flow-step f-${s.color}"><div class="fs-ic">${s.ic}</div><h4>${s.h}</h4><p>${s.b}</p></div>${arrow}`;
+    }).join('');
+    return`<div class="flow">${steps}</div>`;
+  }
+  if(c.type==='imgtext'){
+    const p=c.items.map(i=>`<p>${i}</p>`).join('');
+    return`<div class="imgtext"><img src="${c.img}" alt=""><div class="imgtext-txt">${p}</div></div>`;
+  }
+  if(c.type==='simulation'){
+    return`<div class="sim-embed"><div class="sim-embed-inner"><iframe src="${c.src}" title="${c.title||'BO Simulation'}" loading="lazy"></iframe></div></div>`;
+  }
+  return'';
+}
+function renderQuizReview(items,title){
+  let html=`<div class="quizhead">🧪 ${title}</div><div class="quizsub">Shown here as read-only Q&A for review — the live training renders this as an interactive quiz.</div>`;
+  items.forEach((q,i)=>{
+    html+=`<div class="qrcard"><div class="qrq">Q${i+1}. ${q.q}</div>`;
+    q.opts.forEach((o,oi)=>{ html+=`<div class="qropt${oi===q.c?' correct':''}">${oi===q.c?'✔ ':'○ '}${o}</div>`; });
+    html+=`<div class="qrfb"><strong>Feedback:</strong> ${q.fb}</div></div>`;
+  });
+  return html;
+}
+</script>
+<script src="assets/content-en.js"></script>
+<script src="regions-en-review.js"></script>
+<script>
+function renderMenu(){
+  const g=document.getElementById('regionGrid'); g.innerHTML='';
+  REGIONS.forEach(r=>{
+    const el=document.createElement('div');
+    el.className='mc'; el.style.cursor='pointer';
+    el.innerHTML=`<div class="mc-body">
+      <div class="mc-top"><div class="mc-num">${r.flag}</div><div class="mc-em">${r.emoji}</div></div>
+      <div class="mc-title">${r.label}</div>
+      <div class="rmc-desc">${r.desc}</div>
+    </div>`;
+    el.onclick=()=>openRegion(r.key);
+    g.appendChild(el);
+  });
+}
+function goMenu(){
+  document.getElementById('screen-region').style.display='none';
+  document.getElementById('screen-menu').style.display='block';
+  window.scrollTo(0,0);
+}
+function openRegion(key){
+  const r=REGIONS.find(x=>x.key===key);
+  const m1=MODULES.find(m=>m.id===1);
+  let html=`<div class="region-tag">${r.flag} ${r.label}</div>`;
+  html+=`<div class="meyebrow">MODULE 1 OF 2 — identical for every region</div><div class="mh1">${m1.emoji} ${m1.title}</div><div class="mobj"><strong>Objective:</strong> ${m1.obj}</div>`;
+  m1.sections.forEach(s=>{html+=`<div class="sch">${s.t}</div>`;s.cards.forEach(c=>{html+=rc(c);});});
+  html+=`<div class="mobj" style="margin-top:8px"><strong>Quiz (Module 1)</strong> — identical for every region, already corrected (75% HPR fix, 5 risk groups, mechanism, new risk-group question)${r.quiz1Q5?' — except Q5, adapted below since the tutor isn\'t the one who contacts the family in this region':''}.</div>`;
+  const quiz1 = QUIZ[1].map((q,i)=> (r.quiz1Q5 && i===4) ? r.quiz1Q5 : q);
+  html+=renderQuizReview(quiz1,'Module 1 Quiz');
+  html+='<hr class="divider">';
+  html+=`<div class="meyebrow">MODULE 2 OF 2 — this region's version</div><div class="mh1">${r.m6.emoji} ${r.m6.title}</div><div class="mobj"><strong>Objective:</strong> ${r.m6.obj}</div>`;
+  r.m6.sections.forEach(s=>{html+=`<div class="sch">${s.t}</div>`;s.cards.forEach(c=>{html+=rc(c);});});
+  html+=renderQuizReview(r.quiz6,'Module 6 Quiz — '+r.label);
+  document.getElementById('cbody').innerHTML=html;
+  document.getElementById('screen-menu').style.display='none';
+  document.getElementById('screen-region').style.display='block';
+  window.scrollTo(0,0);
+}
+renderMenu();
+</script>
+</body>
+</html>
