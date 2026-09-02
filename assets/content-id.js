@@ -106,23 +106,90 @@ const CONTENT={
       "id": 1,
       "emoji": "📊",
       "title": "Memahami Metrik: Kehadiran",
-      "desc": "Bagaimana kehadiran diukur, apa arti LPR/HPR bagimu, dan dua jenis penyebab di balik kelas yang terlewat.",
-      "obj": "Memahami cara kehadiran diukur dan memisahkan penyebab yang bisa kamu pengaruhi dari yang tidak bisa.",
+      "desc": "Dua ukuran di balik angka-angka — Kehadiran Back Office dan Kehadiran di Classroom — jenis ketidakhadiran merah dan kuning, lima kelompok risiko, apa arti HPR dan LPR, dan tiga hal yang bisa membuat namamu masuk daftar kami.",
+      "obj": "Memahami cara kehadiran dan keberadaan diukur, mengetahui kelompok risiko setiap siswamu, mengetahui persis apa yang bisa membuat namamu masuk daftar kami — dan memisahkan penyebab yang bisa kamu pengaruhi dari yang tidak bisa.",
       "color": "#D3FF5F",
       "sections": [
         {
-          "t": "📐 Bagaimana Cara Mengukurnya?",
+          "t": "📐 Dua Cara Kami Mengukur Ini",
           "cards": [
-            {"type": "text", "b": "Kita mengelompokkan siswa (SS) ke dalam tiga level berdasarkan persentase kehadiran mereka."},
-            {"type": "table", "h": "Level kehadiran", "head": ["Level", "Rentang"], "rows": [["🟢 Kehadiran Tinggi", "≥ 75%"], ["🟠 Kehadiran Sedang (Risiko)", "50% – 74.99%"], ["❗ Kehadiran Rendah (Waspada)", "&lt; 50%"]]},
-            {"type": "text", "h": "Dari sudut pandang tutor", "b": "Dua indikator ini merangkum performamu pada metrik ini:<br><br><strong>LPR (Low Presence Rate):</strong> % siswamu dengan kehadiran di bawah 50%.<br><strong>HPR (High Presence Rate):</strong> % siswamu dengan kehadiran 75% ke atas."},
-            {"type": "text", "b": "Data kehadiran dihitung berdasarkan catatan kehadiran yang otomatis tercatat oleh classroom saat siswa bergabung ke kelas. Kehadiran dikonfirmasi setelah siswa mengikuti lebih dari 50% pelajaran. Ini tidak berdasarkan catatan kehadiran yang diinput di BO."}
+            {"type": "text", "b": "Seorang siswa bisa saja <strong>tidak hadir di kelas</strong>, atau <strong>hadir tapi pikirannya melayang</strong> — dua masalah yang sama sekali berbeda, jadi kami menggunakan 2 ukuran:"},
+            {"type": "table", "h": "Dua ukuran", "head": ["Ukuran", "Pertanyaan yang dijawab", "Dari mana asalnya"], "rows": [["🙋 <strong>Kehadiran (BO)</strong>", "Apakah siswa datang?", "Back Office — kelas sudah dijadwalkan, dan siswa datang atau tidak"], ["🎥 <strong>Kehadiran di Classroom</strong>", "Saat dia datang, apakah dia benar-benar ada di sana?", "Data Classroom — berapa lama siswa benar-benar berada di ruang kelas"]]},
+            {"type": "tip", "txt": "Kenapa kita butuh keduanya: Back Office adalah satu-satunya tempat yang tahu bahwa sebuah kelas <em>seharusnya</em> berlangsung. Tanpanya, siswa yang tidak pernah muncul sama sekali tidak meninggalkan catatan apa pun — ketidakhadirannya jadi tidak terlihat. Classroom sendiri hanya mengukur seberapa terlibat siswa yang <em>memang</em> datang."}
+          ]
+        },
+        {
+          "t": "🧮 Bagaimana Kehadiran di Classroom Dihitung",
+          "cards": [
+            {"type": "flow", "steps": [
+              {"ic": "⏱️", "h": "1 · Waktu terhubung", "b": "Untuk setiap kelas, kami membandingkan berapa lama siswa benar-benar terhubung dengan durasi kelas. Bertahan sepanjang kelas → 100%. Keluar di tengah → sekitar 50%. Sepuluh menit dari kelas enam puluh menit → sekitar 17%.", "color": "blue"},
+              {"ic": "✅", "h": "2 · Batas 50%", "b": "Seorang siswa baru dihitung <em>Hadir</em> untuk kelas itu jika di atas 50%. Terhubung selama sepuluh menit lalu menghilang bukan kehadiran, dan tidak dihitung sebagai kehadiran.", "color": "coral"},
+              {"ic": "📊", "h": "3 · Rata-rata 30 hari", "b": "Kehadirannya di Classroom adalah rata-rata dari itu selama kelas-kelas dalam 30 hari terakhir — dihitung per kelompok dan per kursus, jadi siswa yang ada di dua kursusmu diukur secara terpisah di masing-masing.", "color": "green"}
+            ]},
+            {"type": "good", "txt": "Kelas yang tidak pernah tercatat di Classroom (sekitar 1%) tetap dihitung untuk Kehadiran BO — ketidakhadiran yang nyata tidak pernah hilang hanya karena Classroom melewatkannya."},
+            {"type": "hi", "h": "Siapa yang dihitung", "b": "Tidak semua siswa muncul dalam angkamu.<br><br>Seorang siswa baru dimasukkan setelah memiliki <strong>minimal 3 kelas yang dijadwalkan</strong> dan <strong>satu kelas dalam 14 hari terakhir</strong>. Jadi satu kelas saja tidak akan pernah bisa mengubah persentasemu secara drastis, dan siswa yang sudah lama pergi berhenti mendistorsinya.<br><br>Jika siswa yang kamu ajar tidak muncul di daftarmu, ini hampir selalu alasannya."}
+          ]
+        },
+        {
+          "t": "🟡🔴 Dua Jenis Ketidakhadiran",
+          "cards": [
+            {"type": "text", "b": "Dari sisi Back Office, ketidakhadiran bukan sekadar ketidakhadiran — memperlakukan ketidakhadiran yang sudah diberi tahu sebelumnya sama seperti siswa yang menghilang tanpa sepatah kata pun akan tidak adil, jadi kami tidak melakukannya."},
+            {"type": "img", "src": "Images/image8_ENG.png"},
+            {"type": "doavoid", "left": {"h": "🟡 Kuning — diberi tahu atau dibenarkan", "items": ["Keluarga memberikan alasan sebelumnya", "Masalah kesehatan, liburan, masalah teknis atau jadwal, dll.", "Situasi yang sedang aktif ditangani keluarga"]}, "right": {"h": "🔴 Merah — tanpa peringatan sama sekali", "items": ["Siswa menghilang tanpa sepatah kata pun", "Tidak ada yang menindaklanjuti sebelum kelas berikutnya", "Jenis ketidakhadiran yang ingin kami hilangkan sepenuhnya"]}},
+            {"type": "text", "b": "Mana yang kamu pilih, dan apa yang kamu lakukan selanjutnya, ada di Modul 6 — modul itu adalah buku panduan untuk halaman ini."}
+          ]
+        },
+        {
+          "t": "🚦 Lima Kelompok Risikomu",
+          "cards": [
+            {"type": "text", "b": "Gabungkan Kehadiran dan Kehadiran di Classroom, dan setiap siswa akan masuk ke salah satu dari lima kelompok — kelompok mana pun yang ditentukan oleh sinyal yang <strong>lebih buruk</strong> di antara keduanya, jadi tidak ada yang lolos saat kedua sinyal berbeda."},
+            {"type": "text", "b": "Baca dua kolom tengah sebagai <strong>alternatif, bukan syarat</strong>: sebuah kelompok dipicu oleh ketidakhadiran atau kehadiran — mana pun yang lebih buruk. Siswa tanpa ketidakhadiran sama sekali bisa berada di WASPADA hanya karena kehadirannya, dan siswa dengan kehadiran sempurna bisa berada di KRITIS karena satu ketidakhadiran yang tidak dijelaskan."},
+            {"type": "table", "h": "Kelompok risiko", "tone": "danger", "head": ["Kelompok", "Ketidakhadiran Back Office", "Kehadiran di Classroom", "Artinya"], "rows": [
+              ["🔴 <strong>KRITIS</strong>", "Satu atau lebih merah, atau empat atau lebih kuning", "—", "Ketidakhadiran yang tidak dijelaskan siapa pun, atau ketidakhadiran yang menumpuk — kami tidak tahu apakah siswa ini masih bersama kami"],
+              ["🟠 <strong>RISIKO TINGGI</strong>", "—", "Di bawah 50%", "Datang, tapi nyaris tidak ada di sana"],
+              ["🟡 <strong>WASPADA</strong>", "2–3 kuning", "50% – 74.99%", "Melewatkan kelas yang sudah dijelaskan keluarga — atau hanya ada di sana setengah waktu"],
+              ["🔵 <strong>PANTAU</strong>", "—", "75% – 84.99%", "Hadir, tapi tidak sepenuhnya terlibat — mulai menjauh"],
+              ["🟢 <strong>Sehat</strong>", "Tidak ada merah, maksimal 1 kuning", "≥ 85%", "Kehadiran dan keterlibatan yang konsisten"]
+            ]},
+            {"type": "warnbox", "h": "Ketidakhadiran kuning bukan catatan buruk. Itu bukti bahwa kamu sudah melakukan tugasmu.", "b": "Satu ketidakhadiran yang diberi tahu membuat siswa tetap Sehat. Butuh dua sebelum siswa bahkan masuk WASPADA, dan ini disengaja: titik di mana siswa yang mulai menjauh masih bisa dibawa kembali adalah ketidakhadiran kedua, yang justru menjadi topik Modul 6.<br><br>Ketidakhadiran yang tidak dijelaskan (merah) berbeda, dan langsung dihitung — bukan karena merah adalah perilaku yang lebih buruk, tapi karena tidak ada yang tahu apa yang terjadi."}
+          ]
+        },
+        {
+          "t": "📈 HPR dan LPR — Apa Arti Sebenarnya dari Angkamu",
+          "cards": [
+            {"type": "text", "b": "Ini diukur berdasarkan <strong>Kehadiran di Classroom</strong> (bukan persentase kehadiran tunggal yang datar):"},
+            {"type": "twocol", "left": {"h": "📈 HPR — Tingkat Kehadiran Tinggi", "items": ["Persentase siswamu di 75% atau lebih — yaitu semua yang ada di 🟢 Sehat atau 🔵 PANTAU", "Semakin tinggi semakin baik"]}, "right": {"h": "📉 LPR — Tingkat Kehadiran Rendah", "items": ["Persentase siswamu di bawah 50% — semua yang ada di 🟠 RISIKO TINGGI", "Semakin rendah semakin baik"], "plain": true}},
+            {"type": "text", "b": "Karena kedua tingkat ini berasal langsung dari kelompok-kelompok di atas, tabel dan kartumu tidak akan pernah bisa berbeda: <strong>HPR adalah Sehat ditambah PANTAU, LPR adalah RISIKO TINGGI.</strong>"},
+            {"type": "text", "b": "Standarnya sama di semua wilayah: <strong>LPR di 25.5% atau di bawahnya</strong> · <strong>HPR di 49.5% atau di atasnya</strong>."},
+            {"type": "hi", "h": "Tujuan sebenarnya bukan sebuah angka — tapi dua hasil", "b": "🔴 <strong>Menghilangkan ketidakhadiran yang tidak dibenarkan (merah).</strong> Ketidakhadiran merah berarti seorang siswa menghilang dan tidak ada yang menindaklanjuti — ini harus berhenti menjadi mungkin.<br><br>🟡 <strong>Menghilangkan penurunan yang dimulai dari ketidakhadiran kedua yang dibenarkan.</strong> Tidak ada siswa yang boleh menghilang diam-diam, dan tidak ada yang boleh hilang karena dua ketidakhadiran yang tidak dijawab siapa pun."}
+          ]
+        },
+        {
+          "t": "🧭 Manfaat Praktisnya",
+          "cards": [
+            {"type": "text", "b": "Kedua ukuran ini menunjuk pada masalah yang berbeda, dengan solusi yang berbeda — itulah alasan kami memisahkannya."},
+            {"type": "table", "head": ["Jika ini rendah…", "…masalahnya biasanya", "…dan penanganannya terjadi"], "rows": [
+              ["<strong>Kehadiran</strong> — mereka tidak datang", "Jadwal, keluarga, motivasi, kursus yang sudah tidak terasa relevan lagi", "<strong>Di luar</strong> kelas — hubungi, tandai, libatkan keluarga atau Teaching Ops"],
+              ["<strong>Kehadiran di Classroom</strong> — mereka datang tapi tidak benar-benar ada", "Fasilitasi — ruang kelas pasif, partisipasi terpusat pada satu atau dua siswa, atau masalah teknis menghalangi", "<strong>Di dalam</strong> kelas — bagaimana kamu membuka, siapa yang kamu ajak bicara, bagaimana kamu menutup"]
+            ]}
           ]
         },
         {
           "t": "🔍 Apa yang Membuat Siswa Melewatkan Kelas?",
           "cards": [
             {"type": "twocol", "left": {"h": "🌦️ Eksternal (di luar kendalimu)", "items": ["Liburan", "Sakit", "Masalah keluarga", "Hari libur nasional"]}, "right": {"h": "🎯 Internal (bisa kamu pengaruhi)", "items": ["Mereka bosan di kelas", "Mereka merasa tidak didengar", "Mereka merasa \"tidak jago\" dalam hal ini", "Mereka bingung dan tersesat"]}}
+          ]
+        },
+        {
+          "t": "🔔 Kapan Kamu Akan Mendengar Kabar dari Kami?",
+          "cards": [
+            {"type": "text", "b": "Kelompok risiko siswamu adalah satu hal. Yang membuat kami menghubungi <strong>kamu</strong> adalah hal lain — dan itu ada tiga situasi, dan tidak ada yang lain."},
+            {"type": "table", "head": ["Kamu akan mendengar kabar dari kami saat…", "Karena", "Apa yang akan kamu dapatkan"], "rows": [
+              ["HPR-mu di bawah target atau LPR-mu di atasnya", "Terlalu sedikit siswamu yang benar-benar hadir, atau terlalu banyak yang nyaris tidak ada", "Pelatihan tentang mengelola kelas — pembukaan, partisipasi, penutupan"],
+              ["Dua atau lebih siswamu memiliki dua atau lebih ketidakhadiran (merah) yang tidak dijelaskan — atau, setelah kamu memiliki 10 siswa atau lebih, lebih dari setengah daftarmu memiliki setidaknya satu", "Ketidakhadiran berulang dan tidak ada yang tahu kenapa. Satu siswa dengan satu ketidakhadiran merah tidak akan pernah membuat namamu masuk daftar — polanya yang membuat itu terjadi", "Pelatihan tentang protokol ketidakhadiran — menghubungi keluarga, mencatat alasan, kelas tambahan"],
+              ["Satu siswa memiliki tiga atau lebih ketidakhadiran merah, atau dua atau lebih siswa masing-masing memiliki empat atau lebih kuning", "Siswa-siswa ini mendekati keluar, apa pun tampilan angka keseluruhanmu. Ini satu-satunya kasus di mana ketidakhadiran yang dijelaskan juga dihitung, karena empat berturut-turut sudah menjadi pola dengan sendirinya", "Nama-namanya, segera, dan pelatihan — ini mendesak"]
+            ]},
+            {"type": "good", "txt": "Dan apa yang bukan ini: sebuah pesan bukan peringatan dan bukan langkah dalam proses disipliner apa pun. Tidak ada keputusan tentang kamu yang dibuat oleh sebuah angka — platform memutuskan ke mana harus melihat lebih dulu, lalu seseorang berbicara denganmu. Jika datanya terasa salah bagimu, mengatakannya itu berguna; sebagian akan ternyata jadi celah pencatatan, bukan masalah mengajar, dan kami lebih memilih mendengarnya darimu daripada menebak-nebak."}
           ]
         },
         {
@@ -365,19 +432,48 @@ const CONTENT={
       "id": 6,
       "emoji": "📞",
       "title": "Apa yang Harus Dilakukan Saat Siswa Melewatkan Kelas",
-      "desc": "Cara menindaklanjuti siswa dan cara berbicara dengan orang tua dengan penuh empati.",
-      "obj": "Ketahui dengan tepat langkah-langkah yang harus diambil — dengan siswa dan dengan keluarganya — saat ketidakhadiran terjadi.",
+      "desc": "Apa yang kamu pilih di Back Office, bagaimana caramu sendiri membuat siswa yang tidak hadir merasa dirindukan, dan kapan Layanan Pelanggan turun tangan sebagai gantinya.",
+      "obj": "Ketahui dengan tepat apa yang harus dipilih di Back Office dan kapan, cara menghubungi supaya siswa merasa dirindukan dan didukung, dan ketahui kapan masalah administratif atau keluarga yang tidak merespons berarti saatnya melibatkan Layanan Pelanggan.",
       "color": "#D3FF5F",
       "sections": [
         {
+          "t": "🎯 Apa yang Kamu Pilih, dan Kapan",
+          "cards": [
+            {"type": "text", "b": "Sebelum apa pun: dua klik, dan seluruh metrik bergantung padanya. Modul 1 menjelaskan arti merah dan kuning. Ini persisnya kapan kamu memilih yang mana."},
+            {"type": "redyellow", "left": {"h": "🔴 Pilih MERAH saat…", "items": ["Siswa tidak muncul dan tidak ada yang memberi tahumu alasannya. Itu satu-satunya kasus.", "Merah bukan label yang lebih keras untuk kejadian yang sama — artinya kita tidak tahu apa yang terjadi, dan itulah yang membuatnya menjadi kondisi paling berbahaya yang bisa dialami seorang siswa.", "Tidak ada yang bisa membantu siswa yang masalahnya tidak terlihat."]}, "right": {"h": "🟡 Pilih KUNING saat…", "items": ["Seseorang memberitahumu alasannya — sebelum atau sesudah kelas. Lalu pilih salah satu dari enam alasan, jika kamu tahu.", "Pilihan-pilihan itu bukan sekadar formalitas: itu bagian dari cara pola ini dipahami, baik oleh kamu maupun Layanan Pelanggan yang menindaklanjutinya.", "Lima detik darimu, dan sebuah pola yang bisa ditindaklanjuti."]}},
+            {"type": "list", "h": "Enam alasan di BO", "p": "Pilih yang paling mendekati dengan jujur — beberapa akan berkembang menjadi opsi yang lebih spesifik setelah dipilih.", "items": [
+              "🏥 <strong>Masalah kesehatan</strong>",
+              "📚 <strong>Masalah konten</strong>",
+              "✈️ <strong>Liburan:</strong> bepergian, libur sekolah, atau hari raya",
+              "💻 <strong>Masalah teknis:</strong> komputer siswa, platform Kodland atau Classroom, mati listrik, atau masalah koneksi internet",
+              "🗓️ <strong>Masalah jadwal:</strong> pindah ke kelompok lain, atau kelas dijadwalkan ulang",
+              "📝 <strong>Lainnya:</strong> beban sekolah / ujian / tugas rumah, alasan keluarga, atau tidak ada alasan spesifik yang disampaikan (komentar wajib diisi)"
+            ]},
+            {"type": "warnbox", "h": "Dan aturan yang melindungi semuanya", "b": "Ketidakhadiran yang kamu catat dengan jujur tidak akan pernah dipakai untuk melawanmu. Satu-satunya ketidakhadiran yang merugikan angkamu adalah yang tidak dijelaskan siapa pun."},
+            {"type": "simulation", "title": "Simulasi BO — Menandai Kehadiran", "src": "Simulacion_BO_Attendance_1_ID.html"}
+          ]
+        },
+        {
           "t": "🔁 Tindak Lanjut",
           "cards": [
+            {"type": "hi", "h": "Pastikan mereka tahu bahwa mereka dirindukan", "b": "Pesan darimu — bukan cuma yang otomatis — adalah yang membuat sebuah ketidakhadiran terasa diperhatikan, bukan tidak terlihat. Pesan singkat yang hangat sangat berarti: kamu dirindukan hari ini, ini tempat menemukan rekamannya, dan aktivitas latihan ada di sana kapan pun kamu siap — dikemas sebagai sesuatu yang berguna, bukan kewajiban."},
             {"type": "list", "items": [
-              "Tanyakan kepada orang tua atau wali bagaimana kabar siswanya, dan sampaikan bahwa mereka dirindukan di kelas.",
-              "Bagikan rekaman kelas beserta rangkuman singkat tugas rumah, supaya siswa tidak tertinggal atau kehilangan motivasi.",
-              "Saat siswa hadir lagi lain kali, tunjukkan bahwa kamu memperhatikan ketidakhadirannya — tanyakan kabarnya dan ingatkan mereka di mana bisa menemukan rekaman dan tugas rumahnya."
+              "Kirim pesan singkat yang mengarahkan ke rekaman dan aktivitas latihan tambahan apa pun di platform — sebuah kesempatan untuk mengejar ketinggalan, bukan tugas.",
+              "Saat siswa kembali, buat itu personal: tanyakan apakah mereka sempat menonton rekamannya, atau apakah mereka butuh bantuan menemukannya.",
+              "Bagian ini adalah bagianmu. Layanan Pelanggan turun tangan hanya untuk masalah administratif, atau jika sebuah keluarga berhenti merespons pesanmu sama sekali."
+            ]}
+          ]
+        },
+        {
+          "t": "⏱️ Waktu: Apa yang Sebenarnya Dipicu oleh Hitungan Ini",
+          "cards": [
+            {"type": "text", "b": "Ambang batas ini tidak hanya memicu sesuatu yang harus kamu lakukan — mereka juga memicu konsekuensi bagi siswa, secara otomatis, di sisi Layanan Pelanggan."},
+            {"type": "table", "h": "Apa yang berubah seiring bertambahnya ketidakhadiran", "head": ["Jumlah", "Apa yang terjadi pada siswa", "Bagianmu"], "rows": [
+              ["Ketidakhadiran ke-1", "Belum ada yang otomatis", "Kirim pesan langsung ke siswa — rekaman, aktivitas latihan, sebuah \"kami merindukanmu\" yang tulus"],
+              ["Ketidakhadiran ke-2–3", "Siswa menjadi memenuhi syarat untuk kelas tambahan, yang bisa ditawarkan Layanan Pelanggan ke keluarga", "Terus kirim pesan langsung; tandai ke Layanan Pelanggan jika keluarga jadi tidak merespons"],
+              ["Ketidakhadiran ke-4 atau lebih", "Siswa berisiko kehilangan akses ke rekaman, dan semakin dekat untuk dikeluarkan dari kursus", "Libatkan Layanan Pelanggan — ini sekarang jadi masalah administratif"]
             ]},
-            {"type": "agefriendly", "intro": "Lihat contoh cara menyambut kembali siswa yang melewatkan kelas berdasarkan usia:", "younger": "\"Itu dia kamu! Aku kangen kamu di kelas — aku udah simpanin rekaman semua yang kita bangun, dan aku yakin kamu bakal suka banget bagian slime-nya mulai memantul-mantul.\"", "older": "\"Senang kamu balik lagi. Aku udah kirim rekamannya dan rangkuman singkat apa yang kita bahas — nggak mendesak kok, kapan aja kamu sempat buat ngejar ketinggalan.\""}
+            {"type": "warn", "txt": "Pemicu bagi Layanan Pelanggan bukanlah jumlah ketidakhadiran itu sendiri — melainkan masalah administratif, atau keluarga yang berhenti menjawabmu. Sampai titik itu, ini tetap jadi bagianmu."}
           ]
         },
         {
@@ -386,9 +482,47 @@ const CONTENT={
             {"type": "imgtext", "img": "Images/WhatsApp_module_6_IND.png", "items": [
               "Bersikap baik dan pengertian, terutama kalau ketidakhadirannya karena sakit atau masalah keluarga.",
               "Kalau ada materi tambahan yang tersedia di kursus, beri tahu mereka.",
-              "Saat siswanya hadir kembali, gunakan momen itu untuk berbagi pencapaian mereka di kelas dengan orang tuanya."
+              "Saat siswanya hadir kembali, gunakan momen itu untuk berbagi pencapaian mereka di kelas dengan orang tuanya.",
+              "Kehangatan tidak ada biayanya dan itulah seluruh perbedaan antara keluarga yang tetap terlibat dengan kursus dan yang diam-diam berhenti merespons."
             ]},
-            {"type": "warnbox", "h": "⚠️ Sebelum menawarkan kelas tambahan", "b": "Kalau kamu merasa kelas tambahan atau kelas motivasi diperlukan, <strong>hubungi TL-mu terlebih dahulu</strong> untuk meninjau kasusnya sebelum mengusulkannya ke orang tua atau wali."}
+            {"type": "warnbox", "h": "⚠️ Yang Tidak Boleh Kamu Lakukan", "b": "Jangan pernah menyarankan keluarga agar siswa istirahat dari kursus. Jangan pernah membahas harga dengan orang tua — itu tugas Sales. Jangan pernah menawarkan kelas 1-on-1 tanpa persetujuan. Dan jangan pernah memberi tahu keluarga tentang pembatalan atau penundaan tanpa izin TL-mu terlebih dahulu."}
+          ]
+        },
+        {
+          "t": "📋 Apa yang Harus Dicatat di Back Office",
+          "cards": [
+            {"type": "list", "h": "Sekarang daftar periksa singkat — mekanismenya sendiri ada di bagian pertama di atas", "items": [
+              "Atur jenis ketidakhadiran dan alasannya. Kuning ditambah alasan yang sesuai dari enam kelompok jika kamu diberi tahu kenapa; merah jika tidak ada yang memberitahumu apa pun.",
+              "Tambahkan komentar dengan hal relevan apa pun yang kamu tahu. Singkat saja tidak masalah — ini yang dibaca Layanan Pelanggan jika kasusnya sampai ke mereka."
+            ]}
+          ]
+        },
+        {
+          "t": "🔀 Lalu Apa? Ini Berjalan dengan Dua Cara",
+          "cards": [
+            {"type": "text", "b": "Kamu sudah menandai ketidakhadiran dan mengirim pesanmu. Dari sini situasinya akan berjalan salah satu dari dua cara, dan keduanya butuh hal yang berbeda darimu."},
+            {"type": "table", "h": "Mereka kembali vs. mereka tidak kembali", "head": ["", "✅ Mereka kembali", "❌ Mereka tidak kembali"], "rows": [
+              ["<span class=\"rowic\">⚡</span>Segera", "Tunjukkan bahwa kamu memperhatikan ketidakhadiran mereka — dengan hangat, dan secara pribadi, bukan di depan kelompok.", "Kirim pesan kedua, dengan nada berbeda jika yang pertama tidak dijawab — tetap kamu, bukan Layanan Pelanggan."],
+              ["<span class=\"rowic\">➡️</span>Kemudian", "Perhatikan keberadaan mereka, bukan cuma kehadirannya. Kalau mereka datang tapi cuma 40% di ruang kelas, itu Modul 2 sampai 4, bukan yang ini.", "Kalau keluarganya jadi benar-benar diam, atau berubah jadi masalah administratif, di situlah Layanan Pelanggan turun tangan."],
+              ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Siapa lagi yang kamu libatkan", "Tidak ada, kecuali kelas tambahan layak untuk ditandai.", "Layanan Pelanggan — tapi hanya setelah berubah dari \"siswa yang sedang saya tindaklanjuti\" menjadi \"keluarga yang tidak bisa saya jangkau.\""],
+              ["<span class=\"rowic\">👨‍👩‍👧</span>Orang tua", "Bagikan satu hal konkret yang dilakukan siswa di kelas saat mereka kembali.", "Tetap hangat dan tidak menekan — kamu tetap yang pertama mereka dengar."]
+            ]},
+            {"type": "redbox", "h": "Mereka kembali, tapi sebenarnya belum benar-benar ada di sana.", "b": "Ini hasil yang paling umum dari semuanya, dan mudah dianggap selesai karena kehadirannya sudah pulih. Ini belum selesai: siswa sekarang ada di ruang kelas tapi tidak terlibat, yang merupakan masalah fasilitasi, bukan masalah ketidakhadiran.<br><br>Kasus itu jadi milik Modul 2, 3, dan 4 — bagaimana kamu membuka, siapa yang kamu ajak bicara, bagaimana kamu menutup."}
+          ]
+        },
+        {
+          "t": "🪜 Jika Meningkat: Kelas Tambahan",
+          "cards": [
+            {"type": "text", "b": "Meminta kelas tambahan bukan alur yang kamu jalankan sendiri di sini — <strong>Layanan Pelanggan yang membuat permintaannya</strong> setelah ambang batas di atas terpenuhi."},
+            {"type": "text", "h": "🖥️ Coba Sendiri", "b": "Latih bagian yang memang jadi milikmu — menandai kehadiran dengan akurat — dan lihat persis apa yang sudah tercatat di profil seorang siswa, supaya kamu tahu apa yang sudah dicoba Layanan Pelanggan (atau rekan kerja):"},
+            {"type": "simulation", "title": "Simulasi BO — Menandai Kehadiran & Membaca Catatan CS", "src": "Simulacion_BO_Attendance_Simplified_ID.html"}
+          ]
+        },
+        {
+          "t": "🕳️ Siswa yang Sama Sekali Tidak Pernah Muncul",
+          "cards": [
+            {"type": "hi", "h": "Ini bukan \"kelas terlewat\" — ini masalah yang berbeda", "b": "Beberapa siswa tidak pernah terhubung ke satu kelas pun sejak hari pertama. Perlakukan ketidakhadiran di kelas pertama sebagai tanda bahaya langsung, bukan sesuatu yang bisa ditunggu."},
+            {"type": "text", "b": "Tandai merah — tidak ada yang memberitahumu apa pun — dan kirim sendiri pesan \"kami merindukanmu\" pertama itu, sama seperti ketidakhadiran lainnya. Kalau keluarganya sama sekali tidak pernah merespons, di situlah Layanan Pelanggan mengambil alih."}
           ]
         }
       ]
@@ -418,11 +552,12 @@ const CONTENT={
   ],
   "quiz": {
     "1": [
-      {"q": "Rentang kehadiran mana yang termasuk Kehadiran Rendah (Waspada)?", "opts": ["Di bawah 50%", "50%–74.99%", "75% ke atas"], "c": 0, "fb": "Kehadiran Rendah (Waspada) berarti kehadiran di bawah 50% — rentang yang perlu perhatianmu lebih dulu."},
-      {"q": "Apa yang diukur oleh HPR?", "opts": ["% siswamu dengan kehadiran di bawah 50%", "% siswamu dengan kehadiran 75% ke atas", "% siswamu yang menyelesaikan tugas rumahnya"], "c": 1, "fb": "HPR (High Presence Rate) adalah persentase siswamu yang kehadirannya 75% ke atas."},
+      {"q": "Apa yang diukur oleh HPR?", "opts": ["Persentase siswamu dengan Kehadiran di Classroom di bawah 50%", "Persentase siswamu dengan Kehadiran di Classroom 75% atau lebih", "Persentase siswamu yang menyelesaikan tugas rumah"], "c": 1, "fb": "HPR (High Presence Rate) adalah persentase siswamu dengan kehadiran 75% atau lebih — semua yang ada di 🟢 Sehat atau 🔵 PANTAU. Persentase di bawah 50% adalah LPR."},
       {"q": "Seorang siswa bilang ke kamu kalau dia merasa \"tidak jago\" ngoding. Ini termasuk kategori apa?", "opts": ["Penyebab eksternal, karena ini soal materinya, bukan tutornya", "Penyebab internal — sesuatu yang bisa kamu pengaruhi lewat feedback dan dorongan semangat", "Bukan keduanya — ini sifat kepribadian, bukan penyebab ketidakhadiran yang sesungguhnya"], "c": 1, "fb": "Merasa \"tidak jago\" dalam suatu materi adalah salah satu penyebab internal — yang bisa kamu ubah lewat cara kamu mengajar dan memberi feedback."},
-      {"q": "Platform classroom mencatat seorang siswa hadir selama 40% pelajaran, tapi tutor kemudian menandainya \"hadir\" secara manual di BO. Bagaimana kehadiran ini dihitung secara resmi?", "opts": ["Dihitung hadir, karena input BO dari tutor adalah catatan final", "Dihitung tidak hadir — kehadiran resmi berdasarkan catatan otomatis classroom, dan mensyaratkan lebih dari 50% pelajaran", "Tergantung apakah TL menyetujui perubahan manual itu"], "c": 1, "fb": "Kehadiran dihitung dari catatan otomatis classroom, bukan dari input manual di BO — dan mensyaratkan lebih dari 50% pelajaran."},
-      {"q": "Mana dari berikut ini yang <strong>BUKAN</strong> termasuk penyebab internal ketidakhadiran yang dibahas di modul ini?", "opts": ["Siswa merasa bosan di kelas", "Siswa merasa \"tidak jago\" dalam hal ini", "Hari libur nasional"], "c": 2, "fb": "Hari libur nasional adalah penyebab eksternal, di luar kendali tutor — penyebab internal adalah yang jadi fokus perubahan dalam pelatihan ini."}
+      {"q": "Seorang siswa ditandai \"hadir\" di Back Office, tapi catatan kelas menunjukkan mereka hanya terhubung 40% dari pelajaran. Bagaimana ini dihitung?", "opts": ["Dihitung Hadir untuk kedua ukuran, karena catatan BO selalu lebih diutamakan daripada catatan kelas", "Dihitung untuk Kehadiran (BO), karena pelajarannya tercatat sebagai dihadiri — tapi TIDAK dihitung Hadir untuk Kehadiran di Classroom, karena 40% di bawah batas 50%", "Dihitung sebagai ketidakhadiran untuk keduanya, karena 40% tidak memenuhi ambang batas mana pun"], "c": 1, "fb": "Kehadiran (BO) dan Kehadiran di Classroom dilacak secara terpisah: siswa ini dihitung untuk Kehadiran, tapi tidak untuk Kehadiran di Classroom, karena tidak pernah melewati batas 50%."},
+      {"q": "Apa sebenarnya yang dilacak oleh Kehadiran (BO)?", "opts": ["Apakah pelajaran yang dijadwalkan berlangsung dan siswanya datang, menurut Back Office", "Berapa lama siswa tetap terhubung di ruang kelas virtual", "Nilai siswa dalam tugas rumah dan tugas kelas"], "c": 0, "fb": "Kehadiran (BO) hanya memastikan apakah pelajaran yang dijadwalkan berlangsung dan siswanya datang — seberapa terlibat mereka adalah ukuran terpisah, Kehadiran di Classroom."},
+      {"q": "Di Back Office, apa yang mengubah ketidakhadiran merah (tidak dibenarkan) menjadi kuning?", "opts": ["Begitu alasannya diketahui, mengubah ketidakhadiran jadi kuning dan memilih alasan itu", "72 jam berlalu tanpa tindakan apa pun", "Meninggalkan komentar di Back Office, tanpa mengubah jenis ketidakhadirannya"], "c": 0, "fb": "Yang mengubah ketidakhadiran merah jadi kuning adalah mengubah jenisnya dan memilih alasannya begitu diketahui — baik kamu tahu langsung atau Layanan Pelanggan yang menyampaikannya. Komentar saja, tanpa mengubah jenisnya, membiarkannya tetap merah."},
+      {"q": "Salah satu siswamu punya satu ketidakhadiran yang diberi tahu (kuning) dan Kehadiran di Classroom 91%. Ada di kelompok mana?", "opts": ["WASPADA — ketidakhadiran apa pun memindahkan siswa ke kelompok risiko", "PANTAU — satu ketidakhadiran adalah peringatan dini", "Sehat — satu ketidakhadiran yang dijelaskan dengan kehadiran yang kuat bukan sinyal risiko"], "c": 2, "fb": "Satu ketidakhadiran kuning dengan kehadiran di atas 85% membuat siswa tetap Sehat. Butuh dua kuning untuk mencapai WASPADA. Ketidakhadiran yang diberi tahu adalah situasi yang sedang ditangani keluarga — itu bukan catatan buruk bagimu atau bagi mereka."}
     ],
     "2": [
     {"q":"Seorang siswa bergabung dengan kamera menyala tapi terlihat murung — diam, menatap meja. Bagaimana kamu memulai kelasnya?","opts":["Kamu menyapa dengan hangat, tanyakan sesuatu yang personal secara singkat tentang minggu mereka, dan begitu mereka merespons, mulai masuk ke rencana hari ini.","Kamu membuka dengan sapaan penuh semangat lalu langsung masuk ke rangkuman proyek pertemuan lalu, percaya momentum awal akan menarik perhatian mereka kembali.","Kamu menyapa dan menanyakan apakah semuanya baik-baik saja, lalu diam menunggu respons mereka sebelum memutuskan apakah akan memulai pelajaran."],"c":0,"fb":"Obrolan personal yang tulus sebelum masuk ke materi adalah yang membuat siswa yang murung kembali terlibat — energi semata atau menunggu secara pasif melewatkan langkah itu."},
@@ -444,10 +579,12 @@ const CONTENT={
       {"q": "Kamu sedang meninjau tugas rumah yang dikumpulkan dan proyek seorang siswa secara teknis benar tapi tidak ada yang istimewa. Apa yang kamu tulis?", "opts": ["Cuma tandai \"selesai\" tanpa komentar apa pun — sudah memenuhi ketentuan, itu cukup.", "Tinggalkan daftar panjang tentang semua yang bisa diperbaiki, tanpa menyebutkan hal positif sama sekali.", "Tinggalkan komentar singkat dan spesifik yang menyebutkan satu hal yang dia lakukan dengan baik dan satu saran lembut — sesuatu yang orang tuanya juga bisa baca."], "c": 2, "fb": "Meninjau tugas rumah adalah kesempatan untuk memberi feedback, bukan cuma centang selesai — ini juga kesempatan untuk memperkuat kedekatan dengan siswa dan orang tuanya."}
     ],
     "6": [
-      {"q": "Sudah dua kali telepon dan pesan minggu ini, tidak ada balasan dari orang tua. Apa langkah terbaik berikutnya?", "opts": ["Langsung eskalasi ke TL-mu dan minta siswanya dikeluarkan dari kelompokmu, karena dua percobaan tanpa balasan menunjukkan ketidaktertarikan.", "Kirim satu pesan lagi yang hangat dan tanpa tekanan, serta bagikan rekaman dan rangkuman PR, supaya siswa tidak makin tertinggal sambil menunggu balasan.", "Berhenti menghubungi untuk saat ini, dengan alasan dua kali percobaan sudah cukup dan pesan lebih lanjut bisa terasa berlebihan."], "c": 1, "fb": "Pengecekan yang penuh perhatian selalu jadi langkah berikutnya — gigih tapi tetap hangat, daripada eskalasi atau menyerah terlalu cepat."},
-      {"q": "Seorang siswa melewatkan kelas karena sakit. Bagaimana tutor berbicara dengan orang tuanya?", "opts": ["Menjaga percakapan tetap singkat dan netral, menghindari pertanyaan personal tentang sakitnya supaya tidak ikut campur urusan keluarga.", "Menunjukkan kepedulian yang tulus tentang kondisi siswanya, menyebutkan materi tambahan yang tersedia, dan memakai momen kembalinya siswa untuk berbagi sesuatu yang positif.", "Fokus utamanya ke mengejar ketertinggalan akademik siswa, karena menenangkan soal sakitnya bukan benar-benar bagian dari peran tutor."], "c": 1, "fb": "Kepedulian yang tulus, bantuan praktis, dan catatan positif saat siswa kembali adalah bentuk empati yang diminta modul ini — bersikap netral atau cuma fokus akademik melewatkan itu."},
-      {"q": "Seorang siswa yang melewatkan dua kelas kembali dan mengerjakan tugas dengan sangat baik hari ini. Bagaimana tutor memanfaatkan ini dengan orang tuanya?", "opts": ["Menunggu sampai jadwal check-in berikutnya untuk menyebutkannya, supaya tidak terlalu sering menghubungi keluarga dalam waktu singkat.", "Menghubungi sekitar waktu kelas ini untuk berbagi pencapaian spesifik itu, memperkuat perubahan positif baik untuk siswa maupun orang tuanya.", "Menyebutkannya secara singkat hanya ke siswanya saja, karena orang tua biasanya lebih tertarik pada pola kehadiran dibanding pencapaian harian."], "c": 1, "fb": "Berbagi pencapaian selagi masih segar memperkuat perubahan positif itu baik untuk siswa maupun orang tua — menunda atau tidak memberi tahu orang tua menyia-nyiakan momen itu."},
-      {"q": "Mana dari berikut ini yang <strong>BUKAN</strong> direkomendasikan saat seorang siswa melewatkan kelas?", "opts": ["Membagikan rekaman dan rangkuman singkat PR supaya mereka tidak tertinggal", "Menindaklanjuti dengan orang tua untuk mengecek kabar dan menyampaikan bahwa siswanya dirindukan", "Mengusulkan kelas tambahan langsung ke orang tua tanpa melibatkan TL-mu terlebih dahulu"], "c": 2, "fb": "Kelas tambahan selalu harus melalui TL-mu dulu — mengusulkannya langsung ke orang tua melewatkan langkah wajib itu."}
+      {"q": "Seorang siswa melewatkan kelas tanpa peringatan. Apa peranmu dalam 24 jam pertama?", "opts": ["Tidak ada — Layanan Pelanggan yang menangani semua kontak", "Kirim sendiri pesan hangat ke siswa, dengan rekaman dan aktivitas latihan apa pun — dikemas sebagai kesempatan, bukan kewajiban", "Tunggu apakah Layanan Pelanggan menghubungi lebih dulu, lalu tindak lanjuti kalau mereka tidak melakukannya"], "c": 1, "fb": "Membuat siswa merasa dirindukan adalah tugasmu di sini — pesan personal dengan rekaman dan aktivitas latihan jauh lebih berarti daripada notifikasi sistem."},
+      {"q": "Kenapa mengirim pesan pribadi tentang kelas yang terlewat, kalau Layanan Pelanggan pada akhirnya akan turun tangan juga?", "opts": ["Sebenarnya tidak terlalu perlu — Layanan Pelanggan akan sampai ke sana juga", "Supaya siswa merasa benar-benar dirindukan dan didukung, bukan cuma diproses oleh sistem — itulah bedanya antara tanda otomatis dan orang yang benar-benar memperhatikan", "Karena Layanan Pelanggan tidak bisa bertindak sampai tutor mengirim pesan ke siswa dulu"], "c": 1, "fb": "Layanan Pelanggan ada untuk masalah administratif dan keluarga yang tidak merespons — pesan pribadi itulah yang membuat siswa merasa diperhatikan oleh seseorang, bukan cuma diproses sistem."},
+      {"q": "Kapan sebenarnya Layanan Pelanggan turun tangan?", "opts": ["Segera setelah satu ketidakhadiran terjadi", "Setelah menjadi masalah administratif, atau keluarga berhenti merespons pesanmu sama sekali", "Tidak pernah — ini sepenuhnya tanggung jawab tutor"], "c": 1, "fb": "Sampai titik itu, menindaklanjuti adalah bagianmu. Layanan Pelanggan masuk untuk masalah administratif atau saat sebuah keluarga benar-benar diam — bukan untuk setiap ketidakhadiran."},
+      {"q": "Di mana kamu memeriksa apa yang sudah dicoba pada seorang siswa sebelum kamu menindaklanjuti sendiri?", "opts": ["Tidak bisa — tidak ada cara untuk melihat itu", "Di profil siswa, di bagian Komentar", "Hanya dengan bertanya langsung ke TL-mu"], "c": 1, "fb": "Klik nama siswa untuk membuka profilnya — Komentar menunjukkan apa yang sudah dicatat, baik oleh Layanan Pelanggan maupun rekan kerja."},
+      {"q": "Seorang siswa melewatkan kelas hari Selasa tanpa peringatan, jadi kamu menandainya merah. Hari Kamis kamu tahu siswa itu sedang flu. Apa yang kamu lakukan?", "opts": ["Biarkan merah — saat itu memang tidak diberitahukan, dan mengubahnya kemudian akan salah menggambarkan apa yang terjadi", "Ubah ketidakhadiran jadi kuning, pilih \"Masalah kesehatan\", dan tambahkan komentar dengan apa yang kamu ketahui", "Tambahkan komentar dengan apa yang kamu ketahui dan biarkan jenis ketidakhadirannya apa adanya"], "c": 1, "fb": "Merah berarti \"kami tidak tahu kenapa\". Setelah kamu tahu, ubah jenisnya, pilih alasannya, dan beri komentar. Komentar saja tanpa mengubah jenisnya akan membiarkan ketidakhadirannya tetap merah."},
+      {"q": "Seorang orang tua bertanya apakah anaknya bisa mendapat kelas tambahan. Apa yang kamu katakan ke mereka?", "opts": ["Jadwalkan langsung karena kamu sudah kenal baik keluarganya", "Beri tahu mereka bahwa Layanan Pelanggan yang mengatur permintaan kelas tambahan", "Katakan itu tidak memungkinkan"], "c": 1, "fb": "Permintaan kelas tambahan dibuat oleh Layanan Pelanggan di sini, setelah ambang batas ketidakhadiran terpenuhi — bukan sesuatu yang kamu atur langsung."}
     ]
   },
   "sortItems": [

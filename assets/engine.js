@@ -281,6 +281,12 @@ function rc(c){
     const li=items=>items.map(i=>`<li>${i}</li>`).join('');
     return`<div class="two-col"><div class="card ok"><h4>${c.left.h}</h4><ul>${li(c.left.items)}</ul></div><div class="card danger"><h4>${c.right.h}</h4><ul>${li(c.right.items)}</ul></div></div>`;
   }
+  if(c.type==='redyellow'){
+    const li=items=>items.map(i=>`<li>${i}</li>`).join('');
+    return`<div class="two-col"><div class="card" style="background:var(--no-bg);border-color:var(--no-b)"><h4 style="color:var(--no-t)">${c.left.h}</h4><ul style="color:var(--no-t)">${li(c.left.items)}</ul></div><div class="card" style="background:var(--cute-bg);border-color:var(--cute-b)"><h4 style="color:var(--cute-t)">${c.right.h}</h4><ul style="color:var(--cute-t)">${li(c.right.items)}</ul></div></div>`;
+  }
+  if(c.type==='yellowbox')return`<div class="card" style="background:var(--cute-bg);border-color:var(--cute-b)">${c.h?`<h4 style="color:var(--cute-t)">${c.h}</h4>`:''}<p style="color:var(--cute-t)">${c.b}</p></div>`;
+  if(c.type==='redbox')return`<div class="card" style="background:var(--no-bg);border-color:var(--no-b)">${c.h?`<h4 style="color:var(--no-t)">${c.h}</h4>`:''}<p style="color:var(--no-t)">${c.b}</p></div>`;
   if(c.type==='flow'){
     const steps=c.steps.map((s,i)=>{
       const arrow=i<c.steps.length-1?'<div class="flow-arrow">→</div>':'';

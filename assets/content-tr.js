@@ -102,16 +102,65 @@ const CONTENT={
     "olderLabel": "Büyükler (12–17)"
   },
   "modules": [
-    {"id":1,"emoji":"📊","title":"Metriği Anlamak: Katılım","desc":"Katılım nasıl ölçülür, LPR/HPR senin için ne anlama gelir ve devamsızlığın arkasındaki iki neden türü.","obj":"Katılımın nasıl ölçüldüğünü anla ve etkileyebildiğin nedenleri etkileyemediklerinden ayır.","color":"#D3FF5F",
+    {"id":1,"emoji":"📊","title":"Metriği Anlamak: Katılım","desc":"Rakamların arkasındaki iki ölçüm — BO Katılımı ve Sınıf İçi Bulunuş — kırmızı ve sarı devamsızlık türleri, beş risk grubu, HPR ve LPR'nin ne anlama geldiği, ve seni listemize sokabilecek üç şey.","obj":"Katılımın ve bulunuşun nasıl ölçüldüğünü anla, her öğrencinin hangi risk grubunda olduğunu bil, seni tam olarak neyin listemize sokacağını bil — ve etkileyebildiğin nedenleri etkileyemediklerinden ayır.","color":"#D3FF5F",
      "sections":[
-      {"t":"📐 Nasıl Ölçülüyor?","cards":[
-        {"type":"text","b":"Öğrencileri (SS) katılım yüzdelerine göre üç seviyeye ayırıyoruz."},
-        {"type":"table","h":"Katılım seviyeleri","head":["Seviye","Aralık"],"rows":[["🟢 Yüksek Katılım","≥ %75"],["🟠 Orta Katılım (Risk)","%50 – %74,99"],["❗ Düşük Katılım (Alarm)","&lt; %50"]]},
-        {"type":"text","h":"Eğitmen açısından","b":"İki gösterge bu metrikteki performansını özetler:<br><br><strong>LPR (Low Presence Rate):</strong> Katılımı %50'nin altında olan öğrenci vakalarının yüzdesi.<br><strong>HPR (High Presence Rate):</strong> Katılımı %75 veya üzerinde olan öğrenci vakalarının yüzdesi."},
-        {"type":"text","b":"Devam durumu, öğrenci derse katıldığında sınıfın otomatik olarak kaydettiği katılım kaydına göre hesaplanır. Öğrenci dersin %50'sinden fazlasına katıldığında devam onaylanmış sayılır. BO'ya girilen katılım kayıtlarına göre değil."}
+      {"t":"📐 Bunu Ölçmenin İki Yolu","cards":[
+        {"type":"text","b":"Bir öğrenci <strong>derste yok</strong> olabilir, ya da <strong>orada ama kopuk</strong> olabilir — bunlar tamamen farklı iki sorun, bu yüzden 2 ölçüm kullanıyoruz:"},
+        {"type":"table","h":"İki ölçüm","head":["Ölçüm","Hangi soruyu yanıtlar","Nereden gelir"],"rows":[["🙋 <strong>Katılım (BO)</strong>","Öğrenci geldi mi?","Back Office — ders planlanmıştı ve öğrenci ya geldi ya gelmedi"],["🎥 <strong>Sınıf İçi Bulunuş</strong>","Geldiğinde, gerçekten orada mıydı?","Classroom Verisi — öğrencinin dersin ne kadarında gerçekten sınıfta olduğu"]]},
+        {"type":"tip","txt":"İkisine de neden ihtiyacımız var: Back Office, bir dersin <em>gerçekleşmesi gerektiğini</em> bilen tek yerdir. O olmadan, hiç gelmeyen bir öğrenci hiçbir kayıt bırakmaz — devamsızlık görünmez olur. Classroom tek başına sadece <em>gelen</em> öğrencilerin ne kadar katıldığını ölçer."}
+      ]},
+      {"t":"🧮 Sınıf İçi Bulunuş Nasıl Hesaplanır","cards":[
+        {"type":"flow","steps":[
+          {"ic":"⏱️","h":"1 · Bağlı kalınan süre","b":"Her ders için, öğrencinin gerçekte ne kadar süre bağlı kaldığını dersin süresiyle karşılaştırırız. Dersin tamamında kalmak → %100. Yarısında ayrılmak → yaklaşık %50. Altmış dakikalık bir dersin on dakikası → yaklaşık %17.","color":"blue"},
+          {"ic":"✅","h":"2 · %50 sınırı","b":"Bir öğrenci o ders için ancak %50'nin üzerinde <em>Bulundu</em> sayılır. On dakika bağlanıp kaybolmak katılım değildir ve öyle sayılmaz.","color":"coral"},
+          {"ic":"📊","h":"3 · 30 günlük ortalama","b":"Sınıf İçi Bulunuşu, son 30 gündeki derslerinin ortalamasıdır — grup ve kurs bazında ayrı hesaplanır, bu yüzden iki kursunda olan bir öğrenci her birinde ayrı ölçülür.","color":"green"}
+        ]},
+        {"type":"good","txt":"Classroom'da hiç kaydedilmemiş dersler (yaklaşık %1) yine de BO Katılımına sayılır — gerçek bir devamsızlık, Classroom onu kaçırdı diye asla kaybolmaz."},
+        {"type":"hi","h":"Kim sayılır","b":"Her öğrenci rakamlarında görünmez.<br><br>Bir öğrenci ancak <strong>en az 3 planlanmış dersi</strong> ve <strong>son 14 gün içinde bir dersi</strong> olduğunda dahil edilir. Böylece tek bir ders yüzdeni asla sarsamaz, ve uzun süre önce ayrılmış öğrenciler onu bozmaya devam edemez.<br><br>Öğrettiğin bir öğrenci listende yoksa, neredeyse her zaman nedeni budur."}
+      ]},
+      {"t":"🟡🔴 İki Tür Devamsızlık","cards":[
+        {"type":"text","b":"Back Office açısından, devamsızlık sadece devamsızlık değildir — önceden haber verilen bir devamsızlığa, tek kelime etmeden kaybolan bir öğrenciyle aynı şekilde davranmak adaletsiz olurdu, bu yüzden öyle yapmıyoruz."},
+        {"type":"img","src":"Images/image8_ENG.png"},
+        {"type":"doavoid","left":{"h":"🟡 Sarı — bildirilmiş veya haklı gösterilmiş","items":["Aile önceden bir sebep bildirdi","Sağlık sorunu, tatil, teknik veya program sorunu vb.","Ailenin aktif olarak çözdüğü bir durum"]},"right":{"h":"🔴 Kırmızı — hiç uyarı yok","items":["Öğrenci hiçbir şey söylemeden kayboldu","Bir sonraki derse kadar kimse takip etmedi","Tamamen ortadan kaldırmak istediğimiz devamsızlık türü"]}},
+        {"type":"text","b":"Hangisini seçeceğin ve sonra ne yapacağın Modül 6'da — o modül bu sayfanın kullanım kılavuzudur."}
+      ]},
+      {"t":"🚦 Beş Risk Grubun","cards":[
+        {"type":"text","b":"Katılımı ve Sınıf İçi Bulunuşu bir araya getir, her öğrenci beş gruptan birine düşer — iki sinyalden <strong>hangisi daha kötüyse</strong> o gruba, böylece sinyaller çeliştiğinde kimse gözden kaçmaz."},
+        {"type":"text","b":"İki orta sütunu <strong>koşul değil, alternatif</strong> olarak oku: bir grup ya devamsızlıklar ya da bulunuşla tetiklenir — hangisi daha kötüyse. Hiç devamsızlığı olmayan bir öğrenci sadece bulunuş yüzünden ALARM'da olabilir, mükemmel bulunuşu olan bir öğrenci ise tek bir açıklanmamış devamsızlık yüzünden KRİTİK'te olabilir."},
+        {"type":"table","h":"Risk grupları","tone":"danger","head":["Grup","BO devamsızlıkları","Sınıf İçi Bulunuş","Ne anlama gelir"],"rows":[
+          ["🔴 <strong>KRİTİK</strong>","Bir veya daha fazla kırmızı, ya da dört veya daha fazla sarı","—","Kimsenin açıklamadığı bir devamsızlık, ya da birikmiş devamsızlıklar — bu öğrencinin hâlâ bizimle olup olmadığını bilmiyoruz"],
+          ["🟠 <strong>YÜKSEK RİSK</strong>","—","%50'nin altında","Geliyor ama sınıfta zar zor bulunuyor"],
+          ["🟡 <strong>ALARM</strong>","2–3 sarı","%50 – %74,99","Ailenin açıkladığı dersleri kaçırıyor — ya da sadece yarısında bulunuyor"],
+          ["🔵 <strong>İZLEME</strong>","—","%75 – %84,99","Bulunuyor ama tam olarak katılmıyor — uzaklaşma daha yeni başlıyor"],
+          ["🟢 <strong>Sağlıklı</strong>","Kırmızı yok, en fazla 1 sarı","≥ %85","Tutarlı bulunuş ve katılım"]
+        ]},
+        {"type":"warnbox","h":"Sarı bir devamsızlık kara bir leke değildir. İşini yaptığının kanıtıdır.","b":"Bir bildirilen devamsızlık öğrenciyi Sağlıklı'da bırakır. Bir öğrencinin ALARM'a girmesi için bile iki tane gerekir, ve bu kasıtlıdır: uzaklaşan bir öğrencinin hâlâ geri kazanılabileceği nokta ikinci devamsızlıktır, tam olarak Modül 6'nın konusu budur.<br><br>Açıklanmamış (kırmızı) bir devamsızlık farklıdır ve hemen sayılır — kırmızının daha kötü bir davranış olmasından değil, kimsenin ne olduğunu bilmemesinden."}
+      ]},
+      {"t":"📈 HPR ve LPR — Rakamların Gerçekte Ne Anlama Geldiği","cards":[
+        {"type":"text","b":"Bunlar <strong>Sınıf İçi Bulunuş</strong> üzerinden ölçülür (tek bir düz katılım yüzdesi üzerinden değil):"},
+        {"type":"twocol","left":{"h":"📈 HPR — Yüksek Bulunuş Oranı","items":["Öğrencilerinin %75 veya üzerinde olan payı — yani 🟢 Sağlıklı veya 🔵 İZLEME'deki herkes","Yüksek olması daha iyidir"]},"right":{"h":"📉 LPR — Düşük Bulunuş Oranı","items":["Öğrencilerinin %50'nin altında olan payı — 🟠 YÜKSEK RİSK'teki herkes","Düşük olması daha iyidir"],"plain":true}},
+        {"type":"text","b":"İki oran da doğrudan yukarıdaki gruplardan geldiği için, tablo ve kartın asla çelişemez: <strong>HPR, Sağlıklı artı İZLEME'dir; LPR, YÜKSEK RİSK'tir.</strong>"},
+        {"type":"text","b":"Eşik tüm bölgelerde aynıdır: <strong>LPR %25,5 veya altında</strong> · <strong>HPR %49,5 veya üzerinde</strong>."},
+        {"type":"hi","h":"Gerçek hedef bir oran değil — iki sonuçtur","b":"🔴 <strong>Haksız (kırmızı) devamsızlıkları ortadan kaldırmak.</strong> Kırmızı bir devamsızlık, bir öğrencinin kaybolduğu ve kimsenin takip etmediği anlamına gelir — bunun mümkün olması durmalı.<br><br>🟡 <strong>İkinci haklı devamsızlıkla başlayan kaybı ortadan kaldırmak.</strong> Hiçbir öğrenci sessizce kaybolmamalı, ve kimse kimsenin yanıtlamadığı iki devamsızlık yüzünden kaybedilmemeli."}
+      ]},
+      {"t":"🧭 Pratik Kazanım","cards":[
+        {"type":"text","b":"İki ölçüm farklı sorunlara işaret eder, farklı çözümlerle — bu yüzden onları ayırıyoruz."},
+        {"type":"table","head":["Bu düşükse…","…sorun genellikle şudur","…ve çalışma şurada gerçekleşir"],"rows":[
+          ["<strong>Katılım</strong> — gelmiyorlar","Program, aile, motivasyon, artık alakalı hissettirmeyen bir kurs","Ders <strong>dışında</strong> — ulaş, bildir, aileyi veya Teaching Ops'u dahil et"],
+          ["<strong>Sınıf İçi Bulunuş</strong> — geliyorlar ama orada değiller","Kolaylaştırma — sınıf pasif, katılım bir veya iki öğrencide yoğunlaşıyor, ya da teknik sorunlar engel oluyor","Ders <strong>içinde</strong> — nasıl açtığın, kimi çağırdığın, nasıl kapattığın"]
+        ]}
       ]},
       {"t":"🔍 Bir Öğrenci Neden Derse Gelmez?","cards":[
         {"type":"twocol","left":{"h":"🌦️ Dışsal (senin kontrolün dışında)","items":["Tatiller","Hastalık","Aile sorunları","Resmi tatiller"]},"right":{"h":"🎯 İçsel (bunları sen etkileyebilirsin)","items":["Derste sıkılıyorlar","Kendilerini duyulmuş hissetmiyorlar","Bunda \"iyi olmadıklarını\" düşünüyorlar","Kafaları karışık ve kaybolmuş hissediyorlar"]}}
+      ]},
+      {"t":"🔔 Ne Zaman Bizden Haber Alırsın?","cards":[
+        {"type":"text","b":"Öğrencilerinin risk grupları bir şey. <strong>Sana</strong> ulaşmamızı sağlayacak şey ise başka bir şey — ve bu üç durumdur, başka hiçbir şey değil."},
+        {"type":"table","head":["Bizden haber alırsın, çünkü…","Çünkü","Ne alacaksın"],"rows":[
+          ["HPR'in hedefin altında veya LPR'in üzerindeyse","Öğrencilerinin çok azı tam olarak bulunuyor, ya da çok fazlası zar zor orada","Sınıfı yönetme üzerine bir eğitim — açılışlar, katılım, kapanışlar"],
+          ["İki veya daha fazla öğrencinin iki veya daha fazla açıklanmamış (kırmızı) devamsızlığı varsa — ya da 10 veya daha fazla öğrencin olduğunda, listenin yarısından fazlası en az bir tane taşıyorsa","Devamsızlıklar tekrarlanıyor ve kimse nedenini bilmiyor. Tek bir kırmızı devamsızlığı olan tek bir öğrenci seni asla listeye sokmaz — örüntü sokar","Devamsızlık protokolü üzerine bir eğitim — ailelerle iletişim, nedeni kaydetme, ekstra dersler"],
+          ["Bir öğrencinin üç veya daha fazla kırmızı devamsızlığı varsa, ya da iki veya daha fazla öğrencinin dörder veya daha fazla sarısı varsa","Bu öğrenciler, genel rakamların neye benzediğine bakılmaksızın ayrılmaya yakındır. Bu, açıklanan devamsızlıkların da sayıldığı tek durumdur, çünkü art arda dört tanesi zaten başlı başına bir örüntüdür","İsimler, hemen, ve bir eğitim — bu acil"]
+        ]},
+        {"type":"good","txt":"Ve bunun ne olmadığı: bir mesaj bir uyarı değildir ve herhangi bir disiplin sürecinin adımı değildir. Senin hakkında hiçbir karar bir sayı tarafından verilmez — platform önce nereye bakacağına karar verir, sonra bir kişi seninle konuşur. Veri sana yanlış görünüyorsa, bunu söylemek faydalıdır; bazıları bir öğretim sorunu değil bir kayıt boşluğu çıkacaktır, ve bunu tahmin etmektense senden duymayı tercih ederiz."}
       ]},
       {"t":"⛓️ Bu Seni Eğitmen Olarak Nasıl Etkiler?","cards":[
         {"type":"hi","h":"Kaçırılan bir ders nadiren sadece bir ders olarak kalır","b":"Dersi kaçırır → cesareti kırılır → devam etme motivasyonunu kaybeder → grup dağılır → eğitmen olarak gelirin düşer."},
@@ -261,23 +310,65 @@ const CONTENT={
       ]}
      ]},
 
-    {"id":6,"emoji":"📞","title":"Bir Öğrenci Dersi Kaçırdığında Ne Yapmalı","desc":"Öğrenciyle nasıl takip edileceği ve ebeveynlerle empatiyle nasıl konuşulacağı.","obj":"Bir devamsızlık olduğunda — öğrenciyle ve aileleriyle — hangi adımları atacağını tam olarak bil.","color":"#D3FF5F",
+    {"id":6,"emoji":"📞","title":"Bir Öğrenci Dersi Kaçırdığında Ne Yapmalı","desc":"Back Office'te ne seçtiğin ve Müşteri Hizmetleri iletişimi yönetse bile bunun neden hâlâ önemli olduğu, ve aileden öğrendiklerini nerede bulacağın.","obj":"Back Office'te tam olarak ne zaman ne seçeceğini bil, aileyle iletişime geçenin — sen değil — Müşteri Hizmetleri olduğunu ve ekstra dersleri onların yönettiğini anla, ve bir öğrencinin profilinde onların notlarını nerede okuyacağını bil.","color":"#D3FF5F",
      "sections":[
+      {"t":"🎯 Ne Seçersin, ve Ne Zaman","cards":[
+        {"type":"text","b":"Her şeyden önce: iki tık, ve tüm metrik bunlara bağlı. Modül 1 kırmızı ve sarının ne anlama geldiğini açıkladı. İşte tam olarak hangisini ne zaman seçeceğin."},
+        {"type":"redyellow","left":{"h":"🔴 KIRMIZI seç, eğer…","items":["Öğrenci gelmediyse ve kimse sana nedenini söylemediyse. Tek durum budur.","Kırmızı, aynı olay için daha sert bir etiket değildir — ne olduğunu bilmediğimiz anlamına gelir, ve bu da onu bir öğrencinin içinde bulunabileceği en tehlikeli durum yapar.","Sorunu görünmez olan bir öğrenciye kimse yardım edemez."]},"right":{"h":"🟡 SARI seç, eğer…","items":["Biri sana bir neden söylediyse — dersten önce veya sonra. O zaman, biliyorsan, altı nedenden hangisi olduğunu seç.","Bu seçenekler evrak işi değildir: Müşteri Hizmetlerinin aradıklarında ne söyleyeceklerini öğrenmelerinin tek yoludur.","Senden beş saniye, ve onların harekete geçebileceği bir örüntü."]}},
+        {"type":"list","h":"BO'daki altı neden","p":"En yakın olanı dürüstçe seç — bazıları seçildikten sonra daha spesifik bir seçeneğe genişler.","items":[
+          "🏥 <strong>Sağlık sorunları</strong>","📚 <strong>İçerik sorunları</strong>","✈️ <strong>Tatil:</strong> seyahat, okul tatili veya bayramlar","💻 <strong>Teknik sorunlar:</strong> öğrencinin bilgisayarı, Kodland platformu veya Classroom, elektrik kesintisi, veya internet bağlantısı sorunu","🗓️ <strong>Program sorunları:</strong> başka bir gruba geçiş, veya dersin yeniden planlanması","📝 <strong>Diğer:</strong> okul yükü / sınavlar / ödevler, ailevi bir sebep, veya paylaşılan belirli bir sebep yok (bir yorum gerekir)"
+        ]},
+        {"type":"hi","h":"Müşteri Hizmetleri her iki durumda da aileyle iletişime geçer","b":"Ne işaretlersen işaretle, Müşteri Hizmetleri doğrudan aileyle iletişime geçer — genellikle 3-4 gün içinde. Bu yüzden senin kısmın değişmez: türü ve nedeni doğru işaretlemek hâlâ önemlidir, çünkü Müşteri Hizmetlerinin o aramayı yapmadan önce okuduğu kayıt budur."},
+        {"type":"warnbox","h":"Ve tüm bunu koruyan şey","b":"Dürüstçe kaydettiğin bir devamsızlık asla senin aleyhine kullanılmaz. Rakamlarına zarar veren tek devamsızlık, kimsenin açıklamadığıdır."},
+        {"type":"simulation","title":"BO Simülasyonu — Katılımı İşaretleme","src":"Simulacion_BO_Attendance_1_TR.html"}
+      ]},
       {"t":"🔁 Takip Et","cards":[
         {"type":"list","items":[
-          "Ebeveyn veya vasiye öğrencinin nasıl olduğunu sor ve derste özlendiğinden bahset.",
-          "Ders kaydını ödevin kısa bir özetiyle birlikte paylaş, böylece öğrenci geride kalmasın veya motivasyonunu kaybetmesin.",
-          "Öğrenci bir sonraki kez derse katıldığında, devamsızlığını fark ettiğini göster — nasıl olduğunu sor ve kaydı ile ödevi nerede bulacağını hatırlat."
-        ]},
-        {"type":"agefriendly","intro":"Dersi kaçıran bir öğrenciyi yaşa göre nasıl karşılayabileceğine dair örneklere göz at:","younger":"\"İşte buradasın! Seni derste özledim — yaptığımız her şeyin kaydını senin için sakladım, bahse girerim slime'ın zıplamaya başladığı kısmı çok seveceksin.\"","older":"\"Geri dönmene sevindim. Kaydı ve ele aldıklarımızın hızlı bir özetini gönderdim — acil bir şey yok, ne zaman fırsatın olursa göz atarsın.\""}
+          "Öğrenci bir sonraki kez derse katıldığında, katılımını önemsediğini göster — sıcak ve nazik bir şekilde. Bu, aranızdaki bağı güçlendirmenin bir parçasıdır.",
+          "Aileyi kişisel olarak takip etmene gerek yok — Müşteri Hizmetleri zaten bununla ilgileniyor."
+        ]}
+      ]},
+      {"t":"⏱️ Zamanlama: Sayının Gerçekte Neyi Tetiklediği","cards":[
+        {"type":"text","b":"Bu eşikler senin yapman gereken bir şeyi tetiklemez — Müşteri Hizmetleri tarafında, otomatik olarak, öğrenciye olan bir şeyi tetikler."},
+        {"type":"table","h":"Devamsızlıklar biriktikçe ne değişir","head":["Sayı","Öğrenciye ne olur","Senin kısmın"],"rows":[
+          ["1. devamsızlık","Müşteri Hizmetleri bilgilendirilir ve 3-4 gün içinde iletişime geçecektir","Doğru işaretle — türü ve varsa nedeni"],
+          ["2.–3. devamsızlık","Öğrenci, Müşteri Hizmetlerinin aileye sunabileceği bir ekstra ders için uygun hale gelir","Aynı — işaretle, yorumunu ekle"],
+          ["4. devamsızlık veya daha fazlası","Öğrenci kayıtlara erişimi kaybetme riskiyle karşı karşıya kalır ve kurstan çekilmeye daha da yaklaşır","Aynı — ve örüntüyle ilgili bir şey tuhaf hissettiriyorsa TL'ine bildir"]
+        ]}
       ]},
       {"t":"👨‍👩‍👧 Ebeveynlerle Konuşmak","cards":[
         {"type":"imgtext","img":"Images/WhatsApp_module_6_TR.png","items":[
-          "Nazik ve anlayışlı ol, özellikle devamsızlık hastalık veya aile sorunundan kaynaklanıyorsa.",
+          "Bir ebeveyn doğrudan sana ulaşırsa, nazik ve anlayışlı ol, özellikle devamsızlık hastalık veya aile sorunundan kaynaklanıyorsa.",
           "Kursta ekstra materyal varsa, onlara haber ver.",
-          "Öğrenci derse katıldığında, sınıftaki başarılarını ebeveynlerle paylaşmak için bu anı kullan."
+          "Öğrenci derse katıldığında, sınıftaki başarılarını ebeveynlerle paylaşmak için bu anı kullan.",
+          "Sıcaklık hiçbir şeye mal olmaz ve kursla ilgilenmeye devam eden bir aile ile sessizce yanıt vermeyi bırakan bir aile arasındaki tüm farktır."
         ]},
-        {"type":"warnbox","h":"⚠️ Ekstra ders önermeden önce","b":"Ekstra veya motivasyonel bir derse ihtiyaç olduğunu düşünüyorsan, ebeveyn veya vasiye önermeden önce <strong>önce TL'ine ulaş</strong> ve durumu birlikte gözden geçirin."}
+        {"type":"warnbox","h":"⚠️ Asla Yapmaman Gerekenler","b":"Bir aileye öğrencinin kurstan ara vermesini asla önerme. Ebeveynlerle asla fiyat konusunu tartışma — bu Satış'ın işi. Onay almadan asla 1'e 1 ders teklif etme. Ve TL'inin izni olmadan bir aileye iptal veya erteleme hakkında asla bilgi verme."}
+      ]},
+      {"t":"📋 Back Office'e Ne Kaydedilir","cards":[
+        {"type":"list","h":"Şimdi kısa bir kontrol listesi — mekanizmanın kendisi yukarıdaki ilk bölümde","items":[
+          "Devamsızlık türünü ve nedenini ayarla. Sana neden söylendiyse sarı artı altı gruptan uyan neden; kimse bir şey söylemediyse kırmızı.",
+          "Bildiğin ilgili her şeyle bir yorum ekle. Kısa olması sorun değil — bu, Müşteri Hizmetlerinin aileyle iletişime geçmeden önce okuduğu şeydir."
+        ]}
+      ]},
+      {"t":"🔀 Peki Sonra? Bu İki Şekilde Gelişir","cards":[
+        {"type":"text","b":"Devamsızlığı işaretledin. Buradan itibaren, Müşteri Hizmetleri her iki sonucu da yönetir — senin kısmın zaten tamamlandı."},
+        {"type":"table","h":"Geri dönerler ile dönmezler","head":["","✅ Geri dönerler","❌ Dönmezler"],"rows":[
+          ["<span class=\"rowic\">⚡</span>Hemen","Gittiğini fark ettiğini göster — sıcak bir şekilde ve özel olarak, grubun önünde değil.","Takip iletişimini Müşteri Hizmetleri yapar — sen değil."],
+          ["<span class=\"rowic\">➡️</span>Sonra","Sadece katılımını değil, bulunuşunu da izle. Gelip sınıfta %40'ta kalıyorsa, bu Modül 2-4'tür, bu değil.","Müşteri Hizmetleri vakayı buradan yönetir."],
+          ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Kimi daha dahil edersin","Her iki durumda da Müşteri Hizmetleri — her iki sonucu da onlar yönetir.","Sadece örüntü hakkında belirli bir endişeyi bildirmek istersen TL'ini dahil et."],
+          ["<span class=\"rowic\">👨‍👩‍👧</span>Ebeveynler","Öğrencinin geri döndüğü derste yaptığı somut bir şeyi paylaş.","Ulaşmana gerek yok — Müşteri Hizmetleri zaten bunu yapıyor."]
+        ]},
+        {"type":"redbox","h":"Geri döndü, ama hâlâ gerçekten orada değil.","b":"Bu, en yaygın sonuçtur ve katılım düzeldiği için çözülmüş olarak dosyalamak kolaydır. Çözülmemiştir: öğrenci artık sınıfta ama kopuk, bu bir kolaylaştırma sorunudur, devamsızlık sorunu değil.<br><br>O vaka Modül 2, 3 ve 4'e aittir — nasıl açtığın, kimi çağırdığın, nasıl kapattığın."}
+      ]},
+      {"t":"🪜 Eskalasyon Olursa: Ekstra Ders","cards":[
+        {"type":"text","b":"Ekstra ders istemek burada kendi kendine yürüttüğün bir akış değildir — yukarıdaki eşikler karşılandığında <strong>Müşteri Hizmetleri talebi oluşturur</strong>."},
+        {"type":"text","h":"🖥️ Kendin Dene","b":"Gerçekten senin olan kısmı pratik yap — katılımı doğru işaretlemek — ve Müşteri Hizmetlerinin iletişime geçtikten sonra tam olarak ne bıraktığını gör:"},
+        {"type":"simulation","title":"BO Simülasyonu — Katılımı İşaretleme ve Müşteri Hizmetleri Notlarını Okuma","src":"Simulacion_BO_Attendance_Simplified_TR.html"}
+      ]},
+      {"t":"🕳️ Hiç Görünmeyen Öğrenci","cards":[
+        {"type":"hi","h":"Bu bir \"kaçırılan ders\" değil — farklı bir sorun","b":"Bazı öğrenciler ilk günden itibaren hiçbir derse hiç bağlanmaz. İlk dersteki bir yoklukla, beklenecek bir şey değil, anında bir kırmızı bayrak olarak davran."},
+        {"type":"text","b":"Kırmızı işaretle — kimse sana bir şey söylemedi. Müşteri Hizmetleri buradan itibaren aynı 48 saat kuralını izleyerek yine de aileyle iletişime geçecektir."}
       ]}
      ]}
   ],
@@ -305,11 +396,12 @@ const CONTENT={
   ],
   "quiz": {
     "1": [
-      {"q":"Hangi katılım aralığı Düşük Katılım (Alarm) sayılır?","opts":["%50'nin altı","%50–%74,99","%75 ve üzeri"],"c":0,"fb":"Düşük Katılım (Alarm), %50'nin altındaki katılım anlamına gelir — önce dikkatini vermen gereken aralık."},
-      {"q":"HPR ne ölçer?","opts":["Katılımı %50'nin altında olan öğrenci vakalarının yüzdesi","Katılımı %75 veya üzerinde olan öğrenci vakalarının yüzdesi","Ödevini tamamlayan öğrencilerin yüzdesi"],"c":1,"fb":"HPR (High Presence Rate), katılımı %75 veya üzerinde olan öğrenci vakalarının payıdır."},
+      {"q":"HPR ne ölçer?","opts":["Sınıf İçi Bulunuşu %50'nin altında olan öğrencilerinin payı","Sınıf İçi Bulunuşu %75 veya üzerinde olan öğrencilerinin payı","Ödevini tamamlayan öğrencilerinin payı"],"c":1,"fb":"HPR (High Presence Rate), %75 veya üzeri bulunuşa sahip öğrencilerinin payıdır — 🟢 Sağlıklı veya 🔵 İZLEME'deki herkes. %50'nin altındaki pay LPR'dir."},
       {"q":"Bir öğrenci sana kodlamada \"iyi olmadığını\" hissettiğini söylüyor. Bu hangi kategoriye girer?","opts":["Dışsal bir neden, çünkü bu konuyla ilgilidir, eğitmenle değil","İçsel bir neden — geri bildirim ve teşvikle etkileyebileceğin bir şey","Hiçbiri — bu bir kişilik özelliğidir, katılımı gerçekten etkileyen bir şey değil"],"c":1,"fb":"\"İyi olmadığını\" hissetmek içsel nedenlerden biridir — öğretme ve geri bildirim verme şeklinle değiştirebileceğin bir şey."},
-      {"q":"Sınıf platformu bir öğrenciyi dersin %40'ında mevcut olarak kaydediyor, ancak eğitmen daha sonra BO'da onu manuel olarak \"katıldı\" olarak işaretliyor. Bu katılım resmi olarak nasıl sayılır?","opts":["Katıldı olarak sayılır, çünkü eğitmenin BO girişi nihai kayıttır","Katılmadı olarak sayılır — resmi katılım, sınıfın otomatik kaydına dayanır ve dersin %50'sinden fazlasını gerektirir","TL'nin manuel değişikliği onaylayıp onaylamadığına bağlıdır"],"c":1,"fb":"Katılım, manuel BO girişlerine değil, sınıfın otomatik kaydına göre hesaplanır — ve dersin %50'sinden fazlasını gerektirir."},
-      {"q":"Aşağıdakilerden hangisi bu modülde ele alınan devamsızlığın içsel nedenlerinden <strong>BİRİ DEĞİLDİR</strong>?","opts":["Öğrenci derste sıkılıyor","Öğrenci bunda \"iyi olmadığını\" hissediyor","Resmi bir tatil"],"c":2,"fb":"Resmi tatil dışsal bir nedendir, eğitmenin kontrolü dışındadır — içsel nedenler bu eğitimin değiştirmeye odaklandığı nedenlerdir."}
+      {"q":"Bir öğrenci Back Office'te \"katıldı\" olarak işaretlenmiş, ama sınıf kaydı dersin sadece %40'ında bağlı kaldığını gösteriyor. Bu nasıl sayılır?","opts":["Her iki ölçüm için de Bulundu sayılır, çünkü BO kaydı sınıf kaydına her zaman üstün gelir","Katılım (BO) için sayılır, çünkü ders katıldı olarak kaydedildi — ama Sınıf İçi Bulunuş için Bulundu sayılmaz, çünkü %40, %50 sınırının altındadır","Her ikisi için de devamsızlık sayılır, çünkü %40 hiçbir eşiği karşılamaz"],"c":1,"fb":"Katılım (BO) ve Sınıf İçi Bulunuş ayrı ayrı takip edilir: bu öğrenci Katılıma sayılır, ama Sınıf İçi Bulunuşa sayılmaz, çünkü %50 sınırını hiç geçmedi."},
+      {"q":"Aşağıdakilerden hangisi Katılım (BO)'nun gerçekte izlediği şeydir?","opts":["Planlanan bir dersin gerçekleşip gerçekleşmediği ve öğrencinin gelip gelmediği, Back Office'e göre","Öğrencinin sanal sınıfta ne kadar süre bağlı kaldığı","Öğrencinin ödev ve sınıf çalışmasındaki puanı"],"c":0,"fb":"Katılım (BO) sadece planlanan bir dersin gerçekleşip gerçekleşmediğini ve öğrencinin gelip gelmediğini doğrular — ne kadar katıldığı ayrı bir ölçüm olan Sınıf İçi Bulunuş'tur."},
+      {"q":"Back Office'te, kırmızı (mazeretsiz) bir devamsızlığı sarıya ne çevirir?","opts":["Neden bilindiğinde, devamsızlığı sarıya çevirip o nedeni seçmek","Herhangi bir işlem yapılmadan 72 saatin geçmesi","Devamsızlık türünü değiştirmeden Back Office'e bir yorum bırakmak"],"c":0,"fb":"Kırmızı bir devamsızlığı sarıya çeviren şey, bilindiğinde türü değiştirip nedeni seçmektir — doğrudan öğrenmiş olsan da Müşteri Hizmetleri iletmiş olsa da. Türü değiştirmeden tek başına bir yorum onu kırmızı bırakır."},
+      {"q":"Öğrencilerinden birinin bir bildirilen (sarı) devamsızlığı ve %91 Sınıf İçi Bulunuşu var. Hangi grupta?","opts":["ALARM — herhangi bir devamsızlık bir öğrenciyi risk grubuna taşır","İZLEME — bir devamsızlık erken bir uyarıdır","Sağlıklı — güçlü bulunuşla açıklanmış bir devamsızlık bir risk sinyali değildir"],"c":2,"fb":"%85 üzerinde bulunuşla bir sarı devamsızlık, bir öğrenciyi Sağlıklı'da bırakır. ALARM'a ulaşmak için iki sarı gerekir. Bildirilen bir devamsızlık, ailenin yönettiği bir durumdur — ne senin ne de onların aleyhine bir kara lekedir."}
     ],
     "2": [
     {"q":"Bir öğrenci kamerası açık şekilde katılıyor ama belirgin şekilde içine kapanık kalıyor — sessiz, masasına bakıyor. Nasıl başlarsın?","opts":["Onu sıcak bir şekilde selamlarsın, haftası hakkında kısa kişisel bir soru sorarsın ve o yanıt verdiğinde bugünkü plana geçersin.","Enerjik bir selamlamayla başlar ve doğrudan geçen dersin projesini özetlemeye geçersin, başlamanın verdiği ivmenin dikkatini geri çekeceğine güvenirsin.","Onu selamlar ve her şeyin yolunda olup olmadığını sorarsın, sonra dersi başlatıp başlatmayacağına karar vermeden önce sessizce yanıt vermesini beklersin."],"c":0,"fb":"İçeriğe dalmadan önce samimi, kişisel bir hâl hatır sorma, içine kapanık bir öğrenciyi yeniden derse bağlar — sadece enerji ya da pasif bekle-gör yaklaşımı bu adımı atlar."},
@@ -331,10 +423,12 @@ const CONTENT={
       {"q":"Teslim edilen ödevleri gözden geçiriyorsun ve bir öğrencinin projesi teknik olarak doğru ama özel bir şey içermiyor. Ne yazarsın?","opts":["Yorum yapmadan sadece \"tamamlandı\" olarak işaretle — gereksinimleri karşılamış, bu yeterli.","İyileştirilebilecek her şeyin uzun bir listesini bırak, hiç olumlu bir şey belirtme.","İyi yaptığı bir şeyi ve nazik bir öneriyi belirten kısa, spesifik bir yorum bırak — ebeveynin de okuyabileceği bir şey."],"c":2,"fb":"Ödevi gözden geçirmek sadece bir kutu işaretlemek değil, bir geri bildirim fırsatıdır — öğrenciler ve ebeveynlerle bağı pekiştirmek için de bir şanstır."}
     ],
     "6": [
-      {"q":"Bu hafta iki kez arama ve mesaj gönderdin, ebeveynden yanıt yok. En iyi sonraki adım nedir?","opts":["Hemen TL'ine ilet ve öğrencinin gruptan çıkarılmasını iste, çünkü iki yanıtsız girişim ilgisizliği düşündürür.","Bir mesaj daha gönder, sıcak ve düşük baskılı bir şekilde, ve yanıt beklerken öğrencinin daha fazla geride kalmaması için kaydı ve ödev özetini paylaş.","İki girişimin makul bir sınır olduğunu ve daha fazla mesajın aşırıya kaçabileceğini düşünerek şimdilik ulaşmayı bırak."],"c":1,"fb":"Şefkatli bir hâl hatır sorma her zaman sıradaki adımdır — üst mercilere taşımak veya çok erken pes etmek yerine ısrarcı ama sıcak olmak."},
-      {"q":"Bir öğrenci hastalık nedeniyle dersi kaçırdı. Eğitmen ebeveynle nasıl konuşur?","opts":["Ailenin durumuna müdahale etmemek için hastalıkla ilgili kişisel sorulardan kaçınarak konuşmayı kısa ve nötr tutar.","Öğrencinin nasıl olduğuna dair gerçek bir ilgi gösterir, varsa ekstra materyalden bahseder ve geri dönüşünü olumlu bir şey paylaşmak için kullanır.","Hastalık konusunda güven vermenin eğitmenin rolünün gerçek bir parçası olmadığını düşünerek çoğunlukla öğrencinin akademik olarak yetişmesine odaklanır."],"c":1,"fb":"Gerçek bir sıcaklık, pratik yardım ve geri dönüşünde olumlu bir söz, bu modülün istediği empatiyi karşılar — nötr kalmak veya tamamen akademik olmak bunu karşılamaz."},
+      {"q":"Bir öğrenci hiç uyarı olmadan bir dersi kaçırıyor. Aileyle kim iletişime geçer?","opts":["Sen, aynı gün","Müşteri Hizmetleri, genellikle 3-4 gün içinde","Kimse — sistem sadece otomatik bir mesaj gönderir"],"c":1,"fb":"Müşteri Hizmetleri iletişimi doğrudan yönetir. Senin kısmın devamsızlığı ve nedeni doğru işaretlemektir."},
+      {"q":"Bir ebeveyn çocuğunun hastalığı hakkında doğrudan sana ulaşıyor. Onlarla nasıl konuşursun?","opts":["Konuşmayı kısa ve nötr tut, bunun yerine onları Müşteri Hizmetlerine yönlendir.","Öğrencinin nasıl olduğuna dair gerçek bir ilgi göster, varsa ekstra materyalden bahset, ve geri dönüşünü olumlu bir şey paylaşmak için kullan.","Öğrencinin akademik olarak yetişmesine odaklan, çünkü hastalık konusunda güven vermek gerçekten eğitmenin rolü değildir."],"c":1,"fb":"Bir aile doğrudan sana ulaştığında sıcaklık hâlâ önemlidir — sadece o iletişimi başlatan sen değilsin."},
       {"q":"İki dersi kaçıran bir öğrenci geri dönüyor ve bugün harika bir iş çıkarıyor. Eğitmen bunu ebeveynlerle nasıl kullanır?","opts":["Aileyle kısa sürede çok fazla kez iletişime geçmemek için bir sonraki planlı görüşmeye kadar bundan bahsetmeyi bekler.","Bu belirli başarıyı paylaşmak için bu ders civarında iletişime geçer, hem öğrenci hem de ebeveyn için olumlu dönüşü pekiştirir.","Ebeveynler genellikle günlük başarılardan çok katılım örüntüleriyle ilgilendiği için bundan sadece öğrenciye kısaca bahseder."],"c":1,"fb":"Başarıyı taze olduğu anda paylaşmak hem öğrenci hem de ebeveyn için bu dönüşü pekiştirir — beklemek ya da ebeveynden saklamak bu anı boşa harcar."},
-      {"q":"Bir öğrenci dersi kaçırdığında aşağıdakilerden hangisi <strong>ÖNERİLMEZ</strong>?","opts":["Geride kalmaması için kaydı ve kısa bir ödev özetini paylaşmak","Ebeveynle iletişime geçip hâl hatır sormak ve öğrencinin özlendiğinden bahsetmek","Önce TL'ini sürece dahil etmeden ekstra bir dersi doğrudan ebeveyne önermek"],"c":2,"fb":"Ekstra bir ders her zaman önce TL'inden geçer — bunu doğrudan ebeveyne önermek bu gerekli adımı atlar."}
+      {"q":"Müşteri Hizmetleri takip ettikten sonra, bir öğrencinin neden devamsız olduğunu nerede öğrenirsin?","opts":["Öğrenemezsin — o bilgi Müşteri Hizmetlerinde kalır","Öğrencinin profilinde, Yorumlar altında","Sadece TL'ine doğrudan sorarsan paylaşılır"],"c":1,"fb":"Öğrencinin profilini açmak için adına tıkla — Müşteri Hizmetlerinin notları orada görünür, neden uzakta olduğu veya dersle ilgili herhangi bir şey dahil."},
+      {"q":"Bir öğrenci Salı dersini hiç uyarı vermeden kaçırdı, bu yüzden kırmızı işaretledin. Perşembe günü öğrencinin gribi olduğunu öğreniyorsun. Ne yaparsın?","opts":["Kırmızı bırak — o an bildirilmemişti, ve sonradan değiştirmek ne olduğunu yanlış yansıtır","Devamsızlığı sarıya çevir, \"Sağlık sorunları\"nı seç, ve öğrendiklerinle bir yorum ekle","Öğrendiklerinle bir yorum ekle ve devamsızlık türünü olduğu gibi bırak"],"c":1,"fb":"Kırmızı \"nedenini bilmiyoruz\" demektir. Öğrendiğinde, türü değiştir, nedeni seç, ve yorum yap. Tek başına bir yorum devamsızlığı kırmızı bırakır."},
+      {"q":"Bir ebeveyn çocuğunun ekstra ders alıp alamayacağını soruyor. Onlara ne söylersin?","opts":["Aileyi iyi tanıdığın için doğrudan planla","Müşteri Hizmetlerinin ekstra ders taleplerini yönettiğini bildir","Bunun mümkün olmadığını söyle"],"c":1,"fb":"Ekstra ders talepleri burada, devamsızlık eşikleri karşılandığında Müşteri Hizmetleri tarafından oluşturulur — doğrudan senin ayarladığın bir şey değil."}
     ]
   },
   "sortItems": [
