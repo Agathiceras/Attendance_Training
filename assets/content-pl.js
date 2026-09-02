@@ -106,17 +106,72 @@ const CONTENT={
       "id": 1,
       "emoji": "📊",
       "title": "Zrozumienie wskaźnika: frekwencja",
-      "desc": "Jak mierzy się frekwencję, co oznaczają dla Ciebie LPR/HPR i dwa rodzaje przyczyn nieobecności na lekcji.",
-      "obj": "Zrozum, jak mierzona jest frekwencja, i oddziel przyczyny, na które masz wpływ, od tych, na które nie masz.",
+      "desc": "Dwa wymiary stojące za liczbami — Frekwencja w Back Office i Obecność w Classroom — rodzaje nieobecności: czerwona i żółta, pięć grup ryzyka, co oznaczają HPR i LPR, oraz trzy rzeczy, które mogą sprawić, że się do Ciebie odezwiemy.",
+      "obj": "Zrozumieć, jak mierzone są frekwencja i obecność, wiedzieć, w jakiej grupie ryzyka znajduje się każdy Twój uczeń, wiedzieć dokładnie, co mogłoby sprawić, że się do Ciebie odezwiemy — i oddzielić przyczyny, na które masz wpływ, od tych, na które nie masz.",
       "color": "#D3FF5F",
       "sections": [
         {
-          "t": "📐 Jak to się mierzy?",
+          "t": "📐 Dwa sposoby, w jakie to mierzymy",
           "cards": [
-            {"type": "text", "b": "Klasyfikujemy uczniów (SS) do trzech poziomów na podstawie ich procentu frekwencji."},
-            {"type": "table", "h": "Poziomy frekwencji", "head": ["Poziom", "Zakres"], "rows": [["🟢 Wysoka frekwencja", "≥ 75%"], ["🟠 Średnia frekwencja (Ryzyko)", "50% – 74,99%"], ["❗ Niska frekwencja (Alarm)", "&lt; 50%"]]},
-            {"type": "text", "h": "Z perspektywy korepetytora", "b": "Dwa wskaźniki podsumowują Twoje wyniki w tym zakresie:<br><br><strong>LPR (Low Presence Rate):</strong> % Twoich uczniów z frekwencją poniżej 50%.<br><strong>HPR (High Presence Rate):</strong> % Twoich uczniów z frekwencją na poziomie 75% lub wyższym."},
-            {"type": "text", "b": "Dane o frekwencji są obliczane na podstawie zapisu obecności rejestrowanego automatycznie przez classroom, gdy uczeń dołącza do zajęć. Obecność jest potwierdzana, gdy uczeń weźmie udział w ponad 50% lekcji. Nie opiera się to na zapisach obecności wprowadzanych w BO."}
+            {"type": "text", "b": "Uczeń może <strong>być nieobecny na lekcji</strong>, albo <strong>obecny, ale myślami nieobecny</strong> — to dwa zupełnie różne problemy, dlatego używamy 2 wskaźników:"},
+            {"type": "table", "h": "Dwa wskaźniki", "head": ["Wskaźnik", "Na jakie pytanie odpowiada", "Skąd pochodzi"], "rows": [["🙋 <strong>Frekwencja (BO)</strong>", "Czy uczeń przyszedł?", "Back Office — lekcja była zaplanowana, a uczeń albo się pojawił, albo nie"], ["🎥 <strong>Obecność w Classroom</strong>", "Kiedy przyszedł, czy naprawdę tam był?", "Dane z Classroom — jak długo uczeń faktycznie był w klasie"]]},
+            {"type": "tip", "txt": "Dlaczego potrzebujemy obu: Back Office to jedyne miejsce, które wie, że lekcja <em>miała</em> się odbyć. Bez niego uczeń, który nigdy się nie pojawił, nie pozostawia żadnego śladu — nieobecność jest niewidoczna. Classroom sam w sobie mierzy tylko to, jak zaangażowani byli uczniowie, którzy <em>faktycznie</em> się pojawili."}
+          ]
+        },
+        {
+          "t": "🧮 Jak obliczana jest Obecność w Classroom",
+          "cards": [
+            {"type": "flow", "steps": [
+              {"ic": "⏱️", "h": "1 · Czas połączenia", "b": "Dla każdej lekcji porównujemy, jak długo uczeń był rzeczywiście połączony, z długością lekcji. Zostać na całą lekcję → 100%. Wyjść w połowie → około 50%. Dziesięć minut z sześćdziesięciominutowej lekcji → około 17%.", "color": "blue"},
+              {"ic": "✅", "h": "2 · Granica 50%", "b": "Uczeń liczy się jako <em>Obecny</em> na tej lekcji dopiero powyżej 50%. Połączenie się na dziesięć minut i zniknięcie to nie obecność i nie jest tak liczone.", "color": "coral"},
+              {"ic": "📊", "h": "3 · Średnia z 30 dni", "b": "Jego Obecność w Classroom to średnia z tego wskaźnika z lekcji z ostatnich 30 dni — obliczana osobno dla grupy i dla kursu, więc uczeń w dwóch Twoich kursach jest mierzony osobno w każdym z nich.", "color": "green"}
+            ]},
+            {"type": "good", "txt": "Lekcje, które nigdy nie zostały zarejestrowane w Classroom (około 1%), nadal liczą się do Frekwencji (BO) — prawdziwa nieobecność nigdy nie znika tylko dlatego, że Classroom jej nie zarejestrował."},
+            {"type": "hi", "h": "Kto jest liczony", "b": "Nie każdy uczeń pojawia się w Twoich liczbach.<br><br>Uczeń jest uwzględniany dopiero, gdy ma <strong>co najmniej 3 zaplanowane lekcje</strong> i <strong>lekcję w ciągu ostatnich 14 dni</strong>. Dzięki temu jedna lekcja nigdy nie może gwałtownie zmienić Twojego procentu, a uczniowie, którzy dawno odeszli, przestają go zniekształcać.<br><br>Jeśli uczeń, którego uczysz, nie pojawia się na Twojej liście, to prawie zawsze jest tego powodem."}
+          ]
+        },
+        {
+          "t": "🟡🔴 Dwa rodzaje nieobecności",
+          "cards": [
+            {"type": "text", "b": "Z punktu widzenia Back Office nieobecność to nie tylko nieobecność — traktowanie zgłoszonej nieobecności tak samo jak ucznia, który zniknął bez słowa, byłoby niesprawiedliwe, więc tego nie robimy."},
+            {"type": "img", "src": "Images/image8_ENG.png"},
+            {"type": "doavoid", "left": {"h": "🟡 Żółta — zgłoszona lub usprawiedliwiona", "items": ["Rodzina podała powód z wyprzedzeniem", "Problem zdrowotny, wakacje, problem techniczny lub z harmonogramem itd.", "Sytuacja, którą rodzina aktywnie rozwiązuje"]}, "right": {"h": "🔴 Czerwona — bez żadnego ostrzeżenia", "items": ["Uczeń zniknął bez słowa", "Nikt nie odezwał się przed kolejną lekcją", "Rodzaj nieobecności, który chcemy całkowicie wyeliminować"]}},
+            {"type": "text", "b": "To, którą wybierzesz, i co zrobisz dalej, to Moduł 6 — ten moduł jest instrukcją obsługi dla tej strony."}
+          ]
+        },
+        {
+          "t": "🚦 Twoje pięć grup ryzyka",
+          "cards": [
+            {"type": "text", "b": "Połącz Frekwencję i Obecność w Classroom, a każdy uczeń trafi do jednej z pięciu grup — do tej, którą wyznacza <strong>gorszy</strong> z dwóch sygnałów, tak aby nikt nie umknął uwadze, gdy sygnały są sprzeczne."},
+            {"type": "text", "b": "Czytaj dwie środkowe kolumny jako <strong>alternatywy, a nie warunki</strong>: grupę wyznaczają albo nieobecności, albo obecność — w zależności od tego, co jest gorsze. Uczeń bez żadnych nieobecności może znaleźć się w ALARMIE wyłącznie z powodu obecności, a uczeń z idealną obecnością może znaleźć się w stanie KRYTYCZNYM z powodu jednej niewyjaśnionej nieobecności."},
+            {"type": "table", "h": "Grupy ryzyka", "tone": "danger", "head": ["Grupa", "Nieobecności w Back Office", "Obecność w Classroom", "Co to oznacza"], "rows": [
+              ["🔴 <strong>KRYTYCZNY</strong>", "Jedna lub więcej czerwonych, lub cztery lub więcej żółtych", "—", "Nieobecność, której nikt nie wyjaśnił, lub narastające nieobecności — nie wiemy, czy ten uczeń nadal jest z nami"],
+              ["🟠 <strong>WYSOKIE RYZYKO</strong>", "—", "Poniżej 50%", "Pojawia się, ale ledwo jest obecny"],
+              ["🟡 <strong>ALARM</strong>", "2–3 żółte", "50% – 74,99%", "Opuszcza lekcje, które rodzina wyjaśniła — albo jest obecny tylko przez połowę czasu"],
+              ["🔵 <strong>OBSERWACJA</strong>", "—", "75% – 84,99%", "Obecny, ale nie w pełni zaangażowany — oddalanie się dopiero się zaczyna"],
+              ["🟢 <strong>Zdrowy</strong>", "Brak czerwonych, maksymalnie 1 żółta", "≥ 85%", "Stała obecność i zaangażowanie"]
+            ]},
+            {"type": "warnbox", "h": "Żółta nieobecność to nie czarny punkt. To dowód, że wykonałeś/aś swoją pracę.", "b": "Jedna zgłoszona nieobecność pozostawia ucznia w stanie Zdrowy. Potrzeba dwóch, aby uczeń w ogóle znalazł się w ALARMIE, i jest to celowe: momentem, w którym oddalającego się ucznia można jeszcze odzyskać, jest druga nieobecność — dokładnie o tym jest Moduł 6.<br><br>Niewyjaśniona (czerwona) nieobecność to co innego i liczy się natychmiast — nie dlatego, że czerwony to gorsze zachowanie, ale dlatego, że nikt nie wie, co się stało."}
+          ]
+        },
+        {
+          "t": "📈 HPR i LPR — Co Twoje liczby naprawdę oznaczają",
+          "cards": [
+            {"type": "text", "b": "Są one mierzone na podstawie <strong>Obecności w Classroom</strong> (a nie pojedynczego, płaskiego procentu frekwencji):"},
+            {"type": "twocol", "left": {"h": "📈 HPR — Wskaźnik Wysokiej Obecności", "items": ["Udział Twoich uczniów na poziomie 75% lub wyższym — czyli wszyscy w grupie 🟢 Zdrowy lub 🔵 OBSERWACJA", "Im wyżej, tym lepiej"]}, "right": {"h": "📉 LPR — Wskaźnik Niskiej Obecności", "items": ["Udział Twoich uczniów poniżej 50% — wszyscy w grupie 🟠 WYSOKIE RYZYKO", "Im niżej, tym lepiej"], "plain": true}},
+            {"type": "text", "b": "Ponieważ oba wskaźniki wynikają bezpośrednio z powyższych grup, tabela i Twoja karta nigdy nie mogą się ze sobą nie zgadzać: <strong>HPR to Zdrowy plus OBSERWACJA, LPR to WYSOKIE RYZYKO.</strong>"},
+            {"type": "text", "b": "Próg jest taki sam we wszystkich regionach: <strong>LPR na poziomie 25,5% lub niżej</strong> · <strong>HPR na poziomie 49,5% lub wyżej</strong>."},
+            {"type": "hi", "h": "Prawdziwy cel to nie wskaźnik — to dwa rezultaty", "b": "🔴 <strong>Wyeliminować nieusprawiedliwione (czerwone) nieobecności.</strong> Czerwona nieobecność oznacza, że uczeń zniknął i nikt się nie odezwał — to musi przestać być możliwe.<br><br>🟡 <strong>Wyeliminować odpływ, który zaczyna się od drugiej usprawiedliwionej nieobecności.</strong> Żaden uczeń nie powinien po cichu zniknąć, i nikt nie powinien zostać stracony z powodu dwóch nieobecności, na które nikt nie odpowiedział."}
+          ]
+        },
+        {
+          "t": "🧭 Praktyczna korzyść",
+          "cards": [
+            {"type": "text", "b": "Oba wskaźniki wskazują na różne problemy, z różnymi rozwiązaniami — dlatego je rozdzielamy."},
+            {"type": "table", "head": ["Jeśli to jest niskie…", "…problem zazwyczaj tkwi w", "…a praca odbywa się"], "rows": [
+              ["<strong>Frekwencja</strong> — nie przychodzą", "Harmonogram, rodzina, motywacja, kurs, który przestał wydawać się istotny", "<strong>Poza</strong> lekcją — odezwij się, zgłoś, zaangażuj rodzinę lub Teaching Ops"],
+              ["<strong>Obecność w Classroom</strong> — przychodzą, ale ich tam nie ma", "Prowadzenie zajęć — klasa jest bierna, udział skupia się na jednym lub dwóch uczniach, albo przeszkadzają problemy techniczne", "<strong>Wewnątrz</strong> lekcji — jak zaczynasz, kogo angażujesz, jak kończysz"]
+            ]}
           ]
         },
         {
@@ -126,10 +181,22 @@ const CONTENT={
           ]
         },
         {
+          "t": "🔔 Kiedy się do Ciebie odezwiemy?",
+          "cards": [
+            {"type": "text", "b": "Grupy ryzyka Twoich uczniów to jedno. To, co sprawi, że odezwiemy się do <strong>Ciebie</strong>, to zupełnie inna sprawa — i są to trzy sytuacje, i nic więcej."},
+            {"type": "table", "head": ["Odezwiemy się do Ciebie, gdy…", "Ponieważ", "Co otrzymasz"], "rows": [
+              ["Twój HPR jest poniżej celu lub Twój LPR jest powyżej niego", "Zbyt mało Twoich uczniów jest w pełni obecnych, albo zbyt wielu ledwo tam jest", "Szkolenie na temat prowadzenia zajęć — otwarcia, uczestnictwo, zakończenia"],
+              ["Dwoje lub więcej Twoich uczniów ma dwie lub więcej niewyjaśnionych (czerwonych) nieobecności — albo, gdy masz 10 lub więcej uczniów, ponad połowa Twojej listy ma co najmniej jedną", "Nieobecności się powtarzają i nikt nie wie dlaczego. Jeden uczeń z jedną czerwoną nieobecnością nigdy nie sprawi, że się odezwiemy — sprawi to wzorzec", "Szkolenie na temat protokołu nieobecności — kontakt z rodzinami, rejestrowanie powodu, dodatkowe lekcje"],
+              ["Jeden uczeń ma trzy lub więcej czerwonych nieobecności, albo dwoje lub więcej uczniów ma po cztery lub więcej żółtych", "Ci uczniowie są bliscy odejścia, niezależnie od tego, jak wyglądają Twoje ogólne liczby. To jedyny przypadek, w którym liczą się też wyjaśnione nieobecności, ponieważ cztery z rzędu same w sobie są już wzorcem", "Nazwiska, natychmiast, i szkolenie — to jest pilne"]
+            ]},
+            {"type": "good", "txt": "A czym to nie jest: wiadomość to nie ostrzeżenie i nie krok w żadnym procesie dyscyplinarnym. Żadna decyzja o Tobie nie jest podejmowana na podstawie liczby — platforma decyduje, gdzie spojrzeć najpierw, a potem rozmawia z Tobą człowiek. Jeśli dane wydają Ci się błędne, warto to powiedzieć; część z nich okaże się luką w rejestracji, a nie problemem z nauczaniem, a wolimy usłyszeć to od Ciebie niż zgadywać."}
+          ]
+        },
+        {
           "t": "⛓️ Jak to wpływa na Ciebie jako korepetytora?",
           "cards": [
-            {"type": "hi", "h": "Jedna opuszczona lekcja rzadko pozostaje tylko jedną opuszczoną lekcją", "b": "Opuszcza lekcję → zniechęca się → traci motywację do kontynuowania → grupa się rozpada → Twój dochód jako korepetytora spada."},
-            {"type": "text", "b": "Dobra wiadomość: przyczyny wewnętrzne — te, które możemy zmienić — są tematem reszty tego szkolenia."}
+            {"type": "hi", "h": "Jedna opuszczona lekcja rzadko pozostaje tylko jedną opuszczoną lekcją", "b": "Opuszcza lekcję → zostaje w tyle → zniechęca się → przestaje widzieć sens → odchodzi. A grupa, która traci dwoje lub troje uczniów, przestaje być odczuwana jako grupa przez tych, którzy zostają.<br><br>Każdy krok, w którym przerywasz ten łańcuch wcześniej, to zatrzymany uczeń — a to jedyny powód, dla którego to wszystko jest mierzone."},
+            {"type": "text", "b": "Dobra wiadomość: przyczyny wewnętrzne — te, które <em>możemy</em> zmienić — są tematem reszty tego szkolenia."}
           ]
         }
       ]
@@ -365,19 +432,49 @@ const CONTENT={
       "id": 6,
       "emoji": "📞",
       "title": "Co robić, gdy uczeń opuszcza lekcję",
-      "desc": "Jak śledzić sytuację ucznia i jak rozmawiać z rodzicami z empatią.",
-      "obj": "Poznaj dokładnie kroki, jakie należy podjąć — wobec ucznia i jego rodziny — gdy dojdzie do nieobecności.",
+      "desc": "Co zaznaczasz w Back Office, automatyczne wiadomości towarzyszące Twojemu własnemu kontaktowi, harmonogram eskalacji, i czego nigdy nie możesz powiedzieć rodzinie.",
+      "obj": "Wiedzieć dokładnie, co zaznaczyć w Back Office i kiedy, rozumieć, jak Obsługa Klienta i Dział Dydaktyczny przejmują eskalację i dodatkowe lekcje, oraz znać granice, których nigdy nie wolno Ci przekroczyć wobec rodziny.",
       "color": "#D3FF5F",
       "sections": [
+        {
+          "t": "🎯 Co zaznaczasz i kiedy",
+          "cards": [
+            {"type": "text", "b": "Przede wszystkim: dwa kliknięcia, od których zależy cały wskaźnik. Moduł 1 wyjaśnił, co oznaczają czerwony i żółty. Oto dokładnie, kiedy wybrać który."},
+            {"type": "redyellow", "left": {"h": "🔴 Wybierz CZERWONY, gdy…", "items": ["Uczeń się nie pojawił i nikt Ci nie powiedział dlaczego. To jedyny taki przypadek.", "Czerwony to nie surowsza etykieta dla tego samego zdarzenia — oznacza, że nie wiemy, co się stało, i właśnie to czyni go najbardziej niebezpiecznym stanem, w jakim może znaleźć się uczeń.", "Nikt nie może pomóc uczniowi, którego problem jest niewidoczny."]}, "right": {"h": "🟡 Wybierz ŻÓŁTY, gdy…", "items": ["Ktoś podał Ci powód — przed lub po lekcji. Wtedy wybierz, który z sześciu powodów to był.", "Te opcje to nie formalność: to jedyny sposób, w jaki dowiadujemy się, którym nieobecnościom moglibyśmy zapobiec z naszej strony.", "Pięć sekund z Twojej strony, i wzorzec, na podstawie którego możemy działać."]}},
+            {"type": "list", "h": "Sześć powodów w BO", "p": "Wybierz najbliższy uczciwie — niektóre po wybraniu rozwijają się w bardziej szczegółową opcję.", "items": [
+              "🏥 <strong>Problemy zdrowotne</strong>",
+              "📚 <strong>Problemy z treścią kursu</strong>",
+              "✈️ <strong>Wakacje:</strong> podróż, wakacje szkolne lub święta",
+              "💻 <strong>Problemy techniczne:</strong> komputer ucznia, platforma Kodland lub Classroom, awaria zasilania lub problem z połączeniem internetowym",
+              "🗓️ <strong>Problemy z harmonogramem:</strong> przeniesienie do innej grupy lub zmiana terminu lekcji",
+              "📝 <strong>Inne:</strong> obciążenie szkolne / egzaminy / prace domowe, powód rodzinny, lub brak podanego konkretnego powodu (wymagany jest komentarz)"
+            ]},
+            {"type": "yellowbox", "h": "Gdy tylko poznasz powód, zmień to.", "b": "Zmień nieobecność na żółtą i wybierz powód, gdy tylko się o nim dowiesz — zwykle z notatek Obsługi Klienta na profilu ucznia. To nie jest poprawianie błędu — to działający proces: zapis teraz odpowiada rzeczywistości."},
+            {"type": "tip", "txt": "Automatyczna wiadomość jest też wysyłana do rodziny po każdej zarejestrowanej przez Ciebie nieobecności. To nie zastępuje czytania notatek Obsługi Klienta — regularnie sprawdzaj profil ucznia, aby rozumieć, co naprawdę się dzieje."},
+            {"type": "warnbox", "h": "I zasada, która to wszystko chroni", "b": "Nieobecność, którą uczciwie zarejestrowałeś/aś, nigdy nie zostanie użyta przeciwko Tobie. Jedyna nieobecność, która szkodzi Twoim liczbom, to ta, której nikt nie wyjaśnił."},
+            {"type": "simulation", "title": "Symulacja BO — Rejestrowanie obecności", "src": "Simulacion_BO_Attendance_1_PL.html"}
+          ]
+        },
         {
           "t": "🔁 Śledzenie sytuacji",
           "cards": [
             {"type": "list", "items": [
-              "Zapytaj rodzica lub opiekuna, jak radzi sobie uczeń, i wspomnij, że brakowało go na lekcji.",
-              "Udostępnij nagranie lekcji razem z krótkim podsumowaniem pracy domowej, aby uczeń nie zostawał w tyle ani nie tracił motywacji.",
-              "Gdy uczeń następnym razem weźmie udział w lekcji, pokaż mu, że zauważyłeś jego nieobecność — zapytaj, jak się czuje, i przypomnij, gdzie znaleźć nagranie i pracę domową."
+              "Sprawy związane z lekcją — wyjaśnianie tematu, śledzenie pracy klasowej — odbywają się bezpośrednio z uczniem, na grupie WhatsApp. Same lekcje są już na platformie, więc nie trzeba wysyłać linku.",
+              "Jeśli uczeń jest nieobecny, możesz sam/a do niego napisać: daj mu znać, że go brakowało, i skieruj go do nagrania oraz wszelkich dodatkowych materiałów dostępnych na platformie.",
+              "Gdy uczeń następnym razem weźmie udział w lekcji, pokaż mu, że zauważyłeś jego nieobecność.",
+              "Wciąż warto zrobić z tego stały nawyk: sprawdzaj komentarze Obsługi Klienta na profilu ucznia, abyś rozumiał/a pełny obraz, a nie tylko to, co widać na lekcji."
+            ]}
+          ]
+        },
+        {
+          "t": "⏱️ Terminy: Harmonogram eskalacji",
+          "cards": [
+            {"type": "text", "b": "Moduł 1 wprowadził nieobecności 🟡 żółte i 🔴 czerwone. Najważniejszy harmonogram zależy od tego, jak daleko w kursie jest uczeń."},
+            {"type": "table", "h": "Gdzie jest uczeń", "head": ["Gdzie jest uczeń", "Co wywołuje eskalację", "Co się dzieje"], "rows": [
+              ["Moduł 1", "Pojedyncza nieobecność — Obsługa Klienta już od tego momentu obserwuje", "OK bezpośrednio się kontaktuje; Ty nadal rejestrujesz nieobecność i swój komentarz jak zwykle"],
+              ["Od Modułu 2", "Dwie kolejne nieobecności", "Staje się to sprawą krytyczną — Ocena Ucznia teraz, tak jak gdzie indziej"]
             ]},
-            {"type": "agefriendly", "intro": "Zobacz przykłady tego, jak możesz powitać z powrotem ucznia, który opuścił lekcję, w zależności od wieku:", "younger": "„Jesteś! Brakowało mi Ciebie na lekcji — zachowałem/am dla Ciebie nagranie wszystkiego, co zbudowaliśmy, i założę się, że spodoba Ci się część, w której szlam zaczyna podskakiwać.”", "older": "„Dobrze mieć Cię z powrotem. Wysłałem/am nagranie i krótkie podsumowanie tego, co omówiliśmy — nic pilnego, po prostu nadrób to, kiedy będziesz mieć okazję.”"}
+            {"type": "warn", "txt": "\"Powiedz komuś — nie czekaj na trzecią.\" Dwie kolejne nieobecności od Modułu 2 to dokładnie moment, w którym oddalającego się ucznia można jeszcze odzyskać."}
           ]
         },
         {
@@ -386,9 +483,55 @@ const CONTENT={
             {"type": "imgtext", "img": "Images/WhatsApp_module_6_PL.png", "items": [
               "Bądź życzliwy i wyrozumiały, zwłaszcza jeśli nieobecność wynikała z choroby lub problemu rodzinnego.",
               "Jeśli w kursie dostępny jest dodatkowy materiał, poinformuj o tym.",
-              "Kiedy uczeń weźmie udział w lekcji, wykorzystaj ten moment, by podzielić się z rodzicami jego osiągnięciami na zajęciach."
+              "Kiedy uczeń weźmie udział w lekcji, wykorzystaj ten moment, by podzielić się z rodzicami jego osiągnięciami na zajęciach.",
+              "Życzliwość nic nie kosztuje i to ona stanowi całą różnicę między rodziną, która pozostaje zaangażowana w kurs, a taką, która po cichu przestaje odpowiadać."
             ]},
-            {"type": "warnbox", "h": "⚠️ Przed zaproponowaniem dodatkowej lekcji", "b": "Jeśli uważasz, że potrzebna jest dodatkowa lub motywacyjna lekcja, <strong>najpierw skontaktuj się ze swoim TL</strong>, aby omówić sprawę, zanim zaproponujesz to rodzicowi lub opiekunowi."}
+            {"type": "warnbox", "h": "⚠️ Czego nigdy nie wolno Ci robić", "b": "Nigdy nie sugeruj rodzinie, aby uczeń zrobił sobie przerwę od kursu. Nigdy nie rozmawiaj z rodzicami o cenach — to zadanie działu Sprzedaży. Nigdy nie oferuj lekcji indywidualnej bez zatwierdzenia. I nigdy nie informuj rodziny o odwołaniu lub przełożeniu zajęć bez wcześniejszej zgody swojego TL."}
+          ]
+        },
+        {
+          "t": "📋 Co rejestrować w Back Office",
+          "cards": [
+            {"type": "list", "h": "Teraz krótka lista kontrolna — sam mechanizm znajduje się w pierwszej sekcji powyżej", "items": [
+              "Ustaw rodzaj nieobecności i powód. Żółty plus odpowiedni powód z sześciu grup, jeśli powiedziano Ci dlaczego; czerwony, jeśli nikt nic nie powiedział.",
+              "Dodaj komentarz z tym, co rodzina faktycznie powiedziała. Krótko jest w porządku. To właśnie czytają Obsługa Klienta i Dział Dydaktyczny, jeśli sprawa się eskaluje.",
+              "Jeśli prosisz o dodatkową lekcję, użyj gotowego szablonu komentarza razem z linkiem do profilu ucznia."
+            ]}
+          ]
+        },
+        {
+          "t": "🔀 A co dalej? Dwie możliwe drogi",
+          "cards": [
+            {"type": "text", "b": "Skontaktowałeś/aś się z rodziną i zarejestrowałeś/aś nieobecność. Stąd sytuacja może potoczyć się na dwa sposoby, i każdy wymaga od Ciebie czegoś innego."},
+            {"type": "table", "h": "Wracają kontra nie wracają", "head": ["", "✅ Wracają", "❌ Nie wracają"], "rows": [
+              ["<span class=\"rowic\">⚡</span>Od razu", "Pokaż mu, że zauważyłeś jego nieobecność — ciepło i prywatnie, nie przy całej grupie.", "Obsługa Klienta już to obsługuje — wysłano automatyczną wiadomość, a OK obserwuje od Modułu 1."],
+              ["<span class=\"rowic\">➡️</span>Potem", "Obserwuj jego obecność, nie tylko frekwencję. Jeśli się pojawia, ale zostaje na 40% w klasie, to Moduły 2–4, nie ten.", "Jeśli osiągnie dwie kolejne nieobecności, automatycznie staje się to sprawą krytyczną — Twoja Ocena Ucznia to potwierdza z Twojej strony."],
+              ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Kogo jeszcze zaangażować", "Twojego TL, jeśli uczeń na tyle zostaje w tyle, że potrzebuje dodatkowej lekcji.", "Obsługę Klienta i Dział Dydaktyczny — już zaangażowanych zgodnie z powyższym harmonogramem."],
+              ["<span class=\"rowic\">👨‍👩‍👧</span>Rodzice", "Podziel się jedną konkretną rzeczą, którą uczeń zrobił na lekcji, na którą wrócił.", "Informuj ich na bieżąco i niczego nie obiecuj. Żadna dodatkowa lekcja nie jest oferowana, zanim nie zostanie zatwierdzona."]
+            ]},
+            {"type": "redbox", "h": "Wrócił/a, ale wciąż tak naprawdę go tam nie ma.", "b": "To najczęstszy ze wszystkich rezultatów, i łatwo uznać go za rozwiązany, ponieważ frekwencja się poprawiła. Nie jest to rozwiązane: uczeń jest teraz w klasie, ale niezaangażowany, co jest problemem prowadzenia zajęć, a nie problemem nieobecności.<br><br>Ta sprawa należy do Modułów 2, 3 i 4 — jak zaczynasz, kogo angażujesz, jak kończysz."}
+          ]
+        },
+        {
+          "t": "🪜 Jeśli sprawa się eskaluje: prośba o dodatkową lekcję",
+          "cards": [
+            {"type": "text", "b": "Sama prośba działa tutaj inaczej — <strong>Obsługa Klienta tworzy prośbę o dodatkową lekcję, a Dział Dydaktyczny ją rozpatruje</strong>, zanim zostanie zaplanowana."},
+            {"type": "flow", "steps": [
+              {"ic": "📋", "h": "1 · Otwórz Ocenę Ucznia", "b": "W BO wybierz „Wymagana jest dodatkowa lekcja”. Kwalifikują się dwie lub więcej kolejnych nieobecności — dla Modułów 1 i 8 wystarczy jedna nieobecność. Maksymalnie jedna dodatkowa lekcja na ucznia w miesiącu.", "color": "blue"},
+              {"ic": "📨", "h": "2 · Obsługa Klienta przejmuje sprawę", "b": "OK rozpatruje Twoją ocenę i tworzy prośbę o dodatkową lekcję w imieniu ucznia.", "color": "red"},
+              {"ic": "🏫", "h": "3 · Dział Dydaktyczny rozpatruje", "b": "Zatwierdzenie pochodzi stąd, a nie bezpośrednio od Twojego TL.", "color": "green"},
+              {"ic": "📞", "h": "4 · Kontakt dopiero po zatwierdzeniu", "b": "Po zatwierdzeniu planujesz bezpłatną 30-minutową lekcję z rodziną.", "color": "orange"},
+              {"ic": "✅", "h": "5 · Po lekcji", "b": "Możesz zaktualizować obecność ucznia na zieloną w BO.", "color": "purple"}
+            ]},
+            {"type": "text", "h": "🖥️ Wypróbuj sam/a", "b": "Proszenie o dodatkową lekcję nie jest tutaj procesem, który przeprowadzasz samodzielnie — ale sprawdzanie tego, co już zostało zapisane na profilu ucznia, owszem. Poćwicz tę część:"},
+            {"type": "simulation", "title": "Symulacja BO — Rejestrowanie obecności i czytanie notatek Obsługi Klienta", "src": "Simulacion_BO_Attendance_Simplified_PL.html"}
+          ]
+        },
+        {
+          "t": "🕳️ Uczeń, który w ogóle się nie pojawił",
+          "cards": [
+            {"type": "hi", "h": "To nie jest „opuszczona lekcja” — to inny problem", "b": "Niektórzy uczniowie nigdy nie łączą się z żadną lekcją od pierwszego dnia. Traktuj brak pojawienia się na pierwszej lekcji jako natychmiastowy sygnał alarmowy, a nie coś, na co można poczekać."},
+            {"type": "text", "b": "Zaznacz to jako czerwone — nikt nic Ci nie powiedział — i postępuj zgodnie z tą samą zasadą 48 godzin."}
           ]
         }
       ]
@@ -418,11 +561,12 @@ const CONTENT={
   ],
   "quiz": {
     "1": [
-      {"q": "Który zakres frekwencji oznacza Niską frekwencję (Alarm)?", "opts": ["Poniżej 50%", "50%–74,99%", "75% i powyżej"], "c": 0, "fb": "Niska frekwencja (Alarm) oznacza frekwencję poniżej 50% — zakres, który wymaga Twojej uwagi w pierwszej kolejności."},
-      {"q": "Co mierzy HPR?", "opts": ["% Twoich uczniów z frekwencją poniżej 50%", "% Twoich uczniów z frekwencją na poziomie 75% lub wyższym", "% Twoich uczniów, którzy ukończyli pracę domową"], "c": 1, "fb": "HPR (High Presence Rate) to udział Twoich uczniów z frekwencją na poziomie 75% lub wyższym."},
+      {"q": "Co mierzy HPR?", "opts": ["Udział Twoich uczniów z Obecnością w Classroom poniżej 50%", "Udział Twoich uczniów z Obecnością w Classroom na poziomie 75% lub wyższym", "Udział Twoich uczniów, którzy ukończyli pracę domową"], "c": 1, "fb": "HPR (High Presence Rate) to udział Twoich uczniów z obecnością na poziomie 75% lub wyższym — wszyscy w grupie 🟢 Zdrowy lub 🔵 OBSERWACJA. Udział poniżej 50% to LPR."},
       {"q": "Uczeń mówi Ci, że czuje, iż jest „niedobry” w programowaniu. Do jakiej kategorii to należy?", "opts": ["Przyczyna zewnętrzna, ponieważ dotyczy przedmiotu, a nie korepetytora", "Przyczyna wewnętrzna — taka, na którą możesz wpłynąć poprzez informację zwrotną i zachętę", "Żadna z powyższych — to cecha charakteru, a nie prawdziwy czynnik wpływający na frekwencję"], "c": 1, "fb": "Poczucie, że jest się „niedobrym” w danym przedmiocie, to jedna z przyczyn wewnętrznych — tych, na które możesz wpłynąć sposobem nauczania i informacją zwrotną."},
-      {"q": "Platforma classroom rejestruje, że uczeń był obecny przez 40% lekcji, ale korepetytor ręcznie oznaczył go później jako „obecny” w BO. Jak oficjalnie liczy się ta obecność?", "opts": ["Jako obecność, ponieważ wpis korepetytora w BO jest ostatecznym zapisem", "Jako nieobecność — oficjalna frekwencja opiera się na automatycznym zapisie classroom i wymaga ponad 50% lekcji", "Zależy to od tego, czy TL zatwierdzi ręczną zmianę"], "c": 1, "fb": "Frekwencja jest obliczana na podstawie automatycznego zapisu classroom, a nie ręcznych wpisów w BO — i wymaga udziału w ponad 50% lekcji."},
-      {"q": "Które z poniższych <strong>NIE</strong> jest przyczyną wewnętrzną nieobecności omówioną w tym module?", "opts": ["Uczeń nudzi się na lekcji", "Uczeń czuje, że jest „niedobry” w tym", "Święto państwowe"], "c": 2, "fb": "Święto państwowe to przyczyna zewnętrzna, poza kontrolą korepetytora — przyczyny wewnętrzne to te, na których zmianę koncentruje się to szkolenie."}
+      {"q": "Uczeń jest oznaczony jako „obecny” w Back Office, ale zapis classroom pokazuje, że był połączony tylko przez 40% lekcji. Jak to się liczy?", "opts": ["Jako Obecny dla obu wskaźników, ponieważ zapis BO zawsze ma pierwszeństwo nad zapisem classroom", "Jako Frekwencja (BO), ponieważ lekcja została zarejestrowana jako odbyta — ale NIE jako Obecny dla Obecności w Classroom, ponieważ 40% jest poniżej granicy 50%", "Jako nieobecność dla obu, ponieważ 40% nie osiąga żadnego z progów"], "c": 1, "fb": "Frekwencja (BO) i Obecność w Classroom są śledzone osobno: ten uczeń liczy się do Frekwencji, ale nie do Obecności w Classroom, ponieważ nigdy nie przekroczył granicy 50%."},
+      {"q": "Co dokładnie śledzi Frekwencja (BO)?", "opts": ["Czy zaplanowana lekcja się odbyła i czy uczeń się pojawił, według Back Office", "Jak długo uczeń pozostawał połączony w wirtualnej klasie", "Wynik ucznia z prac domowych i zadań klasowych"], "c": 0, "fb": "Frekwencja (BO) po prostu potwierdza, czy zaplanowana lekcja się odbyła i czy uczeń się pojawił — to, jak bardzo był zaangażowany, to osobny wskaźnik: Obecność w Classroom."},
+      {"q": "W Back Office, co zmienia czerwoną (nieusprawiedliwioną) nieobecność w żółtą?", "opts": ["Gdy powód staje się znany, zmiana nieobecności na żółtą i wybranie tego powodu", "Upłynięcie 72 godzin bez żadnego działania", "Zostawienie komentarza w Back Office, bez zmiany rodzaju nieobecności"], "c": 0, "fb": "To, co zmienia czerwoną nieobecność na żółtą, to zmiana rodzaju i wybranie powodu, gdy tylko stanie się on znany — niezależnie od tego, czy dowiedziałeś/aś się bezpośrednio, czy przekazała to Obsługa Klienta. Sam komentarz, bez zmiany rodzaju, pozostawia ją czerwoną."},
+      {"q": "Jeden z Twoich uczniów ma jedną zgłoszoną (żółtą) nieobecność i Obecność w Classroom na poziomie 91%. W jakiej jest grupie?", "opts": ["ALARM — każda nieobecność przenosi ucznia do grupy ryzyka", "OBSERWACJA — jedna nieobecność to wczesne ostrzeżenie", "Zdrowy — jedna wyjaśniona nieobecność przy silnej obecności nie jest sygnałem ryzyka"], "c": 2, "fb": "Jedna żółta nieobecność przy obecności powyżej 85% pozostawia ucznia w stanie Zdrowy. Potrzeba dwóch żółtych, aby osiągnąć ALARM. Zgłoszona nieobecność to sytuacja, którą rodzina zarządza — to nie jest czarny punkt ani dla Ciebie, ani dla nich."}
     ],
     "2": [
     {"q":"Uczeń dołącza z włączoną kamerą, ale pozostaje wyraźnie wycofany — cichy, wpatrzony w biurko. Jak zaczynasz?","opts":["Witasz go ciepło, zadajesz krótkie osobiste pytanie o jego tydzień, a gdy odpowie, płynnie przechodzisz do planu na dziś.","Zaczynasz energicznym powitaniem i od razu przechodzisz do podsumowania projektu z poprzedniej lekcji, ufając, że rozpęd wciągnie jego uwagę z powrotem.","Witasz go i pytasz, czy wszystko w porządku, po czym czekasz w ciszy na odpowiedź, zanim zdecydujesz, czy zacząć lekcję."],"c":0,"fb":"Szczere, osobiste zapytanie przed przejściem do treści to sposób na ponowne zaangażowanie wycofanego ucznia — sama energia albo bierne czekanie pomijają ten krok."},
@@ -444,10 +588,12 @@ const CONTENT={
       {"q": "Sprawdzasz oddaną pracę domową i projekt jednego ucznia jest technicznie poprawny, ale niczym się nie wyróżnia. Co piszesz?", "opts": ["Po prostu oznaczasz „zrobione” bez komentarza — spełnił wymagania, to wystarczy.", "Zostawiasz długą listę wszystkiego, co można poprawić, bez wspomnienia niczego pozytywnego.", "Zostawiasz krótki, konkretny komentarz wskazujący jedną rzecz, którą zrobił dobrze, i jedną łagodną sugestię — coś, co mógłby przeczytać także rodzic."], "c": 2, "fb": "Sprawdzanie pracy domowej to okazja do informacji zwrotnej, a nie tylko odhaczenie — to także szansa na wzmocnienie więzi z uczniami i rodzicami."}
     ],
     "6": [
-      {"q": "Dwa telefony i wiadomości w tym tygodniu, brak odpowiedzi od rodzica. Jaki jest najlepszy kolejny krok?", "opts": ["Natychmiast eskalujesz sprawę do swojego TL i prosisz o usunięcie ucznia z grupy, ponieważ dwie nieudane próby sugerują brak zainteresowania.", "Wysyłasz jeszcze jedną ciepłą, niewymuszającą wiadomość i udostępniasz nagranie oraz podsumowanie pracy domowej, żeby uczeń nie zostawał jeszcze bardziej w tyle, czekając na odpowiedź.", "Przestajesz się kontaktować na razie, uznając, że dwie próby to rozsądny limit, a kolejne wiadomości mogłyby wydawać się nadmierne."], "c": 1, "fb": "Troskliwe zapytanie zawsze jest kolejnym krokiem — wytrwałe, ale ciepłe, zamiast eskalacji albo zbyt szybkiej rezygnacji."},
+      {"q": "Kiedy Obsługa Klienta po raz pierwszy angażuje się w nieobecności ucznia?", "opts": ["Dopiero gdy korepetytor eskaluje sprawę przez Ocenę Ucznia", "Od Modułu 1 — nawet pojedyncza nieobecność jest już na ich radarze", "Dopiero po trzech niewyjaśnionych nieobecnościach"], "c": 1, "fb": "Obsługa Klienta obserwuje już od samego pierwszego modułu ucznia — jedna nieobecność tam wystarczy, aby się odezwali."},
       {"q": "Uczeń opuścił lekcję z powodu choroby. Jak korepetytor rozmawia z rodzicem?", "opts": ["Utrzymuje rozmowę krótką i neutralną, unikając osobistych pytań o chorobę, żeby nie ingerować w sytuację rodziny.", "Wyraża szczere zainteresowanie tym, jak radzi sobie uczeń, wspomina o dostępnym dodatkowym materiale i wykorzystuje jego powrót, by podzielić się czymś pozytywnym.", "Skupia się głównie na nadrobieniu materiału przez ucznia, ponieważ uspokajanie w sprawie choroby nie jest tak naprawdę rolą korepetytora."], "c": 1, "fb": "Szczere ciepło, praktyczna pomoc i pozytywna wzmianka przy powrocie ucznia to dokładnie ta empatia, o którą prosi ten moduł — neutralność albo czysto akademickie podejście tego nie zapewniają."},
       {"q": "Uczeń, który opuścił dwie lekcje, wraca i dziś świetnie pracuje. Jak korepetytor wykorzystuje to w kontakcie z rodzicami?", "opts": ["Czeka do kolejnego zaplanowanego kontaktu, żeby o tym wspomnieć, aby nie kontaktować się z rodziną zbyt często w krótkim czasie.", "Kontaktuje się mniej więcej wtedy, gdy odbywa się ta lekcja, żeby podzielić się konkretnym osiągnięciem, wzmacniając ten pozytywny zwrot zarówno dla ucznia, jak i rodzica.", "Wspomina o tym krótko tylko uczniowi, ponieważ rodzice zazwyczaj bardziej interesują się wzorcami frekwencji niż codziennymi osiągnięciami."], "c": 1, "fb": "Podzielenie się osiągnięciem, gdy jest ono świeże, wzmacnia ten zwrot zarówno dla ucznia, jak i rodzica — czekanie albo pominięcie rodzica marnuje ten moment."},
-      {"q": "Które z poniższych <strong>NIE</strong> jest zalecane, gdy uczeń opuszcza lekcję?", "opts": ["Udostępnienie nagrania i krótkiego podsumowania pracy domowej, żeby nie został w tyle", "Skontaktowanie się z rodzicem, żeby zapytać, jak sobie radzi, i wspomnieć, że uczniowi brakowało na zajęciach", "Zaproponowanie dodatkowej lekcji bezpośrednio rodzicowi bez uprzedniego poinformowania swojego TL"], "c": 2, "fb": "Dodatkowa lekcja zawsze najpierw przechodzi przez Twojego TL — zaproponowanie jej bezpośrednio rodzicowi pomija ten wymagany krok."}
+      {"q": "Które z poniższych jest czymś, czego nigdy nie wolno Ci robić?", "opts": ["Udostępnienie nagrania lekcji rodzinie, której dziecko opuściło zajęcia", "Zasugerowanie rodzinie, aby uczeń zrobił sobie przerwę od kursu", "Wspomnienie, że Obsługa Klienta odezwie się w sprawie wzorca nieobecności"], "c": 1, "fb": "Sugerowanie przerwy jest na liście rzeczy, których „nigdy nie wolno robić” — obok rozmawiania o cenach, oferowania niezatwierdzonych lekcji indywidualnych czy informowania rodziny o odwołaniu zajęć bez zgody Twojego TL."},
+      {"q": "Uczeń opuścił wtorkową lekcję bez ostrzeżenia, więc oznaczyłeś/aś ją jako czerwoną. W czwartek dowiadujesz się, że uczeń miał grypę. Co robisz?", "opts": ["Zostawiasz ją czerwoną — w tamtym momencie nie była zgłoszona, a zmiana teraz zniekształciłaby to, co się wydarzyło", "Zmieniasz nieobecność na żółtą, wybierasz „Problemy zdrowotne” i dodajesz komentarz z tym, czego się dowiedziałeś/aś", "Dodajesz komentarz z tym, czego się dowiedziałeś/aś, i zostawiasz rodzaj nieobecności bez zmian"], "c": 1, "fb": "Czerwony oznacza „nie wiemy dlaczego”. Gdy już wiesz, zapis powinien to odzwierciedlać: zmień rodzaj, wybierz powód i dodaj komentarz."},
+      {"q": "Uczeń potrzebuje dodatkowej lekcji. Kto faktycznie tworzy prośbę o nią?", "opts": ["Ty, bezpośrednio z rodziną, gdy tylko Twój TL da ustną zgodę", "Tworzy ją Obsługa Klienta, a Dział Dydaktyczny ją rozpatruje, zanim zostanie zaplanowana", "Rodzina, samodzielnie wypełniając formularz prośby"], "c": 1, "fb": "Obsługa Klienta tworzy prośbę o dodatkową lekcję, a Dział Dydaktyczny ją rozpatruje — Twoja rola kończy się na zgłoszeniu potrzeby przez Ocenę Ucznia."}
     ]
   },
   "sortItems": [

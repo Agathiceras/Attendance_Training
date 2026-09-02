@@ -106,17 +106,72 @@ const CONTENT={
       "id": 1,
       "emoji": "📊",
       "title": "Capire la Metrica: la Frequenza",
-      "desc": "Come si misura la frequenza, cosa significano LPR/HPR per te e i due tipi di cause dietro una lezione persa.",
-      "obj": "Capire come si misura la frequenza e distinguere le cause che puoi influenzare da quelle che non puoi controllare.",
+      "desc": "Le due misure dietro ai numeri — Presenza in Back Office e Presenza in Classroom — i tipi di assenza rossa e gialla, i cinque gruppi di rischio, cosa significano HPR e LPR, e le tre cose che ti mettono nella nostra lista.",
+      "obj": "Capire come si misurano frequenza e presenza, sapere in quale gruppo di rischio si trova ogni tuo studente, sapere esattamente cosa ti metterebbe nella nostra lista — e distinguere le cause che puoi influenzare da quelle che non puoi controllare.",
       "color": "#D3FF5F",
       "sections": [
         {
-          "t": "📐 Come Si Misura?",
+          "t": "📐 Due Modi per Misurarlo",
           "cards": [
-            {"type": "text", "b": "Classifichiamo gli studenti (SS) in tre livelli in base alla loro percentuale di frequenza."},
-            {"type": "table", "h": "Livelli di frequenza", "head": ["Livello", "Intervallo"], "rows": [["🟢 Presenza Alta", "≥ 75%"], ["🟠 Presenza Media (Rischio)", "50% – 74,99%"], ["❗ Presenza Bassa (Allerta)", "&lt; 50%"]]},
-            {"type": "text", "h": "Dal punto di vista del tutor", "b": "Due indicatori riassumono la tua performance su questa metrica:<br><br><strong>LPR (Low Presence Rate):</strong> % dei tuoi studenti con frequenza sotto il 50%.<br><strong>HPR (High Presence Rate):</strong> % dei tuoi studenti con frequenza pari o superiore al 75%."},
-            {"type": "text", "b": "I dati di presenza vengono calcolati in base al registro presenze rilevato automaticamente dall'aula virtuale quando uno studente entra in classe. La presenza viene confermata quando lo studente partecipa per più del 50% della lezione. Non si basa sui dati di presenza inseriti nel BO."}
+            {"type": "text", "b": "Uno studente può essere <strong>assente dalla lezione</strong>, oppure <strong>presente ma disconnesso mentalmente</strong> — due problemi completamente diversi, quindi usiamo 2 misure:"},
+            {"type": "table", "h": "Le due misure", "head": ["Misura", "La domanda a cui risponde", "Da dove viene"], "rows": [["🙋 <strong>Presenza (BO)</strong>", "Lo studente è venuto?", "Back Office — la lezione era programmata, e lo studente si è presentato oppure no"], ["🎥 <strong>Presenza in Classroom</strong>", "Quando è venuto, era davvero presente?", "Dati di Classroom — per quanto tempo lo studente è stato effettivamente in aula"]]},
+            {"type": "tip", "txt": "Perché servono entrambe: il Back Office è l'unico posto che sa che una lezione <em>doveva</em> avvenire. Senza di esso, uno studente che non si è mai presentato non lascia alcuna traccia — l'assenza è invisibile. Classroom da solo misura solo quanto erano coinvolti gli studenti che <em>sono</em> venuti."}
+          ]
+        },
+        {
+          "t": "🧮 Come Si Calcola la Presenza in Classroom",
+          "cards": [
+            {"type": "flow", "steps": [
+              {"ic": "⏱️", "h": "1 · Tempo di connessione", "b": "Per ogni lezione, confrontiamo per quanto tempo lo studente è stato effettivamente connesso rispetto alla durata della lezione. Restare per tutta la lezione → 100%. Andarsene a metà → circa il 50%. Dieci minuti su una lezione di sessanta minuti → circa il 17%.", "color": "blue"},
+              {"ic": "✅", "h": "2 · La soglia del 50%", "b": "Uno studente conta come <em>Presente</em> per quella lezione solo sopra il 50%. Connettersi per dieci minuti e sparire non è presenza, e non viene contato come tale.", "color": "coral"},
+              {"ic": "📊", "h": "3 · Media su 30 giorni", "b": "La sua Presenza in Classroom è la media di questo dato sulle lezioni degli ultimi 30 giorni — calcolata per gruppo e per corso, quindi uno studente in due dei tuoi corsi viene misurato separatamente in ciascuno.", "color": "green"}
+            ]},
+            {"type": "good", "txt": "Le lezioni mai registrate in Classroom (circa l'1%) contano comunque per la Presenza (BO) — un'assenza reale non sparisce mai solo perché Classroom non l'ha registrata."},
+            {"type": "hi", "h": "Chi viene conteggiato", "b": "Non tutti gli studenti compaiono nei tuoi numeri.<br><br>Uno studente viene incluso solo dopo aver avuto <strong>almeno 3 lezioni programmate</strong> e <strong>una lezione negli ultimi 14 giorni</strong>. Così una singola lezione non può mai far oscillare la tua percentuale, e gli studenti che se ne sono andati da tempo smettono di distorcerla.<br><br>Se uno studente che insegni manca dalla tua lista, questo è quasi sempre il motivo."}
+          ]
+        },
+        {
+          "t": "🟡🔴 Due Tipi di Assenza",
+          "cards": [
+            {"type": "text", "b": "Dal punto di vista del Back Office, un'assenza non è solo un'assenza — trattare un'assenza annunciata come uno studente che è sparito senza una parola sarebbe ingiusto, quindi non lo facciamo."},
+            {"type": "img", "src": "Images/image8_ENG.png"},
+            {"type": "doavoid", "left": {"h": "🟡 Gialla — annunciata o giustificata", "items": ["La famiglia ha dato un motivo in anticipo", "Un problema di salute, vacanza, problema tecnico o di orario, ecc.", "Una situazione che la famiglia sta gestendo attivamente"]}, "right": {"h": "🔴 Rossa — nessun avviso", "items": ["Lo studente è sparito senza una parola", "Nessuno ha fatto seguito prima della lezione successiva", "Il tipo di assenza che vogliamo eliminare del tutto"]}},
+            {"type": "text", "b": "Quale scegliere, e cosa fare dopo, è il Modulo 6 — quel modulo è il manuale d'istruzioni per questa pagina."}
+          ]
+        },
+        {
+          "t": "🚦 I Tuoi Cinque Gruppi di Rischio",
+          "cards": [
+            {"type": "text", "b": "Metti insieme Presenza (BO) e Presenza in Classroom e ogni studente finisce in uno dei cinque gruppi — in qualunque gruppo lo metta il <strong>peggiore</strong> dei due segnali, così nessuno passa inosservato quando i segnali sono in disaccordo."},
+            {"type": "text", "b": "Leggi le due colonne centrali come <strong>alternative, non condizioni</strong>: un gruppo è determinato dalle assenze oppure dalla presenza — qualunque sia peggiore. Uno studente senza alcuna assenza può trovarsi in ALLERTA solo per la presenza, e uno studente con presenza perfetta può trovarsi in CRITICO per una singola assenza non spiegata."},
+            {"type": "table", "h": "Gruppi di rischio", "tone": "danger", "head": ["Gruppo", "Assenze Back Office", "Presenza in Classroom", "Cosa significa"], "rows": [
+              ["🔴 <strong>CRITICO</strong>", "Una o più rosse, o quattro o più gialle", "—", "Un'assenza che nessuno ha spiegato, o assenze che si accumulano — non sappiamo se questo studente è ancora con noi"],
+              ["🟠 <strong>ALTO RISCHIO</strong>", "—", "Sotto il 50%", "Si presenta, ma è a malapena in aula"],
+              ["🟡 <strong>ALLERTA</strong>", "2–3 gialle", "50% – 74,99%", "Manca lezioni che la famiglia ha spiegato — oppure in aula solo per metà del tempo"],
+              ["🔵 <strong>OSSERVAZIONE</strong>", "—", "75% – 84,99%", "Presente, ma non pienamente coinvolto — il distacco sta appena iniziando"],
+              ["🟢 <strong>Sano</strong>", "Nessuna rossa, al massimo 1 gialla", "≥ 85%", "Presenza e coinvolgimento costanti"]
+            ]},
+            {"type": "warnbox", "h": "Un'assenza gialla non è un marchio negativo. È la prova che hai fatto il tuo lavoro.", "b": "Un'assenza annunciata lascia uno studente Sano. Ne servono due prima che uno studente sia anche solo in ALLERTA, ed è voluto: il punto in cui uno studente che si sta allontanando può ancora essere recuperato è la seconda assenza, ed è esattamente ciò di cui parla il Modulo 6.<br><br>Un'assenza non spiegata (rossa) è diversa, e conta immediatamente — non perché il rosso sia un comportamento peggiore, ma perché nessuno sa cosa sia successo."}
+          ]
+        },
+        {
+          "t": "📈 HPR e LPR — Cosa Significano Davvero i Tuoi Numeri",
+          "cards": [
+            {"type": "text", "b": "Questi si misurano sulla <strong>Presenza in Classroom</strong> (non su una singola percentuale di frequenza):"},
+            {"type": "twocol", "left": {"h": "📈 HPR — Tasso di Presenza Alta", "items": ["Quota dei tuoi studenti al 75% o oltre — cioè tutti quelli in 🟢 Sano o 🔵 OSSERVAZIONE", "Più alto è, meglio è"]}, "right": {"h": "📉 LPR — Tasso di Presenza Bassa", "items": ["Quota dei tuoi studenti sotto il 50% — tutti quelli in 🟠 ALTO RISCHIO", "Più basso è, meglio è"], "plain": true}},
+            {"type": "text", "b": "Poiché i due tassi derivano direttamente dai gruppi sopra, la tabella e la tua scheda non possono mai essere in disaccordo: <strong>HPR è Sano più OSSERVAZIONE, LPR è ALTO RISCHIO.</strong>"},
+            {"type": "text", "b": "La soglia è la stessa in tutte le regioni: <strong>LPR pari o sotto il 25,5%</strong> · <strong>HPR pari o sopra il 49,5%</strong>."},
+            {"type": "hi", "h": "L'obiettivo reale non è un tasso — sono due risultati", "b": "🔴 <strong>Eliminare le assenze non giustificate (rosse).</strong> Un'assenza rossa significa che uno studente è sparito e nessuno ha fatto seguito — questo deve smettere di essere possibile.<br><br>🟡 <strong>Eliminare l'abbandono che inizia dalla seconda assenza giustificata.</strong> Nessuno studente dovrebbe sparire silenziosamente, e nessuno dovrebbe essere perso per due assenze a cui nessuno ha risposto."}
+          ]
+        },
+        {
+          "t": "🧭 Il Vantaggio Pratico",
+          "cards": [
+            {"type": "text", "b": "Le due misure indicano problemi diversi, con soluzioni diverse — questo è il motivo per cui le separiamo."},
+            {"type": "table", "head": ["Se questo è basso…", "…il problema è di solito", "…e il lavoro avviene"], "rows": [
+              ["<strong>Frequenza</strong> — non vengono", "Orario, famiglia, motivazione, un corso che ha smesso di sembrare rilevante", "<strong>Fuori</strong> dalla lezione — contatta, segnala, coinvolgi la famiglia o Teaching Ops"],
+              ["<strong>Presenza in Classroom</strong> — vengono ma non ci sono davvero", "Facilitazione — l'aula è passiva, la partecipazione è concentrata su uno o due studenti, o problemi tecnici intralciano", "<strong>Dentro</strong> la lezione — come apri, chi coinvolgi, come chiudi"]
+            ]}
           ]
         },
         {
@@ -126,10 +181,22 @@ const CONTENT={
           ]
         },
         {
+          "t": "🔔 Quando Sentirai Parlare di Te?",
+          "cards": [
+            {"type": "text", "b": "I gruppi di rischio dei tuoi studenti sono una cosa. Ciò che ci farebbe contattare <strong>te</strong> è un'altra cosa — e sono tre situazioni, e nient'altro."},
+            {"type": "table", "head": ["Sentirai parlare di noi quando…", "Perché", "Cosa riceverai"], "rows": [
+              ["Il tuo HPR è sotto l'obiettivo o il tuo LPR è sopra di esso", "Troppo pochi dei tuoi studenti sono pienamente presenti, o troppi sono a malapena in aula", "Una formazione sulla gestione dell'aula — aperture, partecipazione, chiusure"],
+              ["Due o più dei tuoi studenti hanno due o più assenze non spiegate (rosse) — oppure, una volta che hai 10 o più studenti, più della metà del tuo gruppo ne porta almeno una", "Le assenze si ripetono e nessuno sa perché. Uno studente con una sola assenza rossa non ti mette mai nella lista — lo schema sì", "Una formazione sul protocollo delle assenze — contattare le famiglie, registrare il motivo, lezioni extra"],
+              ["Uno studente ha tre o più assenze rosse, oppure due o più studenti ne hanno quattro o più gialle ciascuno", "Questi studenti sono vicini ad abbandonare, indipendentemente da come appaiono i tuoi numeri complessivi. Questo è l'unico caso in cui contano anche le assenze spiegate, perché quattro di fila sono già uno schema di per sé", "I nomi, immediatamente, e una formazione — questa è urgente"]
+            ]},
+            {"type": "good", "txt": "E cosa non è: un messaggio non è un avvertimento né un passo di un processo disciplinare. Nessuna decisione su di te viene presa da un numero — la piattaforma decide dove guardare per prima, poi una persona ti parla. Se i dati ti sembrano sbagliati, dirlo è utile; alcuni risulteranno essere una lacuna di registrazione piuttosto che un problema di insegnamento, e preferiamo sentirlo da te che indovinare."}
+          ]
+        },
+        {
           "t": "⛓️ Come influisce su di te come tutor?",
           "cards": [
-            {"type": "hi", "h": "Una lezione persa raramente resta solo una lezione persa", "b": "Perde la lezione → si scoraggia → perde la motivazione a continuare → il gruppo si sfalda → il tuo reddito come tutor cala."},
-            {"type": "text", "b": "La buona notizia: le cause interne — quelle che possiamo cambiare — sono il focus del resto di questa formazione."}
+            {"type": "hi", "h": "Una lezione persa raramente resta solo una lezione persa", "b": "Perde una lezione → resta indietro → si scoraggia → smette di vedere il senso → se ne va. E un gruppo che perde due o tre studenti smette di sembrare un gruppo per quelli che restano.<br><br>Ogni passo prima in cui interrompi quella catena è uno studente mantenuto — che è l'unica ragione per cui tutto questo viene misurato."},
+            {"type": "text", "b": "La buona notizia: le cause interne — quelle che <em>possiamo</em> cambiare — sono il focus del resto di questa formazione."}
           ]
         }
       ]
@@ -365,19 +432,49 @@ const CONTENT={
       "id": 6,
       "emoji": "📞",
       "title": "Cosa Fare Quando uno Studente Perde una Lezione",
-      "desc": "Come seguire lo studente e come parlare con i genitori con empatia.",
-      "obj": "Sapere esattamente quali passi seguire — con lo studente e con la sua famiglia — quando si verifica un'assenza.",
+      "desc": "Cosa selezioni nel Back Office, i messaggi automatici che accompagnano il tuo follow-up personale, la tempistica di escalation, e cosa non devi mai dire a una famiglia.",
+      "obj": "Sapere esattamente cosa selezionare nel Back Office e quando, capire come il Servizio Clienti e il Dipartimento Didattico gestiscono l'escalation e le lezioni extra, e conoscere i limiti che non devi mai superare con una famiglia.",
       "color": "#D3FF5F",
       "sections": [
+        {
+          "t": "🎯 Cosa Selezioni, e Quando",
+          "cards": [
+            {"type": "text", "b": "Prima di tutto: due clic, e l'intera metrica dipende da essi. Il Modulo 1 ha spiegato cosa significano rosso e giallo. Ecco esattamente quando scegliere quale."},
+            {"type": "redyellow", "left": {"h": "🔴 Seleziona ROSSO quando…", "items": ["Lo studente non si è presentato e nessuno ti ha detto perché. È l'unico caso.", "Il rosso non è un'etichetta più severa per lo stesso evento — significa che non sappiamo cosa è successo, ed è ciò che lo rende lo stato più pericoloso in cui uno studente possa trovarsi.", "Nessuno può aiutare uno studente il cui problema è invisibile."]}, "right": {"h": "🟡 Seleziona GIALLO quando…", "items": ["Qualcuno ti ha detto un motivo — prima o dopo la lezione. Poi scegli quale dei sei motivi era.", "Quelle opzioni non sono burocrazia: sono l'unico modo in cui scopriamo mai quali assenze avremmo potuto prevenire dalla nostra parte.", "Cinque secondi da parte tua, e uno schema su cui possiamo agire."]}},
+            {"type": "list", "h": "Le sei ragioni nel BO", "p": "Scegli quella più vicina onestamente — alcune si espandono in un'opzione più specifica una volta selezionate.", "items": [
+              "🏥 <strong>Problemi di salute</strong>",
+              "📚 <strong>Problemi con i contenuti</strong>",
+              "✈️ <strong>Vacanza:</strong> viaggio, vacanze scolastiche o festività",
+              "💻 <strong>Problemi tecnici:</strong> il computer dello studente, la piattaforma Kodland o Classroom, un blackout, o un problema di connessione internet",
+              "🗓️ <strong>Problemi di orario:</strong> spostato in un altro gruppo, o la lezione è stata riprogrammata",
+              "📝 <strong>Altro:</strong> carico scolastico / esami / compiti, un motivo familiare, o nessun motivo specifico condiviso (è richiesto un commento)"
+            ]},
+            {"type": "yellowbox", "h": "Non appena conosci il motivo, cambialo.", "b": "Cambia l'assenza in gialla e seleziona il motivo, non appena lo scopri — di solito dalle note del Servizio Clienti sul profilo dello studente. Questo non è correggere un errore — è il processo che funziona: la registrazione ora corrisponde alla realtà."},
+            {"type": "tip", "txt": "Un messaggio automatico viene inviato anche alla famiglia dopo ogni assenza che registri. Questo non sostituisce la lettura delle note del Servizio Clienti — controlla regolarmente il profilo dello studente per capire cosa sta realmente succedendo."},
+            {"type": "warnbox", "h": "E la linea che protegge tutto questo", "b": "Un'assenza che hai registrato onestamente non viene mai usata contro di te. L'unica assenza che danneggia i tuoi numeri è quella che nessuno ha spiegato."},
+            {"type": "simulation", "title": "Simulazione BO — Registrare la Presenza", "src": "Simulacion_BO_Attendance_1_IT.html"}
+          ]
+        },
         {
           "t": "🔁 Fare Follow-Up",
           "cards": [
             {"type": "list", "items": [
-              "Chiedi al genitore o tutore come sta lo studente, e menziona che è mancato in lezione.",
-              "Condividi la registrazione della lezione insieme a un breve riepilogo dei compiti, così lo studente non resta indietro o perde la motivazione.",
-              "La prossima volta che lo studente partecipa, mostragli che hai notato la sua assenza — chiedigli come sta e ricordagli dove trovare la registrazione e i compiti."
+              "Le questioni legate alla lezione — spiegare un argomento, fare seguito sui compiti in classe — avvengono direttamente con lo studente, nel gruppo WhatsApp. Le lezioni stesse sono già sulla piattaforma, quindi non serve inviare un link.",
+              "Se uno studente è assente, puoi scrivergli tu stesso/a: fagli sapere che ti è mancato, e indirizzalo alla registrazione e a eventuali attività extra disponibili sulla piattaforma.",
+              "La prossima volta che lo studente partecipa, mostragli che hai notato la sua assenza.",
+              "Vale comunque la pena farne un'abitudine regolare: controlla i commenti del Servizio Clienti sul profilo dello studente, così capisci il quadro completo, non solo ciò che vedi in lezione."
+            ]}
+          ]
+        },
+        {
+          "t": "⏱️ Tempistica: La Linea Temporale di Escalation",
+          "cards": [
+            {"type": "text", "b": "Il Modulo 1 ha introdotto le assenze 🟡 gialle e 🔴 rosse. La linea temporale più importante dipende da quanto lo studente è avanti nel corso."},
+            {"type": "table", "h": "A che punto è lo studente", "head": ["A che punto è lo studente", "Cosa attiva l'escalation", "Cosa succede"], "rows": [
+              ["Modulo 1", "Una singola assenza — il Servizio Clienti sta già osservando da qui", "Il Servizio Clienti contatta direttamente; tu registri comunque l'assenza e il tuo commento come al solito"],
+              ["Dal Modulo 2 in poi", "Due assenze consecutive", "Questo diventa un caso critico — Valutazione dello Studente ora, come altrove"]
             ]},
-            {"type": "agefriendly", "intro": "Guarda alcuni esempi di come accogliere di nuovo uno studente che ha perso una lezione, in base all'età:", "younger": "\"Eccoti! Mi sei mancato/a in lezione — ti ho conservato una registrazione di tutto ciò che abbiamo costruito, e scommetto che ti piacerà tantissimo la parte in cui lo slime inizia a rimbalzare.\"", "older": "\"Che bello riaverti qui. Ti ho inviato la registrazione e un breve riepilogo di ciò che abbiamo trattato — niente di urgente, solo quando avrai occasione di metterti in pari.\""}
+            {"type": "warn", "txt": "\"Dillo a qualcuno — non aspettare la terza.\" Due assenze consecutive dal Modulo 2 in poi è esattamente il punto in cui uno studente che si sta allontanando può ancora essere recuperato."}
           ]
         },
         {
@@ -386,9 +483,55 @@ const CONTENT={
             {"type": "imgtext", "img": "Images/WhatsApp_module_6_IT.png", "items": [
               "Sii gentile e comprensivo/a, specialmente se l'assenza era dovuta a malattia o a un problema familiare.",
               "Se c'è materiale extra disponibile nel corso, faglielo sapere.",
-              "Quando lo studente partecipa, usa il momento per condividere con i genitori i suoi risultati in lezione."
+              "Quando lo studente partecipa, usa il momento per condividere con i genitori i suoi risultati in lezione.",
+              "La gentilezza non costa nulla ed è tutta la differenza tra una famiglia che resta coinvolta nel corso e una che smette silenziosamente di rispondere."
             ]},
-            {"type": "warnbox", "h": "⚠️ Prima di offrire una lezione extra", "b": "Se pensi che sia necessaria una lezione extra o motivazionale, <strong>contatta prima il tuo TL</strong> per valutare il caso prima di proporla al genitore o tutore."}
+            {"type": "warnbox", "h": "⚠️ Cosa Non Devi Mai Fare", "b": "Non suggerire mai a una famiglia che lo studente faccia una pausa dal corso. Non discutere mai di prezzi con i genitori — è compito delle Vendite. Non offrire mai una lezione individuale senza approvazione. E non informare mai una famiglia di una cancellazione o di un rinvio senza prima il permesso del tuo TL."}
+          ]
+        },
+        {
+          "t": "📋 Cosa Registrare nel Back Office",
+          "cards": [
+            {"type": "list", "h": "Ora una breve checklist — il meccanismo stesso è nella prima sezione sopra", "items": [
+              "Imposta il tipo di assenza e il motivo. Giallo più il motivo corrispondente tra i sei gruppi se ti è stato detto perché; rosso se nessuno ti ha detto nulla.",
+              "Aggiungi un commento con ciò che la famiglia ha effettivamente detto. Breve va bene. Questo è ciò che leggono il Servizio Clienti e il Dipartimento Didattico se il caso va in escalation.",
+              "Se stai richiedendo una lezione extra, usa il modello di commento precompilato insieme al link al profilo dello studente."
+            ]}
+          ]
+        },
+        {
+          "t": "🔀 E Poi? Due Direzioni Possibili",
+          "cards": [
+            {"type": "text", "b": "Hai contattato la famiglia e registrato l'assenza. Da qui la situazione va in una di due direzioni, e richiedono cose diverse da te."},
+            {"type": "table", "h": "Tornano contro non tornano", "head": ["", "✅ Tornano", "❌ Non tornano"], "rows": [
+              ["<span class=\"rowic\">⚡</span>Subito", "Mostragli che hai notato la sua assenza — con calore, e in privato, non davanti al gruppo.", "Il Servizio Clienti se ne sta già occupando — è partito un messaggio automatico, e il Servizio Clienti osserva fin dal Modulo 1."],
+              ["<span class=\"rowic\">➡️</span>Poi", "Osserva la sua presenza, non solo la sua frequenza. Se si presenta ma resta al 40% in aula, sono i Moduli 2-4, non questo.", "Se arriva a due assenze consecutive, diventa automaticamente un caso critico — la tua Valutazione dello Studente lo conferma dalla tua parte."],
+              ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Chi altro coinvolgere", "Il tuo TL, se lo studente è rimasto abbastanza indietro da aver bisogno di una lezione extra.", "Il Servizio Clienti e il Dipartimento Didattico — già coinvolti secondo la linea temporale sopra."],
+              ["<span class=\"rowic\">👨‍👩‍👧</span>I genitori", "Condividi una cosa concreta che lo studente ha fatto nella lezione a cui è tornato.", "Tienili informati, e non prometti nulla. Non viene offerta nessuna lezione extra prima che sia approvata."]
+            ]},
+            {"type": "redbox", "h": "È tornato/a, ma non è ancora davvero presente.", "b": "Questo è l'esito più comune di tutti, ed è facile archiviarlo come risolto perché la frequenza è tornata. Non è risolto: lo studente ora è in aula ma disimpegnato, il che è un problema di facilitazione, non un problema di assenza.<br><br>Quel caso appartiene ai Moduli 2, 3 e 4 — come apri, chi coinvolgi, come chiudi."}
+          ]
+        },
+        {
+          "t": "🪜 Se Va in Escalation: Richiedere una Lezione Extra",
+          "cards": [
+            {"type": "text", "b": "La richiesta stessa funziona diversamente qui — <strong>il Servizio Clienti crea la richiesta di lezione extra, e il Dipartimento Didattico la esamina</strong> prima che venga programmata."},
+            {"type": "flow", "steps": [
+              {"ic": "📋", "h": "1 · Apri la Valutazione dello Studente", "b": "Nel BO, seleziona \"È necessaria una lezione aggiuntiva.\" Due o più assenze consecutive sono sufficienti — per i Moduli 1 e 8, basta una sola assenza. Massimo una lezione extra per studente al mese.", "color": "blue"},
+              {"ic": "📨", "h": "2 · Il Servizio Clienti se ne occupa", "b": "Il Servizio Clienti esamina la tua valutazione e crea la richiesta di lezione extra per conto dello studente.", "color": "red"},
+              {"ic": "🏫", "h": "3 · Il Dipartimento Didattico esamina", "b": "L'approvazione arriva da qui, non direttamente dal tuo TL.", "color": "green"},
+              {"ic": "📞", "h": "4 · Contatta solo dopo l'approvazione", "b": "Una volta approvata, programmi la lezione di 30 minuti con la famiglia, gratuitamente.", "color": "orange"},
+              {"ic": "✅", "h": "5 · Dopo la lezione", "b": "Puoi aggiornare la presenza dello studente a verde nel BO.", "color": "purple"}
+            ]},
+            {"type": "text", "h": "🖥️ Provaci Tu Stesso/a", "b": "Richiedere la lezione extra qui non è un flusso che gestisci tu stesso/a — ma controllare cosa è già registrato sul profilo di uno studente sì. Esercita quella parte:"},
+            {"type": "simulation", "title": "Simulazione BO — Registrare la Presenza e Leggere le Note del Servizio Clienti", "src": "Simulacion_BO_Attendance_Simplified_IT.html"}
+          ]
+        },
+        {
+          "t": "🕳️ Lo Studente Che Non Si È Mai Presentato",
+          "cards": [
+            {"type": "hi", "h": "Non è una \"lezione persa\" — è un problema diverso", "b": "Alcuni studenti non si collegano mai a una singola lezione fin dal primo giorno. Tratta una mancata presentazione alla prima lezione come un segnale d'allarme immediato, non qualcosa da aspettare."},
+            {"type": "text", "b": "Segnalalo rosso — nessuno ti ha detto nulla — e segui la stessa regola delle 48 ore."}
           ]
         }
       ]
@@ -418,11 +561,12 @@ const CONTENT={
   ],
   "quiz": {
     "1": [
-      {"q": "Quale intervallo di frequenza conta come Presenza Bassa (Allerta)?", "opts": ["Sotto il 50%", "50%–74,99%", "75% e oltre"], "c": 0, "fb": "Presenza Bassa (Allerta) significa frequenza sotto il 50% — l'intervallo che richiede la tua attenzione per primo."},
-      {"q": "Cosa misura l'HPR?", "opts": ["La % dei tuoi studenti con frequenza sotto il 50%", "La % dei tuoi studenti con frequenza pari o superiore al 75%", "La % dei tuoi studenti che hanno completato i compiti"], "c": 1, "fb": "L'HPR (High Presence Rate) è la quota dei tuoi studenti con frequenza pari o superiore al 75%."},
+      {"q": "Cosa misura l'HPR?", "opts": ["La quota dei tuoi studenti con Presenza in Classroom sotto il 50%", "La quota dei tuoi studenti con Presenza in Classroom al 75% o oltre", "La quota dei tuoi studenti che hanno completato i compiti"], "c": 1, "fb": "L'HPR (High Presence Rate) è la quota dei tuoi studenti al 75% di presenza o oltre — tutti quelli in 🟢 Sano o 🔵 OSSERVAZIONE. La quota sotto il 50% è l'LPR."},
       {"q": "Uno studente ti dice che sente di \"non essere bravo\" in programmazione. In quale categoria rientra questo?", "opts": ["Una causa esterna, poiché riguarda la materia e non il tutor", "Una causa interna — una che puoi influenzare tramite il feedback e l'incoraggiamento", "Nessuna delle due — è un tratto di personalità, non un vero motivo di assenza"], "c": 1, "fb": "Sentirsi \"non bravi\" nella materia è una delle cause interne — quelle che puoi cambiare attraverso il modo in cui insegni e dai feedback."},
-      {"q": "La piattaforma dell'aula virtuale registra uno studente come presente per il 40% della lezione, ma il tutor lo ha segnato manualmente come \"presente\" nel BO in seguito. Come viene conteggiata ufficialmente questa presenza?", "opts": ["Come presente, poiché la registrazione nel BO del tutor è quella definitiva", "Come non presente — la presenza ufficiale si basa sul registro automatico dell'aula virtuale, e richiede più del 50% della lezione", "Dipende se il TL approva la modifica manuale"], "c": 1, "fb": "La presenza si calcola in base al registro automatico dell'aula virtuale, non dagli inserimenti manuali nel BO — e richiede più del 50% della lezione."},
-      {"q": "Quale delle seguenti <strong>NON</strong> è una delle cause interne di assenza trattate in questo modulo?", "opts": ["Lo studente si annoia in lezione", "Lo studente sente di \"non essere bravo\" in questo", "Una festività nazionale"], "c": 2, "fb": "Una festività nazionale è una causa esterna, fuori dal controllo del tutor — le cause interne sono quelle su cui si concentra questa formazione."}
+      {"q": "Uno studente è segnato \"presente\" nel Back Office, ma il registro dell'aula mostra che è stato connesso solo per il 40% della lezione. Come conta questo?", "opts": ["Come Presente per entrambe le misure, poiché il dato del BO ha sempre la precedenza sul registro dell'aula", "Come Presenza (BO), poiché la lezione è stata registrata come frequentata — ma NON come Presente per la Presenza in Classroom, poiché il 40% è sotto la soglia del 50%", "Come assenza per entrambe, poiché il 40% non raggiunge nessuna delle due soglie"], "c": 1, "fb": "Presenza (BO) e Presenza in Classroom vengono tracciate separatamente: questo studente conta per la Presenza, ma non per la Presenza in Classroom, poiché non ha mai superato la soglia del 50%."},
+      {"q": "Quale delle seguenti cose traccia effettivamente la Presenza (BO)?", "opts": ["Se una lezione programmata si è svolta e lo studente si è presentato, secondo il Back Office", "Per quanto tempo lo studente è rimasto connesso nell'aula virtuale", "Il punteggio dello studente nei compiti e nel lavoro in classe"], "c": 0, "fb": "La Presenza (BO) conferma semplicemente se una lezione programmata si è svolta e lo studente si è presentato — quanto fosse coinvolto è una misura separata, la Presenza in Classroom."},
+      {"q": "Nel Back Office, cosa trasforma un'assenza rossa (non giustificata) in una gialla?", "opts": ["Una volta noto il motivo, cambiare l'assenza in gialla e selezionare quel motivo", "Il trascorrere di 72 ore senza alcuna azione", "Lasciare un commento nel Back Office, senza cambiare il tipo di assenza"], "c": 0, "fb": "Ciò che trasforma un'assenza rossa in gialla è cambiare il tipo e scegliere il motivo una volta noto — che tu l'abbia scoperto direttamente o che te l'abbia riferito il Servizio Clienti. Un commento da solo, senza cambiare il tipo, la lascia rossa."},
+      {"q": "Uno dei tuoi studenti ha un'assenza annunciata (gialla) e una Presenza in Classroom del 91%. In quale gruppo si trova?", "opts": ["ALLERTA — qualsiasi assenza sposta uno studente in un gruppo di rischio", "OSSERVAZIONE — un'assenza è un avviso precoce", "Sano — un'assenza spiegata con presenza forte non è un segnale di rischio"], "c": 2, "fb": "Un'assenza gialla con presenza sopra l'85% lascia uno studente Sano. Ne servono due gialle per raggiungere ALLERTA. Un'assenza annunciata è una situazione che la famiglia sta gestendo — non è un marchio negativo né per te né per loro."}
     ],
     "2": [
     {"q":"Uno studente si collega con la videocamera accesa ma resta visibilmente chiuso — silenzioso, con lo sguardo fisso sulla scrivania. Come inizi?","opts":["Lo saluti con calore, gli fai una breve domanda personale sulla sua settimana, e una volta che risponde, entri gradualmente nel piano di oggi.","Apri con un saluto energico e passi subito a ripassare il progetto della lezione scorsa, confidando che l'impulso di iniziare recuperi la sua attenzione.","Lo saluti e gli chiedi se va tutto bene, poi aspetti in silenzio che risponda prima di decidere se iniziare la lezione."],"c":0,"fb":"Un check-in personale genuino prima di iniziare è ciò che fa tornare coinvolto uno studente chiuso — la sola energia o un atteggiamento passivo di attesa saltano quel passaggio."},
@@ -444,10 +588,12 @@ const CONTENT={
       {"q": "Stai rivedendo i compiti consegnati e il progetto di uno studente è tecnicamente corretto ma nulla di speciale. Cosa scrivi?", "opts": ["Segni solo \"fatto\" senza commenti — ha soddisfatto i requisiti, basta così.", "Lasci una lunga lista di tutto ciò che si potrebbe migliorare, senza menzionare nulla di positivo.", "Lasci un commento breve e specifico segnalando una cosa fatta bene e un suggerimento gentile — qualcosa che anche il genitore potrebbe leggere."], "c": 2, "fb": "Rivedere i compiti è un'occasione di feedback, non solo una casella da spuntare — è anche un'occasione per rafforzare il legame con studenti e genitori."}
     ],
     "6": [
-      {"q": "Due chiamate e messaggi questa settimana, nessuna risposta dal genitore. Qual è il miglior passo successivo?", "opts": ["Fai subito escalation al tuo TL e chiedi che lo studente venga tolto dal tuo gruppo, dato che due tentativi senza risposta suggeriscono disinteresse.", "Invia un altro messaggio caloroso e senza pressione, condividendo la registrazione e il riepilogo dei compiti, così lo studente non resta ulteriormente indietro mentre aspetti una risposta.", "Smetti per ora di contattarlo, ragionando che due tentativi sono un limite ragionevole e altri messaggi potrebbero sembrare eccessivi."], "c": 1, "fb": "Un check-in premuroso è sempre il passo successivo — persistente ma caloroso, invece di fare escalation o arrenderti troppo presto."},
+      {"q": "Quando si coinvolge per la prima volta il Servizio Clienti nelle assenze di uno studente?", "opts": ["Solo dopo che il tutor fa escalation tramite la Valutazione dello Studente", "Dal Modulo 1 — anche una sola assenza è già sul loro radar", "Solo dopo tre assenze non spiegate"], "c": 1, "fb": "Il Servizio Clienti osserva già dal primissimo modulo di uno studente — una sola assenza lì è sufficiente perché si facciano avanti."},
       {"q": "Uno studente ha perso una lezione per malattia. Come ne parla il tutor con il genitore?", "opts": ["Mantiene la conversazione breve e neutra, evitando domande personali sulla malattia per non essere invadente con la situazione della famiglia.", "Esprime una preoccupazione genuina per come sta lo studente, menziona eventuale materiale extra disponibile, e usa il suo ritorno per condividere qualcosa di positivo.", "Si concentra principalmente sul recupero accademico dello studente, dato che rassicurare sulla malattia non è davvero parte del ruolo del tutor."], "c": 1, "fb": "Calore genuino, aiuto pratico e una nota positiva al suo ritorno coprono l'empatia richiesta da questo modulo — restare neutrali o puramente accademici non basta."},
       {"q": "Uno studente che ha perso due lezioni torna e oggi fa un ottimo lavoro. Come lo usa il tutor con i genitori?", "opts": ["Aspetta il prossimo check-in programmato per menzionarlo, per non contattare la famiglia troppe volte in poco tempo.", "Si mette in contatto intorno a questa lezione per condividere il risultato specifico, rafforzando la ripresa positiva sia per lo studente sia per il genitore.", "Lo menziona brevemente solo allo studente, dato che i genitori sono di solito più interessati ai pattern di presenza che ai risultati quotidiani."], "c": 1, "fb": "Condividere il risultato mentre è fresco rafforza la ripresa positiva sia per lo studente sia per il genitore — aspettare o non dirlo al genitore spreca l'occasione."},
-      {"q": "Quale delle seguenti <strong>NON</strong> è consigliata quando uno studente perde una lezione?", "opts": ["Condividere la registrazione e un breve riepilogo dei compiti così non resti indietro", "Fare follow-up con il genitore per chiedere come sta e menzionare che lo studente è mancato", "Proporre una lezione extra direttamente al genitore senza prima coinvolgere il tuo TL"], "c": 2, "fb": "Una lezione extra passa sempre prima dal tuo TL — proporla direttamente al genitore salta questo passaggio obbligatorio."}
+      {"q": "Quale delle seguenti è qualcosa che non devi mai fare?", "opts": ["Condividere la registrazione della lezione con una famiglia il cui figlio ha perso una lezione", "Suggerire a una famiglia che lo studente faccia una pausa dal corso", "Menzionare che il Servizio Clienti contatterà per uno schema di assenze"], "c": 1, "fb": "Suggerire una pausa è nella lista delle cose da \"non fare mai\" — insieme a discutere di prezzi, offrire lezioni individuali non approvate, o informare una famiglia di una cancellazione senza il permesso del tuo TL."},
+      {"q": "Uno studente ha perso la lezione di martedì senza preavviso, quindi l'hai segnata rossa. Giovedì scopri che lo studente aveva l'influenza. Cosa fai?", "opts": ["La lasci rossa — non era stata annunciata al momento, e cambiarla dopo travisirebbe quanto accaduto", "Cambi l'assenza in gialla, selezioni \"Problemi di salute\", e aggiungi un commento con ciò che hai scoperto", "Aggiungi un commento con ciò che hai scoperto e lasci il tipo di assenza com'è"], "c": 1, "fb": "Rosso significa \"non sappiamo perché\". Una volta che lo sai, la registrazione dovrebbe rifletterlo: cambia il tipo, seleziona il motivo, e commenta."},
+      {"q": "Uno studente ha bisogno di una lezione extra. Chi crea effettivamente la richiesta?", "opts": ["Tu, direttamente con la famiglia, una volta che il tuo TL dà un sì verbale", "Il Servizio Clienti la crea, e il Dipartimento Didattico la esamina prima che venga programmata", "La famiglia, presentando lei stessa un modulo di richiesta"], "c": 1, "fb": "Il Servizio Clienti crea la richiesta di lezione extra e il Dipartimento Didattico la esamina — il tuo ruolo si ferma alla segnalazione del bisogno tramite la Valutazione dello Studente."}
     ]
   },
   "sortItems": [
