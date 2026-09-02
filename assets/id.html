@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id" >
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boost Student Attendance — Kodland Tutor Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<!-- HOME -->
+<div id="screen-home" class="screen active">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r">
+      <div class="lang-wrap">
+        <button class="lang-btn" id="langBtn" onclick="toggleLang(event)">🌐 EN <span style="font-size:10px">▾</span></button>
+        <div class="lang-menu" id="langMenu">
+          <div class="lang-item" data-lang="en" onclick="setLang('en')">🇬🇧 English</div>
+          <div class="lang-item" data-lang="es" onclick="setLang('es')">🇪🇸 Español</div>
+          <div class="lang-item" data-lang="pt" onclick="setLang('pt')">🇧🇷 Português</div>
+          <div class="lang-item" data-lang="it" onclick="setLang('it')">🇮🇹 Italiano</div>
+          <div class="lang-item" data-lang="ru" onclick="setLang('ru')">🇷🇺 Русский</div>
+          <div class="lang-item" data-lang="ar" onclick="setLang('ar')">🇸🇦 العربية</div>
+          <div class="lang-item" data-lang="pl" onclick="setLang('pl')">🇵🇱 Polski</div>
+          <div class="lang-item" data-lang="id" onclick="setLang('id')">🇮🇩 Indonesia</div>
+          <div class="lang-item" data-lang="tr" onclick="setLang('tr')">🇹🇷 Türkçe</div>
+        </div>
+      </div>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow" data-i18n="heroEyebrow">📊 Tutor Training Program</div>
+      <h1 data-i18n-html="heroTitle">Boost Your Students'<br><span class="h-pill">Attendance</span></h1>
+      <p data-i18n="heroWelcome">Welcome to this training! You're probably here for one of two reasons:</p>
+      <div class="hero-reasons">
+        <div class="hr-item"><span class="hr-ic">📉</span><span class="hr-txt" data-i18n="heroReason1">Your attendance percentage is low and you want to understand how to turn it around.</span></div>
+        <div class="hr-item"><span class="hr-ic">🌱</span><span class="hr-txt" data-i18n="heroReason2">You're about to start a new course and want to keep your students with you until the end.</span></div>
+      </div>
+      <p data-i18n="heroWork">Work through 5 modules, pass a final exam, and unlock the essentials checklist. Score 70%+ to move forward at every step.</p>
+      <button class="start-btn" data-i18n="startBtn" onclick="goDashboard()">🚀 Start Training</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEARNING PATH / DASHBOARD -->
+<div id="screen-path" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r">
+      <span id="ntag" style="font-size:13px;color:var(--text-muted);font-weight:700;display:none"></span>
+      <button class="tbtn" onclick="toggleTheme()"></button>
+    </div>
+  </nav>
+  <div class="msec">
+    <div class="slbl" data-i18n="learningPath">Your learning path</div>
+    <div class="grid" id="mgrid"></div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div id="screen-content" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r"><button class="pbtn" data-i18n="navModules" onclick="goDashboard()">← Modules</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="cbody" id="cbody"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="screen-quiz" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r"><button class="pbtn" data-i18n="navExitCheck" onclick="exitQuiz()">← Exit Check</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="qbody">
+    <div class="qpt"><div class="qpf" id="qfill"></div></div>
+    <div class="qctr" id="qcount"></div>
+    <div class="qtxt" id="qtext"></div>
+    <div class="qopts" id="qopts"></div>
+    <div class="qfb" id="qfb"></div>
+    <button class="qnxt" id="qnxt" onclick="nextQ()">Next →</button>
+  </div>
+</div>
+
+<!-- SORT GAME -->
+<div id="screen-sort" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r"><button class="pbtn" data-i18n="navExit" onclick="exitSort()">← Exit</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="qbody">
+    <div id="sort-instructions">
+      <div class="sort-instr-card">
+        <h3 data-i18n="sortHowToPlay">📚 How to Play</h3>
+        <div class="sort-instr-grid">
+          <div class="sort-instr-item"><span class="sort-instr-ic">📖</span><div><strong data-i18n="sortStep1Label">Step 1</strong><span data-i18n="sortStep1">You'll see one statement at a time about this module's habits.</span></div></div>
+          <div class="sort-instr-item"><span class="sort-instr-ic">✨</span><div><strong data-i18n="sortStep2Label">Step 2</strong><span data-i18n="sortStep2">Drag the card into the zone where it belongs.</span></div></div>
+          <div class="sort-instr-item"><span class="sort-instr-ic">🗑️</span><div><strong data-i18n="sortTrashLabel">Trash</strong><span data-i18n="sortTrashDesc">Habits that hurt attendance and engagement.</span></div></div>
+          <div class="sort-instr-item"><span class="sort-instr-ic">💎</span><div><strong data-i18n="sortTreasureLabel">Treasure</strong><span data-i18n="sortTreasureDesc">Habits that build unforgettable classes.</span></div></div>
+        </div>
+        <div class="sort-instr-note" data-i18n="sortNote">Drag with your mouse — no clicking needed. You'll see how you did after each drop.</div>
+      </div>
+      <button class="ctabtn" data-i18n="sortStartGame" onclick="beginSortGame()">🎮 Start Game</button>
+    </div>
+    <div id="sort-playfield" style="display:none">
+      <div class="qpt"><div class="qpf" id="sfill"></div></div>
+      <div class="qctr" id="scount"></div>
+      <div class="sort-dnd">
+        <div class="sort-card" id="stext" draggable="true"></div>
+        <div class="sort-zones">
+          <div class="sort-zone trash" id="strash" data-i18n-html="sortTrashZone">🗑️<br>Trash</div>
+          <div class="sort-zone treasure" id="streasure" data-i18n-html="sortTreasureZone">💎<br>Treasure</div>
+        </div>
+      </div>
+      <div class="qfb" id="sfb"></div>
+      <button class="qnxt" id="snxt" onclick="nextSort()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="screen-results" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r"><button class="pbtn" data-i18n="navModules" onclick="goDashboard()">← Modules</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="rbody" id="rbody"></div>
+</div>
+
+<!-- CERTIFICATE -->
+<div id="screen-complete" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r"><button class="pbtn" data-i18n="navDashboard" onclick="goDashboard()">← Dashboard</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="compbody" id="compbody"></div>
+</div>
+
+<!-- CHECKLIST -->
+<div id="screen-checklist" class="screen">
+  <nav class="nav">
+    <a class="logo" href="#" onclick="goHome();return false;">
+      <span class="logo-mark">kodland</span>
+      <span class="logo-div"></span>
+      <span class="logo-sub" data-i18n="logoSub">Tutor Development Department</span>
+    </a>
+    <div class="nav-r"><button class="pbtn" data-i18n="navDashboard" onclick="goDashboard()">← Dashboard</button><button class="tbtn" onclick="toggleTheme()"></button></div>
+  </nav>
+  <div class="chk-body">
+    <div class="chk-badge" data-i18n="chkBadge">✅ Certified</div>
+    <div class="chk-h1" data-i18n="chkH1">Your Attendance Essentials Checklist</div>
+    <p class="chk-sub" data-i18n="chkSub">Keep this nearby. These are the habits from the training that move the needle most — in the order they show up in a real class.</p>
+    <div class="chk-list" id="chkList"></div>
+    <div class="chk-selfeval">
+      <div class="chk-selfeval-h" data-i18n="chkSelfH">🪞 Self-Check: Ask Yourself</div>
+      <div class="chk-selfeval-sub" data-i18n="chkSelfSub">Not graded — just a quick, honest check-in with yourself before or after class.</div>
+      <div id="chkSelf"></div>
+    </div>
+    <div class="chk-actions no-print">
+      <button class="bdark" data-i18n="chkDownload" onclick="window.print()">⬇️ Download as PDF</button>
+      <button class="bline" data-i18n="navBackDashboard" onclick="goDashboard()">← Back to Dashboard</button>
+    </div>
+  </div>
+</div>
+<script src="assets/content-id.js"></script>
+<script src="assets/engine.js"></script>
+</body>
+</html>
