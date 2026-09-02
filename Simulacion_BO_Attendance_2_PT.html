@@ -1,0 +1,1465 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BO Simulation — Requesting an Extra Lesson</title>
+<style>
+:root{
+  --bg:#211E33; --sidebar:#1B1830; --card:#2C2846; --card2:#342E56; --card3:#3A3460;
+  --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
+  --text:#EDEAF9; --text2:#C3BEDA; --muted:#8B85A6;
+  --accent:#7B87F5; --accent-d:#6067D8; --accent-bg:rgba(123,135,245,.15);
+  --green:#34D399; --green-bg:rgba(52,211,153,.15);
+  --orange:#F2A93B; --orange-bg:rgba(242,169,59,.18);
+  --red:#F2716D; --red-bg:rgba(242,113,109,.15); --grey-bg:#413A66; --grey-t:#B4AFC9;
+  --yellow:#F2D93B; --yellow-bg:rgba(242,217,59,.18);
+  --r:14px; --rs:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Inter,system-ui,sans-serif;min-height:100vh;font-size:14px}
+button{font-family:inherit;cursor:pointer}
+a{color:#8FA0F5;text-decoration:none;cursor:pointer}
+a:hover{text-decoration:underline}
+textarea,select,input{font-family:inherit}
+.app{display:flex;min-height:100vh}
+/* SIDEBAR */
+.sidebar{width:72px;background:var(--sidebar);display:flex;flex-direction:column;align-items:center;padding:20px 0;flex-shrink:0;border-right:1px solid var(--border);position:sticky;top:0;height:100vh}
+.side-logo{font-size:24px;font-weight:800;color:var(--accent);margin-bottom:28px;letter-spacing:-1px}
+.side-icon{width:44px;height:44px;border-radius:12px;background:transparent;border:none;color:var(--muted);display:flex;align-items:center;justify-content:center;margin-bottom:10px;transition:all .15s;position:relative}
+.side-icon:hover{background:var(--card2);color:var(--text)}
+.side-icon.active{background:var(--accent);color:#fff}
+.tour-hl{box-shadow:0 0 0 3px #FFD166 !important;animation:pulse 1.4s infinite;position:relative;z-index:30}
+.side-icon.tour-hl::after{content:'';position:absolute;inset:-5px;border-radius:16px;border:2px solid #FFD166;box-shadow:0 0 0 4px rgba(255,209,102,.25);animation:pulse 1.4s infinite}
+.mod-expand.tour-hl{border-radius:8px !important;box-shadow:0 0 0 3px #FFD166,0 0 0 7px rgba(255,209,102,.3) !important}
+.tour-card.pos-left{right:auto;left:20px}
+.side-bottom{margin-top:auto}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border)}
+.sim-badge{background:var(--orange-bg);color:var(--orange);font-weight:700;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid rgba(242,169,59,.35)}
+.topbar-right{display:flex;gap:8px}
+.ticon{width:36px;height:36px;border-radius:10px;background:transparent;border:none;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.ticon:hover{background:var(--card2);color:var(--text)}
+.content{flex:1;padding:26px 32px 90px;overflow-x:hidden}
+h1.pagetitle{font-size:26px;font-weight:700;margin-bottom:18px}
+/* CARDS / GRID */
+.row3{display:grid;grid-template-columns:1.1fr 1.3fr 1fr;gap:16px;margin-bottom:18px;position:relative}
+.row3-student{display:grid;grid-template-columns:1.1fr 1.3fr 1fr 46px;gap:16px;margin-bottom:18px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+@media(max-width:980px){.row3,.row2{grid-template-columns:1fr}.row3-student{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px}
+.card h3{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.profile-name{font-size:19px;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.field{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13.5px;color:var(--text2);border-bottom:1px solid var(--border)}
+.field:last-child{border-bottom:none}
+.field .ic{color:var(--muted);flex-shrink:0}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{background:var(--card2);border:1px solid var(--border2);color:var(--text2);font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px}
+.course-item{padding:12px 14px;background:var(--card2);border-radius:10px;margin-bottom:10px;font-size:13.5px;color:var(--text2)}
+.course-item:last-child{margin-bottom:0}
+.avail-banner{display:flex;align-items:center;gap:10px;background:var(--orange-bg);border:1px solid rgba(242,169,59,.3);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.avail-banner .warn{color:var(--orange)}
+.btn{border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:700;cursor:pointer}
+.btn-orange{background:#8A6A2E;color:#FFE1A8}
+.btn-green{background:#1E5A45;color:#7FE8BE}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-d)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.availrow{display:flex;justify-content:space-between;padding:6px 0;font-size:13.5px}
+.availrow .day{color:var(--text2)}
+.availrow .val{color:var(--muted);font-style:italic}
+.availrow .val.set{background:var(--accent-bg);color:#AEB8FA;font-style:normal;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+/* TABS */
+.tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tab{padding:10px 18px;background:transparent;border:none;color:var(--text2);font-weight:700;font-size:13.5px;border-radius:8px 8px 0 0;position:relative;top:1px;display:flex;align-items:center;gap:6px}
+.tab.active{background:var(--accent);color:#fff;border-radius:8px}
+.subtabs{display:flex;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.subtabs a.stlink{color:var(--text2);font-weight:700;font-size:13px;padding:8px 4px;border-bottom:2px solid transparent}
+.subtabs a.stlink.active{color:var(--accent);border-color:var(--accent)}
+/* TABLE */
+.tablewrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:relative}
+.tbl-toolbar{display:flex;gap:12px;padding:16px 18px;flex-wrap:wrap;align-items:center}
+.tbl-input,.tbl-select{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:8px;font-size:13px;min-width:160px}
+table{width:100%;border-collapse:collapse}
+thead th{text-align:left;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);padding:12px 16px;background:var(--card2);white-space:nowrap}
+tbody td{padding:13px 16px;font-size:13.5px;color:var(--text2);border-top:1px solid var(--border);vertical-align:top}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr.clickable{cursor:pointer}
+.pill{display:inline-block;padding:3px 12px;border-radius:999px;font-size:11.5px;font-weight:700}
+.pill-green{background:var(--green-bg);color:var(--green)}
+.pill-blue{background:var(--accent-bg);color:#AEB8FA}
+.pill-grey{background:var(--grey-bg);color:var(--grey-t)}
+.pill-orange{background:var(--orange-bg);color:var(--orange)}
+.pill-red{background:var(--red-bg);color:var(--red)}
+.pill-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.pill-pale{background:var(--card2);color:var(--muted);border:1px dashed var(--border2)}
+.pill-click{cursor:pointer}
+.pill-click:hover{filter:brightness(1.15)}
+.progress-legend-ic{width:22px;height:22px;border-radius:50%;background:var(--card2);border:1px solid var(--border2);color:var(--text2);font-weight:800;font-size:12px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;margin-left:8px}
+.progress-legend-ic:hover{background:var(--card3);color:#fff}
+.legend-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:var(--text2)}
+.legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+/* OVAL PROGRESS/CHECK PILLS (match real BO) */
+.oval-pill-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.oval-pill-lbl{font-size:10.5px;color:var(--muted);font-weight:700}
+.oval-pill{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:64px;height:32px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.oval-pill.oval-click{cursor:pointer}
+.oval-pill.oval-click:hover{filter:brightness(1.15)}
+.oval-green{background:var(--green);color:#0b2a1f}
+.oval-orange{background:var(--orange);color:#2a2205}
+.oval-red{background:var(--red);color:#fff}
+.oval-yellow{background:var(--yellow);color:#2a2205}
+.oval-grey{background:var(--grey-bg);color:var(--grey-t)}
+.oval-blue{background:var(--accent);color:#fff}
+.oval-pale{background:#E9E7F5;color:#4A4570;border:1px solid rgba(255,255,255,.1)}
+.progress-grid{margin-top:16px}
+.progress-mod-row{display:flex;align-items:center;gap:18px;padding:14px 0;border-top:1px solid var(--border);flex-wrap:wrap}
+.progress-mod-row:first-child{border-top:none}
+.progress-mod-name{width:30px;font-weight:800;font-size:14px;color:var(--text2);flex-shrink:0}
+.progress-mod-pills{display:flex;gap:14px;flex-wrap:wrap;flex:1}
+.progress-mod-total{min-width:60px;text-align:right;font-size:13px;color:var(--text2);font-weight:700;flex-shrink:0}
+/* FLOATING INLINE POPUP (attendance / lesson records) */
+.floating-popup{position:fixed;z-index:900;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:10px;box-shadow:0 12px 34px rgba(0,0,0,.55);display:none}
+.floating-popup .fp-row{display:flex;gap:6px}
+.floating-popup button{border:none;border-radius:999px;padding:7px 13px;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.floating-popup button:hover{filter:brightness(1.1)}
+.floating-popup .fp-info{font-size:12.5px;color:var(--text2);display:flex;align-items:center;gap:14px;white-space:nowrap}
+/* TOGGLE SWITCH */
+.toggle-switch{position:relative;display:inline-block;width:36px;height:20px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--card2);border:1px solid var(--border2);border-radius:999px;transition:.2s}
+.toggle-slider::before{content:'';position:absolute;height:14px;width:14px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s}
+.toggle-switch input:checked + .toggle-slider{background:var(--accent);border-color:var(--accent)}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(16px)}
+/* GROUP STUDENTS/CHECK TABLE (module-grouped columns) */
+.grp-students-table{width:100%;border-collapse:collapse}
+.grp-students-table th{text-align:left;padding:8px 10px;font-size:11.5px;color:var(--muted);font-weight:700;white-space:nowrap}
+.grp-students-table .mod-header-row th{color:var(--text2);font-size:13px;font-weight:800;border-bottom:none;padding-bottom:2px}
+.grp-students-table td{padding:10px;vertical-align:top;border-top:1px solid var(--border)}
+.grp-student-cell b{display:block;font-size:13.5px}
+.grp-student-cell span{font-size:11.5px;color:var(--muted)}
+.grp-student-badges{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.grp-sqbtn{width:32px;height:32px;border-radius:8px;background:transparent;border:1px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;margin-bottom:6px}
+.grp-sqbtn:hover{background:var(--accent);color:#fff}
+/* GROUP DETAIL */
+.grp-header{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:18px}
+@media(max-width:900px){.grp-header{grid-template-columns:1fr}}
+.grp-info-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;margin-top:14px}
+.grp-info-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border)}
+.grp-info-row b{color:var(--text);font-weight:700}
+.grp-stat{display:inline-flex;align-items:center;gap:5px;background:var(--card2);border:1px solid var(--border2);border-radius:999px;padding:4px 12px;font-size:12px;color:var(--text2);font-weight:700}
+.grp-comment-empty{color:var(--muted);font-size:13px;text-align:center;padding:30px 0}
+.grp-icbtn{width:30px;height:30px;border-radius:8px;background:var(--card2);border:1px solid var(--border2);color:var(--text2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+.grp-icbtn:hover{background:var(--card3);color:#fff}
+.grp-addbtn{width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff;border:none;font-size:18px;font-weight:800;cursor:pointer;line-height:1}
+.grp-students-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border-top:1px solid var(--border);flex-wrap:wrap}
+.grp-student-name{min-width:190px}
+.grp-student-name b{display:block;font-size:13.5px}
+.grp-student-name span{font-size:11.5px;color:var(--muted)}
+.check-legend{display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border)}
+.check-legend span{display:inline-flex;align-items:center;gap:5px}
+.check-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.tbl-foot{display:flex;justify-content:flex-end;align-items:center;gap:14px;padding:14px 18px;font-size:12.5px;color:var(--muted)}
+.filterbtn{position:absolute;top:16px;right:18px;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center}
+.empty-row td{text-align:center;color:var(--muted);padding:26px;font-style:italic}
+/* SCHEDULE */
+.sched-nav{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:6px}
+.sched-range{text-align:center;color:var(--accent);font-size:12.5px;margin-bottom:16px}
+.arrowbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border2);background:transparent;color:var(--accent);display:flex;align-items:center;justify-content:center}
+.gridcal{display:grid;grid-template-columns:70px repeat(7,1fr);border-top:1px solid var(--border);border-left:1px solid var(--border)}
+.gridcal .hd{padding:10px 6px;text-align:center;font-size:12px;font-weight:700;color:var(--text2);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--card2)}
+.gridcal .hourlbl{padding:4px 8px;font-size:11px;color:var(--muted);border-right:1px solid var(--border);border-bottom:1px solid var(--border);height:52px}
+.gridcal .cell{border-right:1px solid var(--border);border-bottom:1px solid var(--border);height:52px;position:relative}
+.evt{position:absolute;inset:2px;border-radius:8px;padding:5px 7px;font-size:10.5px;font-weight:700;line-height:1.3;overflow:hidden;cursor:pointer}
+.evt.avail{background:rgba(52,211,153,.18);color:#7FE8BE;border:1px solid rgba(52,211,153,.35)}
+.evt.lesson{background:var(--accent);color:#fff}
+.evt.lesson:hover{background:var(--accent-d)}
+/* RATING + INFO TOOLTIP */
+.badge-status{display:inline-block;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:700}
+.ratrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--border)}
+.ratrow:first-of-type{border-top:none}
+.ratrow .lbl{color:var(--text2);font-size:13.5px;display:flex;align-items:center;gap:6px}
+.ratrow .num{display:flex;align-items:center;gap:12px}
+.ratrow .num b{font-size:14px}
+.retperiod{background:var(--card2);border-radius:10px;padding:16px;text-align:center}
+.retperiod .t{font-weight:700;font-size:13.5px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px}
+.retperiod .v{font-size:20px;font-weight:800;margin-bottom:6px}
+.info-wrap{position:relative;display:inline-flex;cursor:help}
+.info-ic{width:15px;height:15px;border-radius:50%;background:var(--card3);color:var(--muted);font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:800}
+.info-pop{display:none;position:absolute;left:0;top:22px;background:#fff;color:#2a2540;border-radius:8px;padding:11px 14px;font-size:12px;font-weight:600;line-height:1.7;box-shadow:0 8px 24px rgba(0,0,0,.4);white-space:normal;width:230px;z-index:80;text-align:left}
+.info-wrap:hover .info-pop{display:block}
+.info-pop .def{display:block;font-weight:700;color:#413A66;margin-bottom:6px;border-bottom:1px solid #eee;padding-bottom:6px}
+/* STUDENT DETAIL */
+.avatar-circle{width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#7B87F5,#F2A93B);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff;margin:0 auto 12px}
+.comment{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--border)}
+.comment:first-child{border-top:none}
+.cavatar{width:30px;height:30px;border-radius:50%;background:var(--accent-bg);color:#AEB8FA;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.croletag{font-size:10px;font-weight:800;background:var(--card2);color:var(--text2);padding:2px 7px;border-radius:5px;margin-bottom:4px;display:inline-block}
+.cname{font-weight:700;font-size:13px;margin-bottom:3px}
+.ctext{font-size:13px;color:var(--text2);line-height:1.55}
+.ctime{font-size:11px;color:var(--muted);margin-top:5px}
+.senflag{background:var(--orange-bg);color:var(--orange);font-weight:700;padding:1px 8px;border-radius:6px;font-size:12px}
+.detail-tabs{display:flex;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:18px}
+.dtab{padding:9px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--card2);color:var(--text2);font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.dtab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.balance-box{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.balance-num{font-size:22px;font-weight:800}
+.toggle{width:42px;height:24px;background:var(--accent);border-radius:999px;position:relative;display:inline-block}
+.toggle::after{content:'';position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff}
+.autopay-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.backlink{display:inline-flex;align-items:center;gap:6px;color:var(--text2);font-size:13px;font-weight:700;margin-bottom:16px}
+.side-actions{display:flex;flex-direction:column;gap:8px;align-items:center;padding-top:4px}
+.side-actions button{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text2);display:flex;align-items:center;justify-content:center}
+.side-actions button:hover{background:var(--card2);color:var(--text)}
+/* COURSE DETAIL */
+.course-head{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:18px}
+.course-head-emoji{width:120px;height:100px;border-radius:14px;background:linear-gradient(135deg,#2E2A4D,#3A3460);display:flex;align-items:center;justify-content:center;font-size:48px;flex-shrink:0}
+.course-badges{display:flex;gap:10px;margin-bottom:14px}
+.badge-active{background:var(--green-bg);color:var(--green);font-weight:700;padding:5px 16px;border-radius:8px;font-size:13px}
+.badge-type{background:var(--orange-bg);color:var(--orange);font-weight:700;padding:5px 16px;border-radius:8px;font-size:13px;text-transform:capitalize}
+.modtable td{cursor:default}
+.mod-expand{background:var(--accent-bg);color:#AEB8FA;border:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.lesson-row td{background:rgba(255,255,255,.015)}
+.bug-ic{color:var(--orange);cursor:pointer;display:inline-flex}
+.bug-ic:hover{color:#ffcf8a}
+/* MODALS */
+.modal-back{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:26px;width:min(480px,94vw);max-height:88vh;overflow-y:auto}
+.modal-box h3{font-size:17px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.modal-box label{display:block;font-size:12.5px;font-weight:700;color:var(--text2);margin-bottom:6px;margin-top:14px}
+.modal-box label:first-of-type{margin-top:0}
+.modal-box select,.modal-box textarea{width:100%;background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:10px 12px;border-radius:8px;font-size:13.5px}
+.modal-box textarea{min-height:90px;resize:vertical}
+.modal-actions{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.evalentry{background:var(--card2);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:13px;color:var(--text2);line-height:1.7}
+.evalentry b{color:var(--text)}
+/* TOUR — corner widget so it doesn't cover page content */
+.tour-card{position:fixed;bottom:20px;right:20px;width:min(360px,90vw);background:#221F3A;border:2px solid #FFD166;border-radius:16px;padding:16px 18px;box-shadow:0 10px 40px rgba(0,0,0,.5);z-index:999;display:flex;flex-direction:column;gap:9px;max-height:70vh;overflow-y:auto}
+.tour-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tour-step{font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#FFD166}
+.tour-x{background:var(--card2);border:none;color:var(--text2);font-size:11px;font-weight:800;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.tour-x:hover{background:var(--card3);color:#fff}
+.tour-title{font-size:15px;font-weight:800}
+.tour-body{font-size:13px;color:var(--text2);line-height:1.55}
+.tour-body b{color:#FFD166}
+.tour-progress{height:5px;background:var(--card2);border-radius:999px;overflow:hidden}
+.tour-progress i{display:block;height:100%;background:#FFD166;border-radius:999px;transition:width .3s}
+.tour-actions{display:flex;justify-content:flex-end;align-items:center;margin-top:2px}
+.tour-next{background:#FFD166;color:#2a2205;border:none;border-radius:8px;padding:9px 18px;font-weight:800;font-size:13px}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2C2846;border:1px solid var(--accent);color:var(--text);padding:12px 20px;border-radius:10px;font-size:13.5px;z-index:1000;box-shadow:0 8px 26px rgba(0,0,0,.4);max-width:440px;text-align:center}
+.reflect{background:var(--accent-bg);border:1px solid rgba(123,135,245,.35);border-radius:12px;padding:16px 18px;margin-top:16px;font-size:13.5px;color:#D6DCFC;line-height:1.6}
+/* COMPLETION CELEBRATION */
+.celebrate-back{display:none;position:fixed;inset:0;background:rgba(10,8,25,.72);z-index:2000;align-items:center;justify-content:center;padding:16px}
+.confetti-piece{position:fixed;top:-24px;width:10px;height:16px;opacity:.95;z-index:2001;animation:confetti-fall linear forwards;pointer-events:none}
+@keyframes confetti-fall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(108vh) rotate(560deg);opacity:.85}}
+.celebrate-box{position:relative;z-index:2002;background:linear-gradient(160deg,#221F3A,#2C2750);border:2px solid #FFD166;border-radius:22px;padding:40px 34px;width:min(560px,94vw);max-height:86vh;overflow-y:auto;text-align:center;box-shadow:0 20px 70px rgba(0,0,0,.6);animation:celebrate-pop .45s cubic-bezier(.25,1.4,.4,1)}
+@keyframes celebrate-pop{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
+.celebrate-emoji{font-size:56px;line-height:1;margin-bottom:10px}
+.celebrate-title{font-size:24px;font-weight:800;color:#FFD166;margin-bottom:14px}
+.celebrate-text{font-size:14.5px;line-height:1.7;color:#E5E8FF}
+.celebrate-close{margin-top:24px;background:#FFD166;color:#221F3A;border:none;font-weight:800;padding:12px 26px;border-radius:999px;font-size:14px}
+.celebrate-close:hover{filter:brightness(1.06)}
+/* INTRO SCREEN */
+.introgate{position:fixed;inset:0;background:var(--bg);z-index:1001;overflow-y:auto;padding:50px 20px}
+.introwrap{max-width:680px;margin:0 auto}
+.intro-eyebrow{color:var(--accent);font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.introwrap h1{font-size:32px;margin-bottom:16px}
+.introwrap>p.lead{color:var(--text2);font-size:15.5px;line-height:1.75;margin-bottom:30px}
+.intro-item{display:flex;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.intro-num{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.intro-item h4{font-size:15.5px;margin-bottom:6px}
+.intro-item p{font-size:13.5px;color:var(--text2);line-height:1.6}
+.intro-cta{display:block;width:100%;margin-top:28px;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:16px 28px;font-weight:800;font-size:16px}
+.intro-cta:hover{background:var(--accent-d)}
+.intro-note{text-align:center;color:var(--muted);font-size:12.5px;margin-top:14px}
+</style>
+</head>
+<body>
+
+<div class="introgate" id="introgate">
+  <div class="introwrap">
+    <div class="intro-eyebrow">🎓 Simulação de BO</div>
+    <h1>Escalando um Caso de Frequência no BO 🖥️✨</h1>
+    <p class="lead">Nesta simulação você vai praticar o protocolo completo para um caso real: atualizar a frequência quando uma família responde, e reportar isso corretamente através de <b>Avaliar o Aluno</b> — tanto quando um responsável pede uma aula extra, quanto quando ele para de responder.</p>
+    <p class="lead" style="margin-top:20px">Vamos ficar dentro da seção de Grupos o tempo todo — o resto da barra lateral não é coberto aqui.</p>
+    <button class="intro-cta" onclick="startTour()">🚀 Começar o passo a passo guiado</button>
+    <div class="intro-note">Você está prestes a percorrer uma réplica do BO com dados completamente fictícios. O passo a passo vai te guiar, etapa por etapa, sobre o que olhar e onde clicar.</div>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-logo">K</div>
+    <button class="side-icon" data-page="profile" title="Perfil" onclick="blockedNav()"></button>
+    <button class="side-icon" data-page="courses" title="Cursos" onclick="blockedNav()"></button>
+    <button class="side-icon" data-page="groups" title="Grupos" onclick="goPage('groups')"></button>
+    <button class="side-icon" data-page="students" title="Alunos" onclick="blockedNav()"></button>
+    <div class="side-bottom">
+      <button class="side-icon" title="Minha conta"></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <span class="sim-badge">🧪 SIMULAÇÃO — Pedindo uma Aula Extra (dados fictícios)</span>
+      <div class="topbar-right">
+        <button class="ticon" title="Reportar um problema"></button>
+        <button class="ticon" title="Idioma"></button>
+        <button class="ticon" title="Modo dispositivo"></button>
+        <button class="ticon" title="Sair" onclick="location.reload()"></button>
+      </div>
+    </header>
+    <main class="content" id="content"></main>
+  </div>
+</div>
+
+<div class="tour-card" id="tourCard" style="display:none">
+  <div class="tour-top">
+    <span class="tour-step" id="tourStepLbl">Etapa 1</span>
+    <button class="tour-x" onclick="minimizeTour()" title="Minimizar o passo a passo">Minimizar ▾</button>
+  </div>
+  <div class="tour-progress"><i id="tourBar" style="width:3%"></i></div>
+  <div class="tour-title" id="tourTitle"></div>
+  <div class="tour-body" id="tourBody"></div>
+  <div class="tour-actions">
+    <button class="tour-next" id="tourNextBtn" onclick="nextStep()">Próximo →</button>
+  </div>
+</div>
+<button id="tourReopenBtn" onclick="reopenTour()" style="display:none;position:fixed;bottom:20px;right:20px;background:#FFD166;color:#2a2205;border:none;border-radius:999px;padding:12px 20px;font-weight:800;font-size:13px;z-index:999;box-shadow:0 8px 26px rgba(0,0,0,.4)">📍 Retomar o passo a passo guiado</button>
+<div class="floating-popup" id="floatingPopup"></div>
+<div class="celebrate-back" id="celebrateBack">
+  <div class="celebrate-box">
+    <div class="celebrate-emoji">🎉</div>
+    <div class="celebrate-title">Bom trabalho!</div>
+    <div class="celebrate-text">Você acabou de praticar o protocolo completo: atualizar a frequência quando a família responde, e reportar tanto um <b>pedido de aula extra</b> quanto um caso de <b>cliente que não responde</b> — cada um com o modelo correto. Lembre-se: se você iniciou o caso, ele fica com você até ser resolvido. Agora volte e continue lendo o restante do treinamento.</div>
+    <button class="celebrate-close" onclick="restartTour()">🔁 Repetir o passo a passo</button>
+  </div>
+</div>
+
+<script>
+/* ---------- ICONS ---------- */
+const ICONS = {
+ person:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>',
+ book:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5c2-1 5-1 7 0v14c-2-1-5-1-7 0V5Z"/><path d="M20 5c-2-1-5-1-7 0v14c2-1 5-1 7 0V5Z"/></svg>',
+ users:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.3"/><path d="M2.5 21c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><circle cx="17.5" cy="8.5" r="2.6"/><path d="M15 15.3c2.7.4 4.8 2.3 5.5 5.7"/></svg>',
+ grad:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg>',
+ bug:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="7" width="10" height="11" rx="5"/><path d="M9 4l1.5 2M15 4l-1.5 2M3 12h4M17 12h4M4 17l3-1.5M20 17l-3-1.5M4 8l3 1.5M20 8l-3 1.5"/></svg>',
+ lang:'<span style="font-size:13px;font-weight:800">文A</span>',
+ monitor:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>',
+ logout:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>',
+ filter:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 9v5l-4 2v-7L3 5Z"/></svg>',
+ mail:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>',
+ phone:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1.1.4 2.2.7 3.2a2 2 0 0 1-.5 2.1L8 10.5a16 16 0 0 0 6 6l1.5-1.5a2 2 0 0 1 2-.5c1 .3 2.1.6 3.2.7a2 2 0 0 1 1.7 2Z"/></svg>',
+ flag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4c3-1.5 6-1.5 9 0s6 1.5 9 0v12c-3 1.5-6 1.5-9 0s-6-1.5-9 0Z"/></svg>',
+ globe:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>',
+ clock:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ pencil:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+ pin:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v9M9 21l3-8 3 8M6 9h12l-2 4H8L6 9Z"/></svg>',
+ back:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+ arrow:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+ link:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.5-1.5"/></svg>',
+ lock:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>',
+ gear:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>',
+ star:'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.1 6.3 7 1-5 4.9 1.2 6.9L12 17.8 5.7 21.1 6.9 14.2l-5-4.9 7-1L12 2Z"/></svg>',
+ chevdown:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+ calendar:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+ checklist:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg>',
+};
+document.querySelector('[data-page="profile"]').innerHTML = ICONS.person;
+document.querySelector('[data-page="courses"]').innerHTML = ICONS.book;
+document.querySelector('[data-page="groups"]').innerHTML = ICONS.users;
+document.querySelector('[data-page="students"]').innerHTML = ICONS.grad;
+document.querySelectorAll('.ticon')[0].innerHTML = ICONS.bug;
+document.querySelectorAll('.ticon')[1].innerHTML = ICONS.lang;
+document.querySelectorAll('.ticon')[2].innerHTML = ICONS.monitor;
+document.querySelectorAll('.ticon')[3].innerHTML = ICONS.logout;
+document.querySelector('.side-bottom .side-icon').innerHTML = ICONS.person;
+
+/* ---------- FAKE DATA (100% fictional, for training purposes only) ---------- */
+const TEACHER = {
+  name:'Camila Reyes', status:'Active', email:'c.reyes.demo@kodland.team', phone:'+57 300 000 0000',
+  country:'🇨🇴 Colombia', telegram:'@Camila_Reyes_demo', region:'LatAm', tz:'America/Bogota (UTC-05:00)',
+  extra:'Assigned to: Demo Team', tags:['Micro-group','Small group','Regular group','+2 more']
+};
+const COURSES = [
+ {id:1200,title:'[1200] Python Programming [2025][8-9][60 min][40L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:40,date:'12.03.2026'},
+ {id:1450,title:'[1450] Graphic Design [2025][6-7][60 min][30L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:30,date:'02.02.2026'},
+ {id:1330,title:'[1330] Creative Minecraft [2025][5-7][40 min][60L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:60,date:'19.01.2026'},
+];
+const COURSE_DETAIL = {
+ 1200:{emoji:'🐍',type:'coding',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:40,modulesCount:10,courseGroup:'Python',courseSet:'—',excluded:'No',certificate:'LATAM_Python_Level1_1200',intCert:'—',
+   modules:[
+     {id:3900,num:1,title:'M1. First steps',lessons:[
+        {id:38871,num:1,title:'M1.L1 Introduction',topic:'Introduction to the Python course',type:'DEFAULT_LESSON'},
+        {id:38872,num:2,title:'M1.L2 Variables',topic:'Storing information in the program',type:'DEFAULT_LESSON'},
+     ]},
+     {id:3904,num:5,title:'M5. Loops and conditionals',lessons:[
+        {id:39011,num:11,title:'M5.L11 Nested conditionals',topic:'Making decisions within decisions',type:'DEFAULT_LESSON'},
+        {id:39012,num:12,title:'M5.L12 Loops and conditionals',topic:'Repeating actions with for and while',type:'DEFAULT_LESSON'},
+     ]},
+   ]},
+ 1450:{emoji:'🎨',type:'creativity',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:30,modulesCount:8,courseGroup:'Design',courseSet:'—',excluded:'No',certificate:'LATAM_Design_Level1_1450',intCert:'—',
+   modules:[{id:9001,num:1,title:'M1. Design fundamentals',lessons:[{id:91001,num:1,title:'M1.L1 Introduction to design',topic:'What graphic design is',type:'DEFAULT_LESSON'}]}]},
+ 1330:{emoji:'🧱',type:'coding',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:60,modulesCount:12,courseGroup:'Minecraft',courseSet:'—',excluded:'No',certificate:'LATAM_Minecraft_Level1_1330',intCert:'—',
+   modules:[{id:9101,num:1,title:'M1. My first world',lessons:[{id:91101,num:1,title:'M1.L1 Introduction to Minecraft',topic:'Exploring creative mode',type:'DEFAULT_LESSON'}]}]},
+};
+const LESSON_ASSIGNMENTS = {
+ 39012:{inClass:[{num:1,title:'Challenge: loop counter',type:'Project',score:100}],homework:[{num:1,title:'Homework: multiplication table with for',type:'Project',score:100}],guides:[{id:75427,title:'Lesson manual'},{id:75428,title:'Presentation'}]},
+};
+const DEFAULT_ASSIGNMENTS = {inClass:[],homework:[],guides:[{id:70000,title:'Lesson manual'}]};
+const TEACHER_GROUPS = [
+ {name:'PRM_DEMO_MA-01',course:'[1200] Python Programming',students:'3/3',sched:'Tu, Th 14:00',start:'05.02.2026',nextDate:'20.08.2026',next:'M5L12. Loops and conditionals',status:'Active'},
+ {name:'DEMO_MI-02',course:'[1450] Graphic Design',students:'2/2',sched:'We 16:00',start:'12.03.2026',nextDate:'19.08.2026',next:'M3L8. Composition and color',status:'Active'},
+ {name:'PRM_DEMO_SA-03',course:'[1330] Creative Minecraft',students:'4/4',sched:'Sa 09:00',start:'22.01.2026',nextDate:'22.08.2026',next:'M6L15. My first video game',status:'Active'},
+];
+const AVAILABILITY = [
+ ['Monday',null],['Tuesday','14:00-18:00'],['Wednesday',null],['Thursday','14:00-18:00'],
+ ['Friday',null],['Saturday','09:00-12:00'],['Sunday',null]
+];
+const ALL_GROUPS = [
+ {id:99001,title:'PRM_DEMO_ATT-01',tutor:'Camila Reyes',course:'[1200] Python Programming',courseId:1200,start:'05.02.2026',sp:'3/3',prev:'M1L3. If/else basics',next:'M1L4. Nested conditionals',type:'[26] Premium Group 3, 3 students, 60 minutes',branch:'LatAm',funnel:'LatAm | Peru, Mexico, Colombia',tz:'America/Bogota',premium:'Yes',tourTarget:true},
+];
+const PROBLEM_KIND_OPTIONS = [
+ 'O cliente quer pausar/congelar a conta',
+ 'O aluno quer abandonar os estudos/solicita reembolso',
+ 'Problema técnico, por favor, entre em contato com o aluno',
+ "O cliente não responde/não comparece às aulas (o tutor tentou entrar em contato primeiro)",
+ 'Editar as informações pessoais do aluno (Nome, e-mail, telefone)',
+ 'É necessária uma aula extra',
+ 'O cliente quer mudar o horário',
+ 'Outro',
+];
+const STUDENTS = [
+ {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lessons',region:'LatAm | Colombia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
+   age:9,gender:'Female',sen:'No',last:'11.08.2026, 18:20',
+   parent:{name:'Laura Martínez',phone:'+57 300 111 2222',email:'laura.martinez.demo@example.com',country:'🇨🇴 Colombia',currency:'COP',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'14:32 (UTC-05:00)'},
+   comments:[
+   ],
+   balanceNum:32, monthly:1200, period:40,
+   payments:[{date:'02.02.2026, 09:10',staff:'L204 Ana P.',amt:'560.00$',ccy:'COP',lessons:40,sys:'stripe',country:'🇨🇴',branch:'LatAm',status:'✅'}]
+ },
+ {id:2,name:'Diego Ramírez',active:'PRM_DEMO_ATT-01',inactive:'',email:'diego.demo@example.com',currency:'USD',balance:'18 lessons',region:'LatAm | Peru',funnel:'LatAm|Parallel+Inst sale demo',crm:'BACKLOG',
+   age:10,gender:'Male',sen:'No',last:'10.08.2026, 17:05',
+   parent:{name:'Jorge Ramírez',phone:'+51 900 222 3333',email:'jorge.ramirez.demo@example.com',country:'🇵🇪 Peru',currency:'USD',funnel:'LatAm | Peru, Mexico, Colombia',status:'BACKLOG',local:'14:05 (UTC-05:00)'},
+   comments:[
+   ],
+   balanceNum:18, monthly:900, period:30,
+   payments:[{date:'12.03.2026, 11:00',staff:'L112 Marco V.',amt:'390.00$',ccy:'USD',lessons:30,sys:'stripe',country:'🇵🇪',branch:'LatAm',status:'✅'}]
+ },
+ {id:3,name:'Camila Torres',active:'PRM_DEMO_ATT-01',inactive:'',email:'camila.demo@example.com',currency:'MXN',balance:'55 lessons',region:'LatAm | Mexico',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
+   age:8,gender:'Female',sen:'No',last:'12.08.2026, 09:30',
+   parent:{name:'Patricia Torres',phone:'+52 55 0000 4444',email:'patricia.torres.demo@example.com',country:'🇲🇽 Mexico',currency:'MXN',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'13:30 (UTC-05:00)'},
+   comments:[
+     {role:'CS',name:'Equipe de CS',text:'Confirmado com a família que a aula extra está agendada — eles agradeceram o retorno rápido e disseram que Camila está ansiosa para se atualizar.',time:'13.08.2026, 09:10'},
+     {role:'CS',name:'Equipe de CS',text:'A família mencionou que a aluna tem parecido um pouco desmotivada este mês. Vale a pena ficar de olho.',time:'02.08.2026, 17:22'},
+   ],
+   balanceNum:55, monthly:1650, period:60,
+   payments:[{date:'22.01.2026, 08:45',staff:'L204 Ana P.',amt:'890.00$',ccy:'MXN',lessons:60,sys:'stripe',country:'🇲🇽',branch:'LatAm',status:'✅'}],
+   tourTarget:true,
+ },
+];
+const LESSON_MODAL = {topic:'Loops and conditionals', module:5, lesson:12, course:'[1200] Python Programming', group:'PRM_DEMO_MA-01 - 3 students', time:'14:00 - 15:00'};
+
+/* ---------- STATE ---------- */
+let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+
+function tourStudent(){ return STUDENTS.find(s=>s.tourTarget) || STUDENTS[0]; }
+
+function goPage(p){ state.page=p; if(p!=='studentDetail') state.sid=null; render(); fire('go-'+p); }
+function goTeacherTab(t){ state.ttab=t; render(); fire('open-'+t+'-tab'); }
+function openStudent(id){ state.page='studentDetail'; state.sid=id; state.dtab='wallet'; render(); fire('open-student'); }
+function openStudentByName(name){ const st=STUDENTS.find(x=>x.name===name); if(st) openStudent(st.id); }
+function goDetailTab(t){ state.dtab=t; render(); fire('open-detail-tab-'+t); }
+function openCourseDetail(courseId){ state.page='courseDetail'; state.courseId=courseId; state.courseTab='lessons'; state.expandedModuleId=null; render(); fire('open-course-detail'); }
+function expandModule(modId){ state.expandedModuleId = (state.expandedModuleId===modId?null:modId); render(); fire('expand-module'); }
+function openLessonAssignments(courseId,lessonId){ state.courseId=courseId; state.courseTab='assignments'; state.selectedLessonId=lessonId; render(); fire('open-lesson-assignments'); }
+function goCourseTab(t){ state.courseTab=t; render(); }
+
+function openLessonModal(){ document.getElementById('lessonModal').style.display='flex'; fire('open-lesson-modal'); }
+function closeLessonModal(){ const m=document.getElementById('lessonModal'); if(m) m.style.display='none'; fire('close-lesson-modal'); }
+function reportContentIssue(lessonId){
+  const url = 'https://product-surveys.kodland.com/coding?lang=en&lesson_id='+lessonId+'&user_id=DEMO2026&email='+encodeURIComponent(TEACHER.email);
+  window.open(url, '_blank');
+  toast('🐞 In the real BO, this opens the content-quality survey in a new tab: '+url);
+  fire('open-bug-report');
+}
+function openEvalModal(){ document.getElementById('evalModal').style.display='flex'; fire('open-evaluate-modal'); }
+function closeEvalModal(){ const m=document.getElementById('evalModal'); if(m) m.style.display='none'; }
+function confirmEvalModal(){ closeEvalModal(); toast('✅ Evaluation sent. Your Team Lead will review it.'); fire('confirm-evaluate-modal'); }
+function requestExtraLesson(){ toast('🧪 This is a simulation — in the real BO this opens the form to schedule the extra lesson. Remember to include a clear justification so your Team Leader can approve it.'); fire('click-add-lesson'); }
+function clickLoginLink(){ toast('🔗 Link copiado — permite que o aluno entre na plataforma já com a sessão iniciada, útil se ele tiver um problema técnico no meio da aula.'); fire('click-login-link'); }
+function clickCopyCreds(){ toast('🔒 Usuário e senha do aluno copiados para a área de transferência.'); fire('click-copy-credentials'); }
+
+function toast(msg){
+  const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),3400);
+}
+function showFloatingPopup(anchorEl, html){
+  const fp = document.getElementById('floatingPopup');
+  fp.innerHTML = html;
+  fp.style.display = 'block';
+  const r = anchorEl.getBoundingClientRect();
+  let left = r.left;
+  fp.style.top = (r.bottom+8)+'px';
+  fp.style.left = left+'px';
+  requestAnimationFrame(()=>{
+    const fw = fp.offsetWidth;
+    if(left+fw > window.innerWidth-10) fp.style.left = Math.max(10,window.innerWidth-fw-10)+'px';
+  });
+}
+function hideFloatingPopup(){ document.getElementById('floatingPopup').style.display='none'; }
+document.addEventListener('click', e=>{
+  const fp = document.getElementById('floatingPopup');
+  if(fp && fp.style.display==='block' && !fp.contains(e.target) && !e.target.closest('[data-fp-trigger]')) hideFloatingPopup();
+});
+function simClick(label){ toast('🧪 Isto é uma simulação — no BO real, isso faria: "'+label+'".'); }
+
+/* ---------- RENDER HELPERS ---------- */
+function badge(status){
+  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey'};
+  return `<span class="pill ${map[status]||'pill-grey'}">${status}</span>`;
+}
+function info(def,scale){ return `<span class="info-wrap"><span class="info-ic">i</span><span class="info-pop"><span class="def">${def}</span>${scale}</span></span>`; }
+function tierPill(pct,tiers){
+  for(const t of tiers){ if(pct>=t.min){ return `<span class="pill ${t.cls}">${t.label}</span>`; } }
+  return `<span class="pill pill-grey">—</span>`;
+}
+
+function render(){
+  const c = document.getElementById('content');
+  document.querySelectorAll('.side-icon[data-page]').forEach(b=>b.classList.toggle('active',
+    b.dataset.page===state.page ||
+    (state.page==='studentDetail' && b.dataset.page==='students') ||
+    (state.page==='courseDetail' && b.dataset.page==='groups') ||
+    (state.page==='groupDetail' && b.dataset.page==='groups')
+  ));
+  if(state.page==='profile') c.innerHTML = renderProfile();
+  else if(state.page==='courses') c.innerHTML = renderCourses();
+  else if(state.page==='groups') c.innerHTML = renderGroups();
+  else if(state.page==='students') c.innerHTML = renderStudents();
+  else if(state.page==='studentDetail') c.innerHTML = renderStudentDetail();
+  else if(state.page==='courseDetail') c.innerHTML = renderCourseDetail();
+  else if(state.page==='groupDetail') c.innerHTML = renderGroupDetail();
+  if(state.evalOpen){
+    const m=document.getElementById('groupEvalModal');
+    if(m){
+      m.style.display='flex';
+      const sel=document.getElementById('problemKindSel');
+      if(sel && state.evalKind) sel.value=state.evalKind;
+      const ta=document.getElementById('evalTextarea');
+      if(ta){
+        if(state.evalKind==='É necessária uma aula extra') ta.value=TEMPLATE_EXTRA_CLASS;
+        else if(state.evalKind && state.evalKind.indexOf('O cliente não responde')===0) ta.value=TEMPLATE_NOT_REPLYING;
+      }
+    }
+  }
+  applyTourHighlights();
+}
+
+function renderProfile(){
+  return `
+  <h1 class="pagetitle">Profile</h1>
+  <div class="row3">
+    <div class="card">
+      <div class="profile-name">${TEACHER.name} ${badge(TEACHER.status)}</div>
+      <div class="field">${ICONS.mail}<a>${TEACHER.email}</a></div>
+      <div class="field">${ICONS.phone}${TEACHER.phone}</div>
+      <div class="field">${ICONS.flag}${TEACHER.country}</div>
+      <div class="field">${ICONS.mail}<a>${TEACHER.telegram}</a></div>
+      <div class="field">${ICONS.globe}${TEACHER.region}</div>
+      <div class="field">${ICONS.clock}${TEACHER.tz}</div>
+      <div class="field">${ICONS.person}${TEACHER.extra}</div>
+      <div class="tag-row">${TEACHER.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    </div>
+    <div class="card">
+      <h3>Teacher courses</h3>
+      ${COURSES.map(c=>`<div class="course-item">${c.title}</div>`).join('')}
+    </div>
+    <div class="card">
+      <h3>Availability hours ${ICONS.pencil}</h3>
+      <div class="avail-banner"><span class="warn">⚠️</span><button class="btn btn-orange">Update Hours</button><button class="btn btn-green">Hours Are Current</button></div>
+      ${AVAILABILITY.map(([d,v])=>`<div class="availrow"><span class="day">${d}:</span><span class="val ${v?'set':''}">${v||'Not assigned'}</span></div>`).join('')}
+    </div>
+  </div>
+  <div class="tabs" id="teacherTabs">
+    <button class="tab ${state.ttab==='groups'?'active':''}" data-ttab="groups" onclick="goTeacherTab('groups')">${ICONS.users} Groups</button>
+    <button class="tab ${state.ttab==='schedule'?'active':''}" data-ttab="schedule" onclick="goTeacherTab('schedule')">${ICONS.clock} Schedule</button>
+    <button class="tab ${state.ttab==='rating'?'active':''}" data-ttab="rating" onclick="goTeacherTab('rating')">${ICONS.book} Rating</button>
+  </div>
+  ${state.ttab==='groups'?renderTeacherGroups():state.ttab==='schedule'?renderSchedule():renderRating()}
+  `;
+}
+
+function renderTeacherGroups(){
+  return `
+  <div class="tablewrap" id="groupsTable">
+    <div class="tbl-toolbar">
+      <input class="tbl-input" placeholder="Group name/ID" disabled>
+      <select class="tbl-select" disabled><option>Courses</option></select>
+      <select class="tbl-select" disabled><option>Active</option></select>
+    </div>
+    <table><thead><tr><th>Group name</th><th>Course</th><th>Students</th><th>Schedule</th><th>Start date</th><th>Next lesson date</th><th>Next lesson</th><th>Status</th></tr></thead>
+    <tbody>
+    ${TEACHER_GROUPS.map(g=>`<tr><td><a>${g.name}</a></td><td>${g.course}</td><td>${g.students}</td><td>${g.sched}</td><td>${g.start}</td><td>${g.nextDate}</td><td><a>${g.next}</a></td><td>${badge(g.status)}</td></tr>`).join('')}
+    </tbody></table>
+    <div class="tbl-foot">Items per page: 10 &nbsp;|&nbsp; 1-3 of 3</div>
+  </div>`;
+}
+
+function renderSchedule(){
+  const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const hours=['08:00 AM','09:00 AM','10:00 AM','11:00 AM','01:00 PM','02:00 PM','03:00 PM','04:00 PM'];
+  return `
+  <div class="sched-nav"><button class="arrowbtn">${ICONS.back}</button><button class="btn btn-ghost">Current Week</button><button class="arrowbtn">${ICONS.arrow}</button></div>
+  <div class="sched-range">10.08 - 16.08.2026 📅</div>
+  <div class="tablewrap" style="padding-bottom:6px" id="scheduleGrid">
+    <div class="gridcal">
+      <div class="hd"></div>${days.map(d=>`<div class="hd">${d}</div>`).join('')}
+      ${hours.map((h,i)=>`<div class="hourlbl">${h}</div>${days.map((d)=>{
+        let content='';
+        if((d==='Tuesday'||d==='Thursday')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Available</div>`;
+        if(d==='Saturday'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Available</div>`;
+        if(d==='Tuesday'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
+        return `<div class="cell">${content}</div>`;
+      }).join('')}`).join('')}
+    </div>
+  </div>
+  <div class="modal-back" id="lessonModal">
+    <div class="modal-box" style="width:min(460px,92vw)">
+      <h3>🕐 Lesson Information</h3>
+      <div class="field"><b style="color:var(--text)">Lesson topic:</b>&nbsp;${LESSON_MODAL.topic}</div>
+      <div class="row2" style="margin:10px 0 0">
+        <div class="field">#&nbsp;Module: ${LESSON_MODAL.module}</div>
+        <div class="field">#&nbsp;Lesson: ${LESSON_MODAL.lesson}</div>
+      </div>
+      <div class="field"><a>${LESSON_MODAL.course}</a></div>
+      <div class="field"><a>${LESSON_MODAL.group}</a></div>
+      <div class="field">${ICONS.clock}&nbsp;Session Time: ${LESSON_MODAL.time}</div>
+      <div class="modal-actions">
+        <a onclick="closeLessonModal()">Exit</a>
+        <button class="btn btn-accent" onclick="simClick('Start the lesson / open the virtual classroom');closeLessonModal();">Start lesson</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderRating(){
+  const RET_SCALE = '<b>Amazing:</b> ≥86%<br><b>Good:</b> ≥77%<br><b>OK:</b> ≥71%<br><b>Bad:</b> &lt;71%';
+  const RET_TIERS = [{min:86,cls:'pill-green',label:'Amazing'},{min:77,cls:'pill-blue',label:'Good'},{min:71,cls:'pill-orange',label:'OK'},{min:-1,cls:'pill-red',label:'Bad'}];
+  return `
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px">
+    <select class="tbl-select" disabled><option>Current</option></select>
+    <span class="badge-status" style="background:var(--grey-bg);color:var(--grey-t)">New Tutor (Good)</span>
+  </div>
+  <div class="card" style="margin-bottom:16px" id="retentionCard">
+    <h3>Retention ${info('% of your students who stay enrolled after a given period.',RET_SCALE)} <span class="badge-status" style="background:var(--accent-bg);color:#AEB8FA;font-size:11px">Good</span></h3>
+    <div class="row3">
+      <div class="retperiod"><div class="t">Period 1</div><div class="v">88%</div>${tierPill(88,RET_TIERS)}</div>
+      <div class="retperiod"><div class="t">Period 2</div><div class="v">79%</div>${tierPill(79,RET_TIERS)}</div>
+      <div class="retperiod"><div class="t">Period 3</div><div class="v">72%</div>${tierPill(72,RET_TIERS)}</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:16px" id="disciplineCard">
+    <h3>Discipline <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Amazing</span></h3>
+    <div class="ratrow" id="attendanceRow"><span class="lbl">Attendance ${info('% of your student cases with attendance at or above the expected threshold per lesson.','<b>Amazing:</b> ≥85%<br><b>Good:</b> ≥75%<br><b>OK:</b> ≥70%<br><b>Bad:</b> &lt;70%')}</span><div class="num"><b>92%</b><span class="pill pill-green">Amazing</span></div></div>
+    <div class="ratrow" id="replRow"><span class="lbl">Replacements/Cancellations ${info('% of your scheduled lessons that get rescheduled or cancelled.','<b>Amazing:</b> &lt;3%<br><b>Good:</b> 3-5%<br><b>Bad:</b> &gt;5%')}</span><div class="num"><b>0%</b><span class="pill pill-green">Amazing</span></div></div>
+    <div class="ratrow" id="cwhwRow"><span class="lbl">CW/HW Submitted ${info('% of classwork (CW) and homework (HW) your students actually submit.','<b>CW target:</b> ≥60%<br><b>HW target:</b> ≥40%')}</span><div class="num"><b style="color:var(--orange)">78%</b>&nbsp;/&nbsp;<b>85%</b></div></div>
+    <div class="ratrow"><span class="lbl">CW/HW Corrected</span><div class="num"><b>95%</b>&nbsp;/&nbsp;<b>100%</b></div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px" id="lessonQualityCard">
+    <h3>Lesson Quality ${info('Average quality score of your lessons, from audits/AutoQA.','<b>Amazing:</b> ≥90%<br><b>Good:</b> 65-89%<br><b>OK:</b> 35-64%<br><b>Bad:</b> 15-34%<br><b>Terrible:</b> &lt;15%')} <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Great</span></h3>
+    <div class="ratrow"><span class="lbl">Average score</span><div class="num"><b>90%</b></div></div>
+  </div>
+  <div class="card" id="refundsCard">
+    <h3>Refunds ${info('Number of refund requests linked to your students in the period.','<b>Amazing:</b> 0<br><b>Good:</b> 1<br><b>Bad:</b> ≥2')} <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Amazing</span></h3>
+    <div class="ratrow"><span class="lbl">Refunds count</span><div class="num"><b>0</b></div></div>
+  </div>
+  `;
+}
+
+function renderCourses(){
+  return `<h1 class="pagetitle">Courses</h1>
+  <div class="tablewrap">
+    <button class="filterbtn">${ICONS.filter}</button>
+    <table><thead><tr><th>ID</th><th>Title</th><th>Business branch</th><th>Active</th><th>Number of lessons</th><th>Change date</th></tr></thead>
+    <tbody>${COURSES.map(c=>`<tr><td>${c.id}</td><td><a onclick="openCourseDetail(${c.id})">${c.title}</a></td><td>${c.branch}</td><td>${c.active}</td><td>${c.lessons}</td><td>${c.date}</td></tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">Items per page: 100 &nbsp;|&nbsp; 1-3 of 3</div>
+  </div>`;
+}
+
+function renderGroups(){
+  return `<h1 class="pagetitle">Grupos</h1>
+  <div style="display:flex;gap:10px;margin-bottom:16px">
+    <button class="btn btn-ghost">Aulas Extra</button>
+    <button class="btn btn-ghost">Grupos Paralelos</button>
+  </div>
+  <div class="tablewrap" id="allGroupsTable">
+    <button class="filterbtn">${ICONS.filter}</button>
+    <table><thead><tr><th>ID</th><th>Título</th><th>Tutor</th><th>Curso atual</th><th>Início</th><th>Alunos/Pago</th><th>Aula anterior</th><th>Próxima aula</th><th>Tipo</th><th>Filial</th><th>Fuso horário</th><th>Premium</th></tr></thead>
+    <tbody>${ALL_GROUPS.map(g=>`<tr><td>${g.id}</td><td><a class="${g.tourTarget?'tour-group-target':''}" style="cursor:pointer;color:var(--accent)" onclick="openGroupDetail(${g.id})">${g.title}</a></td><td>${g.tutor}</td><td><a class="${g.tourTarget?'tour-course-target':''}" onclick="openCourseDetail(${g.courseId})">${g.course}</a></td><td>${g.start}</td><td>${g.sp}</td><td>${g.prev||'—'}</td><td><a>${g.next}</a></td><td>${g.type}</td><td>${g.branch}</td><td>${g.tz}</td><td>${g.premium}</td></tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">Itens por página: 100 &nbsp;|&nbsp; 1-4 de 4</div>
+  </div>`;
+}
+
+/* ---------- GROUP DETAIL ---------- */
+const GROUP_DETAIL_MODULES = [
+  {name:'M1', lessons:['L1','L2','L3','L4']},
+];
+const GROUP_DETAIL_LESSONS = GROUP_DETAIL_MODULES.flatMap(m=>m.lessons);
+const GROUP_CHECK_TASKS = [{key:'T1',type:'house'},{key:'T2',type:'asterisk'},{key:'T3',type:'theory'},{key:'T4',type:'project'}];
+let GROUP_RUNTIME = {};
+const GROUP_FILLER_NAMES = [
+  {name:'Ethan Smith', email:'ethan.smith.demo@example.com'},
+  {name:'Olivia Jones', email:'olivia.jones.demo@example.com'},
+  {name:'Lucas Brown', email:'lucas.brown.demo@example.com'},
+  {name:'Mia Taylor', email:'mia.taylor.demo@example.com'},
+];
+const FIXED_ATT = {
+  'Sofía Martínez': ['green','green','green','green'],
+  'Diego Ramírez': ['green','green','green','green'],
+  'Camila Torres': ['green','green','yellow','red'],
+};
+function buildGroupDetailData(gid){
+  const g = ALL_GROUPS.find(x=>x.id===gid) || ALL_GROUPS[0];
+  const roster = STUDENTS.filter(s=>s.active===g.title).map(s=>({name:s.name,email:s.email}));
+  const targetSize = parseInt((g.sp||'3/3').split('/')[0],10) || 3;
+  let fillerIdx = 0;
+  while(roster.length<targetSize) roster.push(GROUP_FILLER_NAMES[fillerIdx++ % GROUP_FILLER_NAMES.length]);
+  const attColors = ['green','green','orange','red','blue','pale','pale','pale'];
+  const students = roster.map((n,i)=>({
+    name:n.name, email:n.email,
+    package: g.premium==='Yes' ? 'Premium package' : 'Standard package',
+    tasksDone: 2+(i%2), checked: i%2===0,
+    cells: GROUP_DETAIL_LESSONS.map((l,li)=>{
+      const fixed = FIXED_ATT[n.name];
+      const att = fixed ? fixed[li] : attColors[(li+i)%attColors.length];
+      return {lesson:l, att, score: (att==='green') ? '40/40' : '—'};
+    })
+  }));
+  const statuses = ['green','yellow','orange','red','grey'];
+  const checkGridByLesson = GROUP_DETAIL_LESSONS.map((l,li)=>students.map((s,si)=>GROUP_CHECK_TASKS.map((t,ti)=>{
+    const st = statuses[(li+si+ti)%statuses.length];
+    return {status:st, score:(st==='grey'||st==='red') ? '—' : (ti+2)+'/5'};
+  })));
+  return {
+    group:g, students, checkTasks:GROUP_CHECK_TASKS, checkGridByLesson,
+    schedule:[
+      {num:1,title:g.prev||'M5L10. For loops',tutor:g.tutor,date:'23.07.2026',day:'Th',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
+      {num:2,title:'M5L11. Nested conditionals',tutor:g.tutor,date:'30.07.2026',day:'Th',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
+      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Th',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
+      {num:4,title:'M5L13. Functions basics',tutor:g.tutor,date:'27.08.2026',day:'Th',status:'upcoming'},
+    ],
+  };
+}
+function getGroupData(gid){
+  if(!GROUP_RUNTIME[gid]) GROUP_RUNTIME[gid] = buildGroupDetailData(gid);
+  return GROUP_RUNTIME[gid];
+}
+function openGroupDetail(id){ state.page='groupDetail'; state.gid=id; state.groupTab='students'; state.checkLessonIdx=0; state.checkOnlyReview=false; render(); fire('open-group-detail'); }
+function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
+function copyGroupName(name){ toast('📋 Nome do grupo "'+name+'" copiado para a área de transferência.'); }
+
+function openAttPopup(si,ci,ev){
+  ev.stopPropagation();
+  state.attTarget={si,ci};
+  showFloatingPopup(ev.currentTarget, `
+    <div class="fp-row">
+      <button style="background:var(--green);color:#0b2a1f" onclick="markAttendance('green')">Compareceu</button>
+      <button style="background:var(--red);color:#fff" onclick="markAttendance('red')">Não compareceu</button>
+      <button style="background:var(--yellow);color:#2a2205" onclick="showAbsentReasons(event)">Ausente</button>
+    </div>`);
+  fire('open-att-popup');
+}
+const ABSENCE_REASONS = ['Problemas de saúde','Problemas de conteúdo','Viagem','Problemas técnicos','Problemas de horário','Outro'];
+function showAbsentReasons(ev){
+  ev.stopPropagation();
+  const fp = document.getElementById('floatingPopup');
+  fp.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${ABSENCE_REASONS.map(r=>`<button style="background:var(--yellow);color:#2a2205" onclick="markAttendance('yellow','${r}')">${r}</button>`).join('')}
+    </div>`;
+  fire('open-absence-reasons');
+}
+const TEMPLATE_EXTRA_CLASS = 'Motivo da aula extra:\n Isso foi discutido com o aluno?: sim/não\n O aluno tentou se recuperar assistindo às gravações das aulas?: sim/não';
+const TEMPLATE_NOT_REPLYING = 'Por favor, entre em contato com o cliente.\n Data da próxima aula:\n Quando o aluno deixou de frequentar as aulas:\n Como e onde tentei entrar em contato com o cliente/resultado:\n Módulo e número da próxima aula (apenas 1-1):\n Por que eu queria entrar em contato com o cliente:';
+function markAttendance(status, reason){
+  if(!state.attTarget) return;
+  const data = getGroupData(state.gid);
+  const cell = data.students[state.attTarget.si].cells[state.attTarget.ci];
+  cell.att = status;
+  cell.score = status==='green' ? '40/40' : '—';
+  const name = data.students[state.attTarget.si].name, lesson = cell.lesson;
+  hideFloatingPopup();
+  render();
+  let extra = '';
+  if(reason==='Problemas técnicos') extra = ' A família explicou que a luz acabou naquele dia — registrado automaticamente.';
+  toast(reason ? '✅ Falta registrada para '+name+' — '+lesson+' ('+reason+').'+extra : '✅ Frequência atualizada para '+name+' — '+lesson);
+  if(reason) fire('pick-absence-reason'); else fire('mark-attendance');
+}
+function openGroupEvalModal(name){
+  state.groupEvalTarget=name;
+  state.evalOpen=true;
+  state.evalKind=null;
+  const sel=document.getElementById('problemKindSel'); if(sel) sel.selectedIndex=0;
+  const ta=document.getElementById('evalTextarea'); if(ta) ta.value='';
+  document.getElementById('groupEvalModal').style.display='flex';
+  fire('open-group-eval');
+}
+function closeGroupEvalModal(){ state.evalOpen=false; state.evalKind=null; document.getElementById('groupEvalModal').style.display='none'; }
+function applyEvalTemplate(){
+  const v=document.getElementById('problemKindSel').value;
+  const ta=document.getElementById('evalTextarea');
+  state.evalKind=v;
+  if(v==='É necessária uma aula extra'){ ta.value=TEMPLATE_EXTRA_CLASS; fire('select-extra-class'); }
+  else if(v.indexOf('O cliente não responde')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
+  else { ta.value=''; }
+}
+function confirmGroupEvalModal(){
+  const name = state.groupEvalTarget || 'o aluno';
+  const ta=document.getElementById('evalTextarea');
+  closeGroupEvalModal();
+  toast('✅ Avaliação enviada para '+name+'. Seu Team Lead vai revisá-la.');
+  fire('confirm-group-eval');
+}
+function addNextLesson(){
+  if(GROUP_DETAIL_MODULES[0].lessons.indexOf('L5')!==-1) return;
+  GROUP_DETAIL_MODULES[0].lessons.push('L5');
+  GROUP_DETAIL_LESSONS.push('L5');
+  const data = getGroupData(99001);
+  data.students.forEach(function(s){
+    const att = (s.name==='Camila Torres') ? 'red' : 'green';
+    s.cells.push({lesson:'L5', att:att, score: att==='green' ? '40/40' : '—'});
+  });
+  const lastRow = data.checkGridByLesson[data.checkGridByLesson.length-1];
+  data.checkGridByLesson.push(lastRow.map(function(row){ return row.map(function(cell){ return {status:cell.status, score:cell.score}; }); }));
+  render();
+}
+function blockedNav(){ toast('🔒 Esta seção não faz parte deste passo a passo.'); }
+function openLessonRecords(li,ev){
+  ev.stopPropagation();
+  const data = getGroupData(state.gid);
+  const l = data.schedule[li];
+  if(!l.rec) return;
+  showFloatingPopup(ev.currentTarget, `
+    <div class="fp-info">
+      <span>${ICONS.clock} ${l.rec.time}</span>
+      <a href="${l.rec.link}" target="_blank" style="color:var(--accent)">Link - S3</a>
+      <span>Duração: ${l.rec.duration} min.</span>
+    </div>`);
+}
+function setCheckLesson(idx){ state.checkLessonIdx = +idx; render(); }
+function toggleCheckReview(){ state.checkOnlyReview = !state.checkOnlyReview; render(); }
+function gradeCheckCell(si,ti){
+  const data = getGroupData(state.gid);
+  const cell = data.checkGridByLesson[state.checkLessonIdx||0][si][ti];
+  if(cell.status==='grey'){ toast('— Sem tarefa para esta aula.'); return; }
+  if(cell.status==='red'){ toast('⚠️ Ainda não foi entregue nada — não há nada para avaliar.'); return; }
+  cell.status='green'; cell.score='5/5';
+  render();
+  toast('📄 Simulação: isso abriria a plataforma onde o aluno entregou essa tarefa, para que você possa revisá-la e avaliá-la.');
+}
+function checkTaskIcon(type){ return {house:'🏠',asterisk:'✱',theory:'T',project:'⭐'}[type] || '🏠'; }
+function renderScheduleStatus(l){
+  if(l.status==='completed') return `<span class="pill pill-green">Concluída</span>`;
+  return `<button class="btn btn-accent" onclick="simClick('Start lesson')">Iniciar aula</button>`;
+}
+
+function renderGroupDetail(){
+  const data = getGroupData(state.gid);
+  const g = data.group;
+  const durMatch = g.type.match(/(\d+) minutes/);
+  const completedCount = data.schedule.filter(l=>l.status==='completed').length;
+  return `
+  <h1 class="pagetitle">${g.title}</h1>
+  <div class="grp-header">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <h3 style="margin:0">${g.title}</h3>
+        <span class="grp-icbtn" title="Copiar nome do grupo" onclick="copyGroupName('${g.title}')">📋</span>
+        <span class="badge-status" style="background:var(--green-bg);color:var(--green)">Ativo</span>
+      </div>
+      <div class="grp-info-cols">
+        <div>
+          <div class="grp-info-row"><span>Tutor</span><b>${g.tutor}</b></div>
+          <div class="grp-info-row"><span>Supervisor</span><b>Rodrigo Salas</b></div>
+          <div class="grp-info-row"><span>Suporte Técnico</span><b>Ana Belén Ruiz</b></div>
+          <div class="grp-info-row"><span>Filial</span><b>${g.branch}</b></div>
+          <div class="grp-info-row"><span>Funil AMO</span><a style="cursor:pointer" onclick="simClick('Open AMO funnel')"><b style="color:var(--accent)">${g.funnel}</b></a></div>
+          <div class="grp-info-row"><span>Idioma</span><b>🇧🇷 Português</b></div>
+          <div class="grp-info-row" style="border-bottom:none"><span>Fuso horário</span><b>${g.tz}</b></div>
+        </div>
+        <div>
+          <div class="grp-info-row"><span>Curso</span><a style="cursor:pointer" onclick="openCourseDetail(${g.courseId})"><b style="color:var(--accent)">${g.course}</b></a></div>
+          <div class="grp-info-row"><span>Tipo de grupo</span><b>${g.type}</b></div>
+          <div class="grp-info-row"><span>Alunos</span><b>${g.sp}</b></div>
+          <div class="grp-info-row"><span>Duração da sessão</span><b>${durMatch?durMatch[1]:'60'} min</b></div>
+          <div class="grp-info-row"><span>Faixa etária</span><b>7–12</b></div>
+          <div class="grp-info-row"><span>Aulas concluídas</span><b>${completedCount}/${data.schedule.length}</b></div>
+          <div class="grp-info-row" style="border-bottom:none"><span>Data de início</span><b>${g.start}</b></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <span class="grp-stat">${ICONS.star} 4.9</span>
+        <span class="grp-stat">${ICONS.clock} ${data.schedule.length} aulas</span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 style="margin:0">Comentários</h3>
+        <div style="display:flex;gap:8px">
+          <button class="grp-addbtn" title="Adicionar comentário" onclick="simClick('Add group comment')">+</button>
+          <span class="grp-icbtn" title="Exportar comentários" onclick="simClick('Export group comments')">⬇</span>
+        </div>
+      </div>
+      <div class="grp-comment-empty">Sem descrição</div>
+    </div>
+  </div>
+  <div class="detail-tabs" id="groupTabs">
+    <button class="dtab ${state.groupTab==='students'?'active':''}" data-grouptab="students" onclick="goGroupTab('students')">${ICONS.grad} Alunos</button>
+    <button class="dtab ${state.groupTab==='schedule'?'active':''}" data-grouptab="schedule" onclick="goGroupTab('schedule')">${ICONS.calendar} Cronograma</button>
+    <button class="dtab ${state.groupTab==='check'?'active':''}" data-grouptab="check" onclick="goGroupTab('check')">${ICONS.checklist} Verificar</button>
+  </div>
+  ${state.groupTab==='schedule' ? renderGroupScheduleTab(data) : state.groupTab==='check' ? renderGroupCheckTab(data) : renderGroupStudentsTab(data)}
+  ${renderGroupModals()}
+  `;
+}
+function renderGroupStudentsTab(data){
+  return `
+  <div class="tablewrap" style="overflow-x:auto">
+    <table class="grp-students-table">
+      <thead>
+        <tr class="mod-header-row">
+          <th></th>
+          ${GROUP_DETAIL_MODULES.map(m=>`<th colspan="${m.lessons.length}">${m.name}</th>`).join('')}
+          <th></th>
+        </tr>
+        <tr>
+          <th>Lista de alunos</th>
+          ${GROUP_DETAIL_LESSONS.map(l=>`<th>${l}</th>`).join('')}
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.students.map((s,si)=>`
+        <tr>
+          <td class="grp-student-cell">
+            <a class="clickable${s.name==='Camila Torres'?' tour-student-name-target':''}" onclick="openStudentByName('${s.name}')"><b>${s.name}</b></a><span>${s.email}</span>
+            <div class="grp-student-badges">
+              <span class="pill pill-blue">${ICONS.book} ${s.tasksDone} aulas</span>
+              <span class="pill ${s.checked?'pill-green':'pill-grey'}">${s.checked?'✓':'—'}</span>
+            </div>
+          </td>
+          ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
+            <span class="oval-pill-lbl">${c.lesson}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+          </div></td>`).join('')}
+          <td>
+            <button class="grp-sqbtn" title="Link de acesso à plataforma" onclick="clickLoginLink()">${ICONS.lock}</button><br>
+            <button class="grp-sqbtn${s.name==='Camila Torres'?' tour-star-target':''}" title="Avaliar o aluno" onclick="openGroupEvalModal('${s.name}')">${ICONS.star}</button>
+          </td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+function renderGroupScheduleTab(data){
+  return `
+  <div class="tablewrap">
+    <table><thead><tr><th>Nº</th><th>Aula</th><th>Tutor</th><th>Data</th><th>Sala</th><th>Status</th><th>Gravações</th></tr></thead>
+    <tbody>${data.schedule.map((l,li)=>`<tr>
+      <td>${l.num}</td><td>${l.title}</td>
+      <td><select><option>${l.tutor}</option></select></td>
+      <td>${l.date}</td><td>${l.day}</td>
+      <td>${renderScheduleStatus(l)}</td>
+      <td>${l.rec?`<a style="cursor:pointer;color:var(--accent);display:inline-flex;align-items:center;gap:5px" onclick="openLessonRecords(${li},event)">${ICONS.book} Gravações da aula</a>`:'—'}</td>
+    </tr>`).join('')}</tbody></table>
+  </div>`;
+}
+function renderGroupCheckTab(data){
+  const li = state.checkLessonIdx || 0;
+  const onlyReview = !!state.checkOnlyReview;
+  return `
+  <div class="tablewrap">
+    <div class="tbl-toolbar" style="gap:18px;flex-wrap:wrap;align-items:center">
+      <select class="tbl-select" onchange="setCheckLesson(this.value)">${GROUP_DETAIL_LESSONS.map((l,i)=>`<option value="${i}" ${i===li?'selected':''}>${l}</option>`).join('')}</select>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer">
+        <span class="toggle-switch"><input type="checkbox" ${onlyReview?'checked':''} onchange="toggleCheckReview()"><span class="toggle-slider"></span></span>
+        Somente pendentes de revisão
+      </label>
+    </div>
+    <div class="check-legend">
+      <span><i class="check-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></i>Revisado</span>
+      <span><i class="check-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></i>Não entregue</span>
+      <span><i class="check-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></i>Entregue com atraso</span>
+      <span><i class="check-dot" style="background:${PROGRESS_LEGEND_HEX.yellow}"></i>Para revisar</span>
+      <span><i class="check-dot" style="background:${PROGRESS_LEGEND_HEX.grey}"></i>Sem tarefa</span>
+      <span>🏠 Tarefa de casa &nbsp; ✱ Tarefa adicional &nbsp; T Teoria &nbsp; ⭐ Projeto</span>
+    </div>
+    <table class="grp-students-table">
+      <thead><tr><th>Aluno</th>${data.checkTasks.map(t=>`<th>${t.key}</th>`).join('')}</tr></thead>
+      <tbody>${data.students.map((s,si)=>{
+        const cells = data.checkTasks.map((t,ti)=>{
+          const cg = data.checkGridByLesson[li][si][ti];
+          if(onlyReview && cg.status!=='yellow') return `<td></td>`;
+          return `<td><div class="oval-pill-wrap">
+            <span class="oval-pill-lbl">${t.key}</span>
+            <span class="oval-pill oval-${cg.status} oval-click" onclick="gradeCheckCell(${si},${ti})">${checkTaskIcon(t.type)} ${cg.score}</span>
+          </div></td>`;
+        }).join('');
+        return `<tr><td class="grp-student-cell"><b>${s.name}</b></td>${cells}</tr>`;
+      }).join('')}</tbody>
+    </table>
+  </div>`;
+}
+function renderGroupModals(){
+  return `
+  <div class="modal-back" id="groupEvalModal">
+    <div class="modal-box">
+      <h3>⭐ Avaliar o aluno</h3>
+      <label>Tipo de problema</label>
+      <select id="problemKindSel" onchange="applyEvalTemplate()">${PROBLEM_KIND_OPTIONS.map(o=>`<option>${o}</option>`).join('')}</select>
+      <label>Escrever comentário</label>
+      <textarea id="evalTextarea" placeholder="Ex.: Expliquei o conceito novamente com uma atividade mais curta, a família concordou em reforçar em casa..."></textarea>
+      <div class="modal-actions"><a onclick="closeGroupEvalModal()">Cancelar</a><button class="btn btn-accent" onclick="confirmGroupEvalModal()">Confirmar</button></div>
+    </div>
+  </div>
+  `;
+}
+
+function renderCourseDetail(){
+  const cd = COURSE_DETAIL[state.courseId];
+  const base = COURSES.find(c=>c.id===state.courseId) || {title:'Demo course'};
+  return `
+  <a class="backlink" onclick="goPage('groups')">${ICONS.back} Back to Groups</a>
+  <div class="course-head">
+    <div class="course-head-emoji">${cd.emoji}</div>
+    <div style="flex:1;min-width:260px">
+      <h1 class="pagetitle" style="margin-bottom:10px">${base.title}</h1>
+      <div class="course-badges"><span class="badge-active">Active</span><span class="badge-type">${cd.type}</span></div>
+      <div class="row2" style="margin-bottom:0">
+        <div>
+          <div class="field">${ICONS.users}Business branch: ${cd.branch}</div>
+          <div class="field">${ICONS.lang}Language: ${cd.language}</div>
+          <div class="field">${ICONS.clock}Course type: ${cd.courseType}</div>
+        </div>
+        <div>
+          <div class="field">${ICONS.book}Number of lessons: ${cd.lessonsCount}</div>
+          <div class="field">${ICONS.book}Number of modules: ${cd.modulesCount}</div>
+          <div class="field">${ICONS.grad}Certificate: <a>${cd.certificate}</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab ${state.courseTab==='lessons'?'active':''}" onclick="goCourseTab('lessons')">${ICONS.book} Lessons</button>
+    <button class="tab ${state.courseTab==='assignments'?'active':''}" onclick="goCourseTab('assignments')">${ICONS.grad} Assignments</button>
+  </div>
+  ${state.courseTab==='lessons' ? renderModulesTable(cd) : renderAssignmentsTab(cd)}
+  `;
+}
+
+function renderModulesTable(cd){
+  return `
+  <div class="tablewrap" id="modulesTable">
+    <h3 style="padding:16px 18px 0">Modules</h3>
+    <table class="modtable"><thead><tr><th>ID</th><th>Title</th><th>Nº</th><th>Skills</th><th>Review</th><th>Actions</th></tr></thead>
+    <tbody>
+    ${cd.modules.map(m=>`
+      <tr><td>${m.id}</td><td>${m.title}</td><td>${m.num}</td><td>—</td><td>—</td>
+      <td><button class="mod-expand ${m.id===state.expandedModuleId?'tour-course-target':''}" data-mod="${m.id}" onclick="expandModule(${m.id})">${ICONS.chevdown}</button></td></tr>
+      ${m.id===state.expandedModuleId ? `
+      <tr><td colspan="6" style="padding:0">
+        <table style="width:100%"><thead><tr><th>ID</th><th>Nº</th><th>Lesson title</th><th>Topic</th><th>Type</th><th>Actions</th></tr></thead>
+        <tbody>
+        ${m.lessons.map(l=>`<tr class="lesson-row"><td>${l.id}</td><td>${l.num}</td><td><a onclick="openLessonAssignments(${state.courseId},${l.id})">${l.title}</a></td><td>${l.topic}</td><td>${l.type}</td><td><span class="bug-ic" title="Evaluate content quality" onclick="reportContentIssue(${l.id})">${ICONS.bug}</span></td></tr>`).join('')}
+        </tbody></table>
+      </td></tr>` : ''}
+    `).join('')}
+    </tbody></table>
+    <div class="tbl-foot">Items per page: 100 &nbsp;|&nbsp; 1-${cd.modules.length} of ${cd.modules.length}</div>
+  </div>`;
+}
+
+function renderAssignmentsTab(cd){
+  const allLessons = cd.modules.flatMap(m=>m.lessons);
+  const lid = state.selectedLessonId || (allLessons[0] && allLessons[0].id);
+  const lesson = allLessons.find(l=>l.id===lid) || allLessons[0];
+  const data = LESSON_ASSIGNMENTS[lid] || DEFAULT_ASSIGNMENTS;
+  return `
+  <div class="tablewrap" id="studyGuidesTable">
+    <div style="padding:16px 18px 0">
+      <label style="font-size:12px;color:var(--muted);font-weight:700">Lesson</label>
+      <select class="tbl-select" style="margin-top:6px;width:100%;max-width:340px">${allLessons.map(l=>`<option ${l.id===lid?'selected':''}>${l.title}</option>`).join('')}</select>
+    </div>
+    <h3 style="padding:20px 18px 0">In-class assignments</h3>
+    <table><thead><tr><th>Nº</th><th>Title</th><th>Type</th><th>Max score</th></tr></thead>
+    <tbody>${data.inClass.length?data.inClass.map(a=>`<tr><td>${a.num}</td><td>${a.title}</td><td>${a.type}</td><td>${a.score}</td></tr>`).join(''):'<tr class="empty-row"><td colspan="4">No data available</td></tr>'}</tbody></table>
+    <h3 style="padding:20px 18px 0">Homework assignments</h3>
+    <table><thead><tr><th>Nº</th><th>Title</th><th>Type</th><th>Max score</th></tr></thead>
+    <tbody>${data.homework.length?data.homework.map(a=>`<tr><td>${a.num}</td><td>${a.title}</td><td>${a.type}</td><td>${a.score}</td></tr>`).join(''):'<tr class="empty-row"><td colspan="4">No data available</td></tr>'}</tbody></table>
+    <h3 style="padding:20px 18px 0">Study guides</h3>
+    <table><thead><tr><th>ID</th><th>Title</th></tr></thead>
+    <tbody>${data.guides.map(g=>`<tr><td>${g.id}</td><td><a onclick="simClick('Open '+'${g.title}'+' (the lesson\'s real manual)')">${g.title}</a></td></tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">This is where you'll find the lesson's step-by-step manual and the presentation you'll use in class.</div>
+  </div>`;
+}
+
+function renderStudents(){
+  return `<h1 class="pagetitle">Students</h1>
+  <button class="btn btn-accent" style="margin-bottom:16px" onclick="simClick('Add a new student')">+ Add</button>
+  <div class="tablewrap" id="studentsTable">
+    <button class="filterbtn">${ICONS.filter}</button>
+    <table><thead><tr><th>Student's name</th><th>Active groups</th><th>Inactive groups</th><th>E-mail address</th><th>Currency</th><th>Balance</th><th>Region</th><th>Sales funnel</th><th>CRM status</th></tr></thead>
+    <tbody>${STUDENTS.map(s=>`<tr class="clickable ${s.tourTarget?'tour-student-target':''}" onclick="openStudent(${s.id})"><td><a>${s.name}</a></td><td>${s.active}</td><td>${s.inactive||'—'}</td><td>${s.email}</td><td>${s.currency}</td><td>${s.balance}</td><td>${s.region}</td><td>${s.funnel}</td><td>${badge(s.crm)}</td></tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">Items per page: 100 &nbsp;|&nbsp; 1-${STUDENTS.length} of ${STUDENTS.length}</div>
+  </div>`;
+}
+
+function renderStudentDetail(){
+  const s = STUDENTS.find(x=>x.id===state.sid) || tourStudent();
+  const initials = s.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+  return `
+  <a class="backlink" onclick="goPage('students')">${ICONS.back} Voltar para Alunos</a>
+  <div class="row3-student">
+    <div class="card" style="text-align:center">
+      <div class="avatar-circle">${initials}</div>
+      <div style="font-weight:700;font-size:16px;margin-bottom:12px">${s.name}</div>
+      <div class="field" style="justify-content:center;border:none">Idade: ${s.age}</div>
+      <div class="field" style="justify-content:center;border:none">Gênero: ${s.gender}</div>
+      <div class="field" id="senField" style="justify-content:center;border:none">NEE: ${s.sen==='No'?'Não':`<span class="senflag">${s.sen}</span>`}</div>
+      <div class="field" style="justify-content:center;border:none">Saldo de aulas: ${s.balanceNum}</div>
+      <div class="field" style="justify-content:center;border:none">Última vez visto: ${s.last}</div>
+    </div>
+    <div class="card">
+      <h3>Informações da família</h3>
+      <div class="subtabs"><a class="stlink active">Responsável</a><a class="stlink">Membros da Família&nbsp;0</a></div>
+      <div class="field">Nome do responsável: ${s.parent.name}</div>
+      <div class="field">${ICONS.phone}${s.parent.phone}</div>
+      <div class="field">${ICONS.mail}<a>${s.parent.email}</a></div>
+      <div class="field">${ICONS.flag}${s.parent.country}</div>
+      <div class="field">Moeda: ${s.parent.currency}</div>
+      <div class="field">Funil AMO: <a>${s.parent.funnel}</a></div>
+      <div class="field">Status AMO: ${s.parent.status}</div>
+      <div class="field">${ICONS.clock}Horário local: ${s.parent.local}</div>
+    </div>
+    <div class="card">
+      <div class="subtabs"><a class="stlink active">Comentários</a><a class="stlink">Mais Informações</a></div>
+      ${s.comments.length?s.comments.map(c=>`<div class="comment"><div class="cavatar">${c.role}</div><div><span class="croletag">${c.role}</span><div class="cname">${c.name}</div><div class="ctext">${c.text}</div><div class="ctime">${ICONS.pin} ${c.time}</div></div></div>`).join(''):`<div style="color:var(--muted);font-size:13px;padding:14px 0">Sem descrição</div>`}
+    </div>
+    <div class="side-actions">
+      <button id="loginLinkBtn" title="Link de acesso à plataforma" onclick="clickLoginLink()">${ICONS.link}</button>
+      <button id="copyCredsBtn" title="Copiar usuário e senha" onclick="clickCopyCreds()">${ICONS.lock}</button>
+      <button title="Configurações" onclick="simClick('Open advanced student settings')">${ICONS.gear}</button>
+    </div>
+  </div>
+  <div class="detail-tabs" id="detailTabs">
+    <button class="dtab ${state.dtab==='wallet'?'active':''}" data-dtab="wallet" onclick="goDetailTab('wallet')">💰 Saldo</button>
+    <button class="dtab" onclick="simClick('View Trial Class information')">📋 Aula Experimental</button>
+    <button class="dtab" onclick="simClick('View the student\'s Groups')">${ICONS.users} Grupos</button>
+    <button class="dtab ${state.dtab==='progress'?'active':''}" data-dtab="progress" onclick="goDetailTab('progress')">📊 Progresso</button>
+    <button class="dtab" onclick="simClick('View HUB Projects')">🔧 Projetos HUB</button>
+    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Aulas Extra</button>
+    <button class="dtab" onclick="simClick('View lesson Feedback')">📝 Feedback</button>
+  </div>
+  ${state.dtab==='wallet' ? renderWalletTab(s) : state.dtab==='progress' ? renderProgressTab(s) : state.dtab==='extra' ? renderExtraTab(s) : renderWalletTab(s)}
+  `;
+}
+
+function renderWalletTab(s){
+  return `
+  <div class="card" style="margin-bottom:16px" id="walletCard">
+    <h3>Saldo</h3>
+    <div class="balance-box">
+      <div><div style="font-size:12px;color:var(--muted)">Saldo atual</div><div class="balance-num">${s.balanceNum} aulas</div></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-accent" onclick="simClick('Top up lessons (Top Up)')">Recarregar</button>
+        <button class="btn btn-ghost" onclick="simClick('Subtract lessons (Substract)')">Subtrair</button>
+        <button class="btn btn-ghost" onclick="simClick('Generate an invoice')">Fatura</button>
+      </div>
+    </div>
+    <div class="autopay-row">
+      <div><div style="font-size:12px;color:var(--muted)">Pagamento mensal: <b style="color:var(--text)">${s.monthly}</b></div><div style="font-size:12px;color:var(--muted)">Período de recarga: <b style="color:var(--text)">${s.period}</b></div></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:12.5px;color:var(--text2)">Ativar pagamentos automáticos no SimplePay</span><span class="toggle"></span></div>
+    </div>
+  </div>
+  <div class="tablewrap">
+    <div class="tbl-toolbar" style="justify-content:space-between"><h3 style="margin:0">Pagamentos</h3><button class="btn btn-accent" onclick="simClick('Log a new payment')">Criar</button></div>
+    <table><thead><tr><th>Data</th><th>Membro da equipe</th><th>Valor</th><th>Moeda</th><th>Aulas</th><th>Sistema de pagamento</th><th>País</th><th>Status</th></tr></thead>
+    <tbody>${s.payments.map(p=>`<tr><td>${p.date}</td><td>${p.staff}</td><td>${p.amt}</td><td>${p.ccy}</td><td>${p.lessons}</td><td>${p.sys}</td><td>${p.country}</td><td>${p.status}</td></tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">Itens por página: 5 &nbsp;|&nbsp; 1-1 de 1</div>
+  </div>`;
+}
+
+const PROGRESS_LEGEND_HEX = {green:'#34D399',orange:'#F2A93B',red:'#F2716D',blue:'#7B87F5',pale:'#8B85A6',yellow:'#F2D93B',grey:'#B4AFC9'};
+const PROGRESS_CLASS_MODULES = [
+  {name:'M1', total:'140/280', lessons:[
+    {lbl:'L1',v:'60/60',c:'green'},{lbl:'L2',v:'80/80',c:'green'},{lbl:'L3',v:'—',c:'orange'},{lbl:'L4',v:'—',c:'red'},
+  ]},
+  {name:'M2', total:'0/260', lessons:[
+    {lbl:'L5',v:'—',c:'blue'},{lbl:'L6',v:'—',c:'pale'},{lbl:'L7',v:'—',c:'pale'},{lbl:'L8',v:'—',c:'pale'},
+  ]},
+];
+const PROGRESS_HOME_MODULES = [
+  {name:'M1', total:'140/220', lessons:[
+    {lbl:'L1',v:'60/60',c:'green',hasScore:true},{lbl:'L2',v:'70/80',c:'yellow',hasScore:true},{lbl:'L3',v:'40/60',c:'orange',hasScore:true},{lbl:'L4',v:'—',c:'red',hasScore:false},
+  ]},
+  {name:'M2', total:'80/140', lessons:[
+    {lbl:'L5',v:'—',c:'grey',hasScore:false},{lbl:'L6',v:'80/80',c:'green',hasScore:true},{lbl:'L7',v:'—',c:'red',hasScore:false},{lbl:'L8',v:'0/60',c:'orange',hasScore:true},
+  ]},
+];
+function setProgressSub(sub){ state.progressSub = sub; render(); }
+function openProgressLegend(){ document.getElementById('progressLegendModal').style.display='flex'; }
+function closeProgressLegend(){ document.getElementById('progressLegendModal').style.display='none'; }
+function gradeHomework(lbl, hasScore){
+  if(!hasScore){ toast('⚠️ '+lbl+' — nothing was submitted yet, so there is nothing to grade.'); return; }
+  toast('📄 Simulation: this would open the platform where the student submitted '+lbl+', so you can review and grade it.');
+}
+function renderProgressLegend(){
+  return `
+  <div class="modal-back" id="progressLegendModal">
+    <div class="modal-box" style="width:min(620px,94vw)">
+      <h3>Legend<a onclick="closeProgressLegend()" style="cursor:pointer;font-weight:800">✕</a></h3>
+      <div style="display:flex;gap:30px;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <b style="font-size:13px;display:block;margin-bottom:8px">In the class:</b>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></span>Student was absent from the lesson</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></span>Absent for well-founded reasons</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></span>Student attended the lesson</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.blue}"></span>Student's presence was not marked</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.pale};border:1px solid var(--border2)"></span>Next lesson</div>
+        </div>
+        <div style="flex:1;min-width:220px">
+          <b style="font-size:13px;display:block;margin-bottom:8px">Assignments:</b>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></span>Assignment reviewed</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></span>Assignment not submitted</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></span>Assignment submitted after deadline</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.yellow}"></span>Assignment to be reviewed</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.grey}"></span>No assignments in the lesson</div>
+          <div class="legend-row">— &nbsp;Not graded assignment</div>
+          <div class="legend-row">✱ &nbsp;Additional task</div>
+          <div class="legend-row">T &nbsp;Theory</div>
+          <div class="legend-row">★ &nbsp;Project</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function renderProgressModules(modules, isHome){
+  return `<div class="progress-grid">
+    ${modules.map(m=>`
+      <div class="progress-mod-row">
+        <div class="progress-mod-name">${m.name}</div>
+        <div class="progress-mod-pills">${m.lessons.map(l=>`
+          <div class="oval-pill-wrap">
+            <span class="oval-pill-lbl">${l.lbl}</span>
+            <span class="oval-pill oval-${l.c}${isHome?' oval-click':''}" ${isHome?`onclick="gradeHomework('${m.name}·${l.lbl}',${!!l.hasScore})"`:''}>${l.v}</span>
+          </div>`).join('')}
+        </div>
+        <div class="progress-mod-total">${m.total}</div>
+      </div>`).join('')}
+  </div>`;
+}
+function renderProgressTab(s){
+  const sub = state.progressSub || 'class';
+  return `
+  <div class="card" style="margin-bottom:16px" id="progressHeader">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px">
+      <div>
+        <h3 style="margin-bottom:10px">Progress</h3>
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:4px">Choose the group</label>
+        <select class="tbl-select" onchange="toast('🧪 This is a simulation — switching groups would reload this Progress view for the new group.')">
+          <option>${s.active}</option>
+        </select>
+      </div>
+      <div style="text-align:right;font-size:12.5px;color:var(--muted);font-weight:600">
+        Status: <b style="color:var(--green)">Admitted</b> &nbsp; Points: <b style="color:var(--text)">210/260</b> &nbsp; Rating: <b style="color:var(--text)">3/4</b>
+      </div>
+    </div>
+    <div class="subtabs" style="margin-top:18px;align-items:center;justify-content:space-between">
+      <div style="display:flex;gap:14px">
+        <a class="stlink ${sub==='class'?'active':''}" onclick="setProgressSub('class')">In The Class</a>
+        <a class="stlink ${sub==='home'?'active':''}" onclick="setProgressSub('home')">At Home</a>
+      </div>
+      <span class="progress-legend-ic" onclick="openProgressLegend()" title="What do the colors mean?">i</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin:10px 0 0">
+      ${sub==='class'
+        ? 'Attendance and in-lesson participation, module by module.'
+        : 'Homework: how many tasks were submitted and whether each was reviewed on time. Click a task to open it for grading.'}
+    </p>
+    ${sub==='class' ? renderProgressModules(PROGRESS_CLASS_MODULES,false) : renderProgressModules(PROGRESS_HOME_MODULES,true)}
+  </div>
+  ${renderProgressLegend()}
+  <div class="tablewrap" id="tutorsEvalPanel">
+    <div class="tbl-toolbar" style="justify-content:space-between">
+      <h3 style="margin:0">Tutors' Evaluations</h3>
+      <button class="btn btn-accent" id="evalStudentBtn" onclick="openEvalModal()">${ICONS.star} Evaluate The Student</button>
+    </div>
+    <div style="padding:0 18px 20px">
+      <div class="evalentry">
+        <b>Jan 20, 2026, 11:10 AM, Camila Reyes (you)</b><br>
+        Please review this case — the family mentioned in the Trial Class that the student has diagnosed ADHD.<br>
+        <b>Problem Kind:</b> Edit the students personal information (Name, email, phone number)<br>
+        <b>Comment:</b> Suggest confirming with CS whether the 60-minute lesson length is appropriate, or if an individual class with shorter blocks would work better.
+      </div>
+    </div>
+  </div>
+  <div class="modal-back" id="evalModal">
+    <div class="modal-box">
+      <h3>⭐ Evaluate the student</h3>
+      <label>Problem Kind</label>
+      <select id="problemKindSel">${PROBLEM_KIND_OPTIONS.map(o=>`<option>${o}</option>`).join('')}</select>
+      <label>Choose the group</label>
+      <select><option>${s.active}</option></select>
+      <label>Write comment</label>
+      <textarea placeholder="E.g.: I contacted the parent with empathy, explained I noticed the absence, offered the recording and an extra lesson..."></textarea>
+      <div class="modal-actions"><a onclick="closeEvalModal()">Cancel</a><button class="btn btn-accent" onclick="confirmEvalModal()">Confirm</button></div>
+    </div>
+  </div>
+  `;
+}
+
+function renderExtraTab(s){
+  return `
+  <div class="tablewrap" id="extraLessonsPanel">
+    <div class="tbl-toolbar" style="justify-content:space-between">
+      <h3 style="margin:0">Extra Lessons</h3>
+      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Add Lesson</button>
+    </div>
+    <table><thead><tr><th>ID</th><th>Request date</th><th>Initiator</th><th>Lesson type</th><th>Status</th><th>Actions</th></tr></thead>
+    <tbody><tr class="empty-row"><td colspan="6">No data available</td></tr></tbody></table>
+  </div>`;
+}
+
+/* ---------- GUIDED TOUR ---------- */
+const STEPS = [
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'1 · Camila está ausente hoje',body:'Camila já faltou a uma aula recentemente (amarelo) e hoje ela <b>não compareceu</b> (vermelho). Você entra em contato com a família para saber o que aconteceu.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · A família responde: foi um problema técnico',body:'A família explica que a luz acabou naquele dia. Clique no oval vermelho de Camila para atualizar a frequência dela.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'3 · Marque como Ausente',body:'Já que agora está justificada, clique em <b>Ausente</b>.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Escolha "Problemas técnicos"',body:'Clique em <b>Problemas técnicos</b> — a luz acabou naquele dia. Note que o BO registra essa explicação automaticamente; o oval passa de vermelho para amarelo.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'5 · A próxima aula, ainda ausente',body:'Camila também falta à próxima aula (L5, vermelho). A partir daqui, duas coisas diferentes podem acontecer com a família.',advance:'next',onEnter:'addNextLesson',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'6 · Caso A: o responsável pede uma aula extra',body:'O responsável responde e pede uma aula extra. Antes de confirmar qualquer coisa a ele, clique no ícone de ⭐ estrela na linha de Camila para solicitá-la no BO.',advance:'evalopen',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'7 · Escolha "É necessária uma aula extra"',body:'Selecione este Tipo de problema. Note que o campo de comentário se preenche com um modelo automaticamente.',advance:'template1',waitFor:'select-extra-class',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'8 · Preencha o modelo e confirme',body:'Complete o modelo com honestidade, depois clique em <b>Confirmar</b>. Enquanto isso, envie as gravações da aula para a família para que Camila não fique para trás enquanto você espera a aprovação — e lembre-se, falar primeiro com seu TL está correto, mas o caso continua com você.',advance:'confirmed1',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'9 · Caso B: e se o responsável nunca responder?',body:'Agora imagine a mesma situação, mas o responsável nunca respondeu a nenhuma das suas mensagens. Clique no ícone de ⭐ estrela novamente.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'10 · Escolha "O cliente não responde"',body:'Selecione esta opção em vez disso — um modelo diferente aparece.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'11 · Preencha e confirme',body:'Complete o modelo, depois clique em <b>Confirmar</b> para finalizar este caso.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'12 · Um hábito que vale a pena manter: veja o perfil dela',body:'Antes de continuar, clique no <b>nome de Camila Torres</b> para ver o que já está registrado no perfil dela — casos como este geralmente têm mais contexto ali do que cabe em um comentário do BO.',advance:'studentopen',waitFor:'open-student'},
+ {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'13 · Leia os comentários',body:'É aqui que o Atendimento ao Cliente (e qualquer outra pessoa que tenha lidado com este caso) deixa o que sabe — confirmações, contexto da família, qualquer coisa relevante. Crie o hábito de verificar aqui, tenha você lidado com o caso ou não.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'14 · Esse é o protocolo completo',body:'Você acabou de praticar como escalar um caso real de frequência do início ao fim. Clique em <b>Finalizar</b> para terminar.',advance:'next',cardPos:'left'},
+];
+let stepIdx = -1;
+
+function startTour(){
+  document.getElementById('introgate').style.display='none';
+  stepIdx = 0;
+  goToStepPage();
+  showStepCard();
+}
+function goToStepPage(){
+  const st = STEPS[stepIdx];
+  const keepEvalOpen = !!(st.sel && st.sel.indexOf('#evalModal')!==-1);
+  const keepLessonOpen = !!(st.sel && st.sel.indexOf('#lessonModal')!==-1);
+  if(!keepLessonOpen) closeLessonModal();
+  if(!keepEvalOpen) closeEvalModal();
+  state.page = st.page;
+  if(st.ttab) state.ttab = st.ttab;
+  if(st.dtab) state.dtab = st.dtab;
+  if(st.gid) state.gid = st.gid;
+  if(st.groupTab) state.groupTab = st.groupTab;
+  if(st.courseId) state.courseId = st.courseId;
+  if(st.courseTab) state.courseTab = st.courseTab;
+  if(st.expandModule!==undefined) state.expandedModuleId = st.expandModule;
+  if(st.page==='studentDetail' && !state.sid) state.sid = tourStudent().id;
+  render();
+  if(keepEvalOpen){ const m=document.getElementById('evalModal'); if(m) m.style.display='flex'; }
+  if(keepLessonOpen){ const m=document.getElementById('lessonModal'); if(m) m.style.display='flex'; }
+  if(st.onEnter && window[st.onEnter]) window[st.onEnter]();
+}
+function showStepCard(){
+  const st = STEPS[stepIdx];
+  const card = document.getElementById('tourCard');
+  card.style.display='flex';
+  card.classList.toggle('pos-left', st.cardPos==='left');
+  document.getElementById('tourReopenBtn').style.display='none';
+  document.getElementById('tourStepLbl').textContent = `Etapa ${stepIdx+1} de ${STEPS.length}`;
+  document.getElementById('tourBar').style.width = Math.round(((stepIdx+1)/STEPS.length)*100)+'%';
+  document.getElementById('tourTitle').innerHTML = st.title;
+  document.getElementById('tourBody').innerHTML = st.body;
+  const nb = document.getElementById('tourNextBtn');
+  if(st.advance==='next'){ nb.style.display='inline-block'; nb.textContent = 'Próximo →'; }
+  else { nb.style.display='none'; }
+}
+function nextStep(){
+  stepIdx++;
+  if(stepIdx>=STEPS.length){ endTour(); return; }
+  goToStepPage();
+  showStepCard();
+}
+function minimizeTour(){
+  document.getElementById('tourCard').style.display='none';
+  document.getElementById('tourReopenBtn').style.display='block';
+}
+function reopenTour(){
+  document.getElementById('tourReopenBtn').style.display='none';
+  document.getElementById('tourCard').style.display='flex';
+}
+function endTour(){
+  document.getElementById('tourCard').style.display='none';
+  document.getElementById('tourReopenBtn').style.display='none';
+  document.querySelectorAll('.tour-hl').forEach(e=>e.classList.remove('tour-hl'));
+  celebrateCompletion();
+}
+function celebrateCompletion(){
+  const colors = ['#FFD166','#7B87F5','#4ADE80','#F2A93B','#FF6B6B','#38BDF8'];
+  for(let i=0;i<90;i++){
+    const p = document.createElement('div');
+    p.className='confetti-piece';
+    p.style.left = Math.random()*100+'vw';
+    p.style.background = colors[i%colors.length];
+    p.style.animationDuration = (2.4+Math.random()*1.8)+'s';
+    p.style.animationDelay = (Math.random()*0.6)+'s';
+    p.style.borderRadius = Math.random()<0.5 ? '50%' : '2px';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 5000);
+  }
+  document.getElementById('celebrateBack').style.display='flex';
+}
+function closeCelebration(){
+  document.getElementById('celebrateBack').style.display='none';
+}
+function restartTour(){
+  document.getElementById('celebrateBack').style.display='none';
+  GROUP_RUNTIME = {};
+  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+  stepIdx = 0;
+  goToStepPage();
+  showStepCard();
+}
+function fire(action){
+  if(stepIdx<0 || stepIdx>=STEPS.length) return;
+  if(STEPS[stepIdx].waitFor===action){
+    setTimeout(()=>{
+      stepIdx++;
+      if(stepIdx>=STEPS.length){ endTour(); } else { goToStepPage(); showStepCard(); }
+    }, 300);
+  }
+}
+function applyTourHighlights(){
+  document.querySelectorAll('.tour-hl').forEach(e=>e.classList.remove('tour-hl'));
+  if(stepIdx<0 || stepIdx>=STEPS.length) return;
+  const st = STEPS[stepIdx];
+  const targets = st.hl || [st.sel];
+  targets.forEach(sel=>{
+    if(!sel) return;
+    document.querySelectorAll(sel).forEach(el=>el.classList.add('tour-hl'));
+  });
+  if(st.sel){ const el=document.querySelector(st.sel); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); }
+}
+
+render();
+</script>
+</body>
+</html>
