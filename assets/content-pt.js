@@ -106,17 +106,72 @@ const CONTENT={
       "id": 1,
       "emoji": "📊",
       "title": "Entendendo a Métrica: Frequência",
-      "desc": "Como a frequência é medida, o que significam LPR/HPR para você, e os dois tipos de causas por trás de uma aula perdida.",
-      "obj": "Entenda como a frequência é medida e separe as causas que você pode influenciar das que não pode.",
+      "desc": "As duas medidas por trás dos números — Frequência no Back Office e Presença em Sala de Aula — os tipos de falta vermelha e amarela, os cinco grupos de risco, o que significam HPR e LPR, e as três coisas que te colocam na nossa lista.",
+      "obj": "Entenda como frequência e presença são medidas, saiba em qual grupo de risco cada um dos seus alunos está, saiba exatamente o que te colocaria na nossa lista — e separe as causas que você pode influenciar das que não pode.",
       "color": "#D3FF5F",
       "sections": [
         {
-          "t": "📐 Como Ela É Medida?",
+          "t": "📐 Duas Formas de Medir Isso",
           "cards": [
-            {"type": "text", "b": "Classificamos os alunos (SS) em três níveis com base na porcentagem de frequência."},
-            {"type": "table", "h": "Níveis de frequência", "head": ["Nível", "Faixa"], "rows": [["🟢 Alta Presença", "≥ 75%"], ["🟠 Presença Média (Risco)", "50% – 74,99%"], ["❗ Presença Baixa (Alerta)", "&lt; 50%"]]},
-            {"type": "text", "h": "Da perspectiva do tutor", "b": "Dois indicadores resumem seu desempenho nessa métrica:<br><br><strong>LPR (Low Presence Rate):</strong> % dos seus casos de alunos com frequência abaixo de 50%.<br><strong>HPR (High Presence Rate):</strong> % dos seus casos de alunos com frequência igual ou acima de 75%."},
-            {"type": "text", "b": "Os dados de frequência são calculados com base no registro de presença capturado automaticamente pela sala de aula quando um aluno entra na aula. A presença é confirmada quando o aluno participa de mais de 50% da aula. Ela não é baseada nos registros de frequência inseridos no BO."}
+            {"type": "text", "b": "Um aluno pode estar <strong>ausente da aula</strong>, ou <strong>presente mas desconectado</strong> — dois problemas completamente diferentes, por isso usamos 2 medidas:"},
+            {"type": "table", "h": "As duas medidas", "head": ["Medida", "A pergunta que ela responde", "De onde vem"], "rows": [["🙋 <strong>Frequência (BO)</strong>", "O aluno veio?", "Back Office — a aula estava programada, e o aluno apareceu ou não"], ["🎥 <strong>Presença em Sala de Aula</strong>", "Quando ele veio, ele realmente estava presente?", "Dados da Classroom — quanto da aula o aluno esteve realmente na sala"]]},
+            {"type": "tip", "txt": "Por que precisamos das duas: o Back Office é o único lugar que sabe que uma aula <em>deveria</em> acontecer. Sem ele, um aluno que nunca apareceu não deixa nenhum registro — a falta é invisível. A Classroom sozinha só mede o quanto os alunos que <em>vieram</em> estavam engajados."}
+          ]
+        },
+        {
+          "t": "🧮 Como a Presença em Sala de Aula É Calculada",
+          "cards": [
+            {"type": "flow", "steps": [
+              {"ic": "⏱️", "h": "1 · Tempo conectado", "b": "Para cada aula, comparamos quanto tempo o aluno ficou realmente conectado com a duração da aula. Ficar a aula toda → 100%. Sair na metade → cerca de 50%. Dez minutos de uma aula de sessenta minutos → cerca de 17%.", "color": "blue"},
+              {"ic": "✅", "h": "2 · A linha dos 50%", "b": "Um aluno só conta como <em>Presente</em> naquela aula acima de 50%. Conectar por dez minutos e desaparecer não é frequência, e não conta como tal.", "color": "coral"},
+              {"ic": "📊", "h": "3 · Média de 30 dias", "b": "A Presença em Sala de Aula dele é a média disso ao longo das aulas nos últimos 30 dias — calculada por grupo e por curso, então um aluno em dois dos seus cursos é medido separadamente em cada um.", "color": "green"}
+            ]},
+            {"type": "good", "txt": "Aulas nunca registradas na Classroom (cerca de 1%) ainda contam para a Frequência no BO — uma falta real nunca desaparece só porque a Classroom não a captou."},
+            {"type": "hi", "h": "Quem é contado", "b": "Nem todo aluno aparece nos seus números.<br><br>Um aluno só é incluído quando tem <strong>pelo menos 3 aulas programadas</strong> e <strong>uma aula nos últimos 14 dias</strong>. Assim, uma única aula nunca pode mudar sua porcentagem, e alunos que saíram há muito tempo param de distorcê-la.<br><br>Se um aluno que você ensina não aparece na sua lista, esse é quase sempre o motivo."}
+          ]
+        },
+        {
+          "t": "🟡🔴 Dois Tipos de Falta",
+          "cards": [
+            {"type": "text", "b": "Do lado do Back Office, uma falta não é só uma falta — tratar uma falta avisada do mesmo jeito que um aluno que sumiu sem dizer nada seria injusto, então não fazemos isso."},
+            {"type": "img", "src": "Images/image8_ENG.png"},
+            {"type": "doavoid", "left": {"h": "🟡 Amarela — avisada ou justificada", "items": ["A família deu um motivo com antecedência", "Um problema de saúde, viagem, técnico ou de horário, etc.", "Uma situação que a família está gerenciando ativamente"]}, "right": {"h": "🔴 Vermelha — sem nenhum aviso", "items": ["O aluno sumiu sem dizer nada", "Ninguém deu retorno antes da próxima aula", "O tipo de falta que queremos eliminar por completo"]}},
+            {"type": "text", "b": "Qual você seleciona, e o que você faz depois, é o Módulo 6 — esse módulo é o manual de instruções para esta página."}
+          ]
+        },
+        {
+          "t": "🚦 Seus Cinco Grupos de Risco",
+          "cards": [
+            {"type": "text", "b": "Junte Frequência e Presença em Sala de Aula e cada aluno cai em um dos cinco grupos — no grupo correspondente ao <strong>pior</strong> dos dois sinais, para que ninguém escape quando os sinais não coincidem."},
+            {"type": "text", "b": "Leia as duas colunas do meio como <strong>alternativas, não condições</strong>: um grupo é ativado pelas faltas ou pela presença — o que for pior. Um aluno sem nenhuma falta pode estar em ALERTA só pela presença, e um aluno com presença perfeita pode estar em CRÍTICO por uma única falta sem explicação."},
+            {"type": "table", "h": "Grupos de risco", "tone": "danger", "head": ["Grupo", "Faltas no Back Office", "Presença em Sala de Aula", "O que significa"], "rows": [
+              ["🔴 <strong>CRÍTICO</strong>", "Uma ou mais vermelhas, ou quatro ou mais amarelas", "—", "Uma falta que ninguém explicou, ou faltas se acumulando — não sabemos se esse aluno ainda está com a gente"],
+              ["🟠 <strong>ALTO RISCO</strong>", "—", "Abaixo de 50%", "Aparece, mas mal está presente"],
+              ["🟡 <strong>ALERTA</strong>", "2–3 amarelas", "50% – 74,99%", "Falta a aulas que a família explicou — ou está na sala só pela metade do tempo"],
+              ["🔵 <strong>OBSERVAÇÃO</strong>", "—", "75% – 84,99%", "Presente, mas não totalmente engajado — o afastamento está só começando"],
+              ["🟢 <strong>Saudável</strong>", "Nenhuma vermelha, no máximo 1 amarela", "≥ 85%", "Presença e engajamento consistentes"]
+            ]},
+            {"type": "warnbox", "h": "Uma falta amarela não é um ponto negativo. É prova de que você fez seu trabalho.", "b": "Uma falta avisada deixa um aluno em Saudável. São necessárias duas para que um aluno chegue sequer a ALERTA, e isso é intencional: o ponto em que um aluno que está se afastando ainda pode ser recuperado é a segunda falta, que é exatamente do que trata o Módulo 6.<br><br>Uma falta sem explicação (vermelha) é diferente, e conta imediatamente — não porque vermelho seja um comportamento pior, mas porque ninguém sabe o que aconteceu."}
+          ]
+        },
+        {
+          "t": "📈 HPR e LPR — O Que Seus Números Realmente Significam",
+          "cards": [
+            {"type": "text", "b": "Eles são medidos com base na <strong>Presença em Sala de Aula</strong> (não em uma porcentagem de frequência simples):"},
+            {"type": "twocol", "left": {"h": "📈 HPR — Taxa de Alta Presença", "items": ["Proporção dos seus alunos com 75% ou mais — ou seja, todos em 🟢 Saudável ou 🔵 Observação", "Quanto mais alto, melhor"]}, "right": {"h": "📉 LPR — Taxa de Baixa Presença", "items": ["Proporção dos seus alunos abaixo de 50% — todos em 🟠 Alto Risco", "Quanto mais baixo, melhor"], "plain": true}},
+            {"type": "text", "b": "Como as duas taxas vêm diretamente dos grupos acima, a tabela e o seu painel nunca podem discordar: <strong>HPR é Saudável mais Observação, LPR é Alto Risco.</strong>"},
+            {"type": "text", "b": "A meta se manteve igual em todas as regiões: <strong>LPR em 25,5% ou menos</strong> · <strong>HPR em 49,5% ou mais</strong>."},
+            {"type": "hi", "h": "A meta real não é uma taxa — são dois resultados", "b": "🔴 <strong>Eliminar as faltas sem justificativa (vermelhas).</strong> Uma falta vermelha significa que um aluno sumiu e ninguém deu retorno — isso deveria deixar de ser possível.<br><br>🟡 <strong>Eliminar o abandono que começa na segunda falta justificada.</strong> Nenhum aluno deveria desaparecer em silêncio, e nenhum deveria se perder por duas faltas que ninguém respondeu."}
+          ]
+        },
+        {
+          "t": "🧭 O Efeito Prático",
+          "cards": [
+            {"type": "text", "b": "As duas medidas apontam para problemas diferentes, com soluções diferentes — por isso as separamos."},
+            {"type": "table", "head": ["Se isto está baixo…", "…o problema geralmente é", "…e o trabalho acontece"], "rows": [
+              ["<strong>Frequência</strong> — eles não vêm", "Horários, família, motivação, um curso que deixou de parecer relevante", "<strong>Fora</strong> da aula — entrar em contato, sinalizar, envolver a família ou a Teaching Ops"],
+              ["<strong>Presença em Sala de Aula</strong> — vêm mas não estão", "Facilitação — a sala está passiva, a participação fica com um ou dois alunos, ou há problemas técnicos no caminho", "<strong>Dentro</strong> da aula — como você abre, para quem você pergunta, como você fecha"]
+            ]}
           ]
         },
         {
@@ -126,10 +181,22 @@ const CONTENT={
           ]
         },
         {
+          "t": "🔔 Quando Você Ouviria da Gente?",
+          "cards": [
+            {"type": "text", "b": "Os grupos de risco dos seus alunos são uma coisa. O que faria a gente entrar em contato com <strong>você</strong> é outra — e são três situações, e nada mais."},
+            {"type": "table", "head": ["Você vai ouvir da gente quando…", "Porque", "O que você vai receber"], "rows": [
+              ["Seu HPR está abaixo da meta ou seu LPR está acima", "Poucos dos seus alunos estão totalmente presentes, ou muitos estão mal presentes", "Um treinamento sobre como conduzir a sala — aberturas, participação, encerramentos"],
+              ["Dois ou mais dos seus alunos têm duas ou mais faltas sem explicação (vermelhas) — ou, se você tem 10 ou mais alunos, mais da metade do seu grupo está com uma", "As faltas estão se repetindo e ninguém sabe por quê. Um aluno com uma única falta vermelha nunca te coloca na lista — o padrão sim", "Um treinamento sobre o protocolo de faltas — contatar famílias, registrar o motivo, aulas extras"],
+              ["Um aluno tem três ou mais faltas vermelhas, ou dois ou mais alunos têm quatro ou mais amarelas cada", "Esses alunos estão perto de sair, não importa como estejam seus números gerais. Este é o único caso em que faltas explicadas também contam, porque quatro seguidas já são um padrão em si", "Os nomes, imediatamente, e um treinamento — este é urgente"]
+            ]},
+            {"type": "good", "txt": "E o que não é: uma mensagem não é um aviso nem uma etapa de nenhum processo disciplinar. Nenhuma decisão sobre você é tomada por um número — a plataforma decide onde olhar primeiro, depois uma pessoa fala com você. Se os dados parecerem errados pra você, dizer isso é útil; parte disso vai acabar sendo uma falha de registro, não um problema de ensino, e preferimos ouvir isso de você do que adivinhar."}
+          ]
+        },
+        {
           "t": "⛓️ Como isso afeta você como tutor?",
           "cards": [
-            {"type": "hi", "h": "Uma aula perdida raramente fica só nela", "b": "Falta à aula → fica desmotivado → perde a motivação para continuar → o grupo se desfaz → sua renda como tutor cai."},
-            {"type": "text", "b": "A boa notícia: as causas internas — aquelas que podemos mudar — são o foco do restante deste treinamento."}
+            {"type": "hi", "h": "Uma aula perdida raramente fica só nela", "b": "Falta a uma aula → fica pra trás → fica desmotivado → deixa de ver sentido → sai. E um grupo que perde dois ou três alunos deixa de parecer um grupo para os que ficam.<br><br>Cada etapa antes em que você interrompe essa corrente é um aluno que fica — que é a única razão de tudo isso ser medido."},
+            {"type": "text", "b": "A boa notícia: as causas internas — aquelas que <em>podemos</em> mudar — são o foco do restante deste treinamento."}
           ]
         }
       ]
@@ -365,19 +432,45 @@ const CONTENT={
       "id": 6,
       "emoji": "📞",
       "title": "O Que Fazer Quando um Aluno Falta à Aula",
-      "desc": "Como acompanhar o aluno e como falar com os pais com empatia.",
-      "obj": "Saiba exatamente quais passos seguir — com o aluno e com a família dele — quando uma falta acontecer.",
+      "desc": "O que você seleciona no Back Office e quando, quão rápido agir, o gatilho de escalonamento de duas faltas, e o que você nunca pode oferecer a uma família sem o seu TL.",
+      "obj": "Saiba exatamente o que selecionar no Back Office e quando, quão rápido agir com o aluno e a família, quando duas faltas significam que é hora de escalar, e o que está fora dos limites sem a aprovação do seu TL.",
       "color": "#D3FF5F",
       "sections": [
+        {
+          "t": "🎯 O Que Você Seleciona, e Quando",
+          "cards": [
+            {"type": "text", "b": "Antes de mais nada: dois cliques, e toda a métrica depende deles. O Módulo 1 explicou o que significam vermelho e amarelo. Aqui está exatamente quando você escolhe qual."},
+            {"type": "redyellow", "left": {"h": "🔴 Selecione VERMELHO quando…", "items": ["O aluno não apareceu e ninguém te disse por quê. Esse é o único caso.", "A Classroom marca isso automaticamente no momento em que uma aula fica sem presença.", "Ninguém pode ajudar um aluno cujo problema é invisível."]}, "right": {"h": "🟡 Selecione AMARELO quando…", "items": ["Alguém te deu um motivo — antes ou depois da aula. Você então muda de vermelho para amarelo você mesmo e escolhe qual dos seis motivos foi.", "Essas opções não são burocracia: são a única forma de aprendermos quais faltas poderíamos ter evitado do nosso lado.", "Cinco segundos seus, e um padrão sobre o qual podemos agir."]}},
+            {"type": "list", "h": "Os seis motivos no BO", "p": "Escolha o mais próximo com honestidade — alguns se desdobram em uma opção mais específica depois de selecionados.", "items": [
+              "🏥 <strong>Problemas de saúde</strong>", "📚 <strong>Problemas de conteúdo</strong>", "✈️ <strong>Viagem:</strong> viagem, férias escolares, ou feriados", "💻 <strong>Problemas técnicos:</strong> computador do aluno, a plataforma da Kodland ou Classroom, uma queda de energia, ou um problema de conexão à internet", "🗓️ <strong>Problemas de horário:</strong> mudou de grupo, ou a aula foi reagendada", "📝 <strong>Outro:</strong> carga escolar / provas / tarefas de casa, um motivo familiar, ou nenhum motivo específico compartilhado (um comentário é obrigatório)"
+            ]},
+            {"type": "yellowbox", "h": "Marcou vermelho, e depois a família responde? Mude.", "b": "Mude a falta para amarela e selecione o motivo. Isso não é corrigir um erro — é o processo funcionando: você entrou em contato, recebeu uma resposta, e o registro agora corresponde à realidade."},
+            {"type": "hi", "h": "O comentário vem além da seleção, não no lugar dela.", "b": "Escreva o que a família realmente te disse. Se o caso depois sair das suas mãos, o comentário é o que o Atendimento ao Cliente e seu TL leem para saber como as coisas estão."},
+            {"type": "warnbox", "h": "E a linha que protege tudo isso", "b": "Uma falta que você registrou com honestidade nunca é usada contra você. A única falta que prejudica seus números é a que ninguém explicou."},
+            {"type": "simulation", "title": "Simulação de BO — Marcar Frequência", "src": "Simulacion_BO_Attendance_1_PT.html"}
+          ]
+        },
         {
           "t": "🔁 Acompanhamento",
           "cards": [
             {"type": "list", "items": [
-              "Pergunte ao pai, mãe ou responsável como o aluno está, e mencione que ele fez falta na aula.",
+              "Entre em contato com a família você mesmo, o mais rápido possível, depois de qualquer falta sem aviso — isso é com você, não com o Atendimento ao Cliente, pelo menos no início.",
               "Compartilhe a gravação da aula junto com um breve resumo da tarefa de casa, para que o aluno não fique para trás nem perca a motivação.",
-              "Na próxima vez que o aluno participar, mostre que você notou a ausência dele — pergunte como ele está e lembre onde encontrar a gravação e a tarefa de casa."
+              "Na próxima vez que o aluno participar, mostre que você notou a ausência dele."
+            ]}
+          ]
+        },
+        {
+          "t": "⏱️ Prazos: O Gatilho de Duas Faltas",
+          "cards": [
+            {"type": "text", "b": "O Módulo 1 apresentou as faltas 🟡 amarela e 🔴 vermelha. O gatilho de escalonamento é <strong>duas faltas</strong> — não uma única vermelha sem resposta como em outras regiões."},
+            {"type": "table", "h": "O que muda conforme as faltas se acumulam", "head": ["Contagem", "O que você faz", "Até quando"], "rows": [
+              ["Uma falta vermelha", "Entre em contato com a família você mesmo, consiga o motivo, depois mude a falta para amarela e selecione-o.", "No mesmo dia. Nunca deixe uma vermelha sem explicação por mais de 48 horas."],
+              ["Uma falta amarela", "Compartilhe a gravação e um breve resumo da tarefa de casa para que ele não fique para trás. Nada para escalar.", "Antes da próxima aula"],
+              ["Duas faltas, ou nenhuma resposta depois da segunda", "Este é o gatilho — escale agora através da Avaliação do Aluno, para que o Atendimento ao Cliente possa entrar em contato com a família diretamente.", "Agora"]
             ]},
-            {"type": "agefriendly", "intro": "Veja exemplos de como você pode receber de volta um aluno que faltou à aula, de acordo com a idade:", "younger": "\"Aí está você! Senti sua falta na aula — guardei uma gravação de tudo que construímos, e aposto que você vai adorar a parte em que o slime começa a pular.\"", "older": "\"Que bom te ver de volta. Te mandei a gravação e um resumo rápido do que vimos — nada urgente, só quando você tiver uma chance de se atualizar.\""}
+            {"type": "tip", "txt": "O gatilho são duas faltas — mas nem um dia a mais. Se a família não respondeu até a segunda falta, esse é o momento de passar para o Atendimento ao Cliente."},
+            {"type": "warn", "txt": "\"Avise alguém — não espere pela terceira.\" Duas faltas é exatamente o ponto em que um aluno que está se afastando ainda pode ser recuperado, e você geralmente é a única pessoa que percebe isso a tempo."}
           ]
         },
         {
@@ -386,9 +479,57 @@ const CONTENT={
             {"type": "imgtext", "img": "Images/WhatsApp_module_6_PT.png", "items": [
               "Seja gentil e compreensivo(a), especialmente se a falta foi por doença ou um problema familiar.",
               "Se houver material extra disponível no curso, avise-os.",
-              "Quando o aluno participar novamente, aproveite o momento para compartilhar as conquistas dele em aula com os pais."
+              "Quando o aluno participar novamente, aproveite o momento para compartilhar as conquistas dele em aula com os pais.",
+              "Carinho não custa nada e é toda a diferença entre uma família que continua engajada com o curso e uma que silenciosamente para de responder."
             ]},
-            {"type": "warnbox", "h": "⚠️ Antes de oferecer uma aula extra", "b": "Se você achar que uma aula extra ou motivacional é necessária, <strong>fale primeiro com seu TL</strong> para analisar o caso antes de propor isso ao pai, mãe ou responsável."}
+            {"type": "warnbox", "h": "⚠️ O Que Você Nunca Deve Fazer", "b": "Nunca ofereça um curso, grupo ou horário diferente por conta própria — encaminhe a família para o Atendimento ao Cliente. Nunca ofereça uma aula 1 a 1 sem a aprovação do seu TL. E nunca ofereça uma aula extra por conta própria — isso passa pelo seu TL, ou vem diretamente do Atendimento ao Cliente."}
+          ]
+        },
+        {
+          "t": "📋 O Que Registrar no Back Office",
+          "cards": [
+            {"type": "list", "h": "Agora uma lista curta — o mecanismo em si está na primeira seção acima", "items": [
+              "Defina o tipo de falta e o motivo. Amarela mais o motivo correspondente dos seis grupos se te disseram por quê; vermelha se ninguém te disse nada.",
+              "Adicione um comentário com o que a família realmente disse. Curto está bom. Isso é o que seu TL e o Atendimento ao Cliente leem se o caso sair das suas mãos.",
+              "Se você está pedindo uma aula extra, use o modelo de comentário pré-preenchido junto com o link para o perfil do aluno."
+            ]}
+          ]
+        },
+        {
+          "t": "🔀 E Depois? Dois Caminhos Possíveis",
+          "cards": [
+            {"type": "text", "b": "Você entrou em contato com a família e registrou a falta. A partir daqui a situação segue um de dois caminhos, e eles precisam de coisas diferentes de você."},
+            {"type": "table", "h": "Voltam vs. não voltam", "head": ["", "✅ Voltam", "❌ Não voltam"], "rows": [
+              ["<span class=\"rowic\">⚡</span>Imediatamente", "Mostre que você notou a ausência — com carinho, e em particular, não na frente do grupo.", "Segundo contato com a família, por um canal diferente do primeiro, antes da segunda falta."],
+              ["<span class=\"rowic\">➡️</span>Depois", "Observe a presença dele, não só a frequência. Se ele aparece mas fica em 40% na sala, o problema se moveu para dentro da aula — isso são os Módulos 2 a 4, não este.", "Abra a Avaliação do Aluno no BO depois da segunda falta. O caso sai do acompanhamento particular aqui."],
+              ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Quem mais você envolve", "Seu TL, se o aluno ficou para trás o suficiente para precisar de uma aula extra.", "Seu TL, e o Atendimento ao Cliente, que entra em contato com a família diretamente assim que você escalar."],
+              ["<span class=\"rowic\">👨‍👩‍👧</span>Os pais", "Compartilhe algo concreto que o aluno fez na aula em que voltou.", "Mantenha-os informados, e não prometa nada — nenhuma aula extra sem o seu TL, e nenhuma mudança de curso, grupo ou horário sem encaminhar para o Atendimento ao Cliente."]
+            ]},
+            {"type": "redbox", "h": "Ele voltou, mas ainda não está realmente ali.", "b": "Este é o resultado mais comum de todos, e é fácil arquivar como resolvido porque a frequência voltou ao normal. Não está resolvido: o aluno agora está na sala e desengajado, o que é um problema de facilitação, não de falta.<br><br>Esse caso pertence aos Módulos 2, 3 e 4 — como você abre, para quem você pergunta, como você fecha."}
+          ]
+        },
+        {
+          "t": "🪜 Se Escalar: Pedindo uma Aula Extra",
+          "cards": [
+            {"type": "text", "b": "<strong>Falar primeiro com seu TL está correto</strong> — aqui está o caminho completo:"},
+            {"type": "flow", "steps": [
+              {"ic": "📋", "h": "1 · Abra a Avaliação do Aluno", "b": "No BO, selecione \"É necessária uma aula adicional.\" Duas ou mais faltas contam — para os Módulos 1 e 8, uma falta já é suficiente. Máximo uma aula extra por aluno por mês.", "color": "blue"},
+              {"ic": "💬", "h": "2 · Avise seu TL", "b": "Envie uma mensagem privada para que ele possa analisar e aprovar o caso.", "color": "red"},
+              {"ic": "📞", "h": "3 · Entre em contato com a família", "b": "Somente depois da aprovação, entre em contato diretamente com a família você mesmo para agendar a aula extra (30 min, gratuita).", "color": "green"},
+              {"ic": "⏰", "h": "4 · Se o aluno não entrar", "b": "Envie um lembrete por WhatsApp. Se ainda não houver resposta, a aula é cancelada após 15 minutos.", "color": "orange"},
+              {"ic": "✅", "h": "5 · Depois da aula", "b": "Você pode atualizar a frequência do aluno para verde no BO.", "color": "purple"}
+            ]},
+            {"type": "text", "b": "Uma aula extra também pode vir diretamente do Atendimento ao Cliente, se eles decidirem oferecer uma à família por conta própria — mas você nunca deve oferecer uma por conta própria sem a aprovação do seu TL primeiro."},
+            {"type": "warnbox", "h": "⚠️ Se você começou, fica com você", "b": "Se <strong>você</strong> iniciou o caso, não redirecione o aluno para o Atendimento ao Cliente depois — a responsabilidade de acompanhar até o fim fica com você."},
+            {"type": "text", "h": "🖥️ Pratique Você Mesmo", "b": "É hora de praticar como você lidaria com isso no BO com um caso real:"},
+            {"type": "simulation", "title": "Simulação de BO — Pedindo uma Aula Extra", "src": "Simulacion_BO_Attendance_2_PT.html"}
+          ]
+        },
+        {
+          "t": "🕳️ O Aluno Que Nunca Apareceu",
+          "cards": [
+            {"type": "hi", "h": "Isso não é uma \"aula perdida\" — é um problema diferente", "b": "Alguns alunos nunca se conectam a uma única aula desde o primeiro dia. Não há um \"bem-vindo de volta\" para eles — trate uma ausência total na primeira aula como um alerta vermelho imediato, algo que não se deve esperar passar."},
+            {"type": "text", "b": "O Atendimento ao Cliente é responsável por resolver esse caso — mas você ainda deve perceber e escalar o quanto antes. Siga a mesma regra de 48 horas para registrar com precisão."}
           ]
         }
       ]
@@ -418,11 +559,12 @@ const CONTENT={
   ],
   "quiz": {
     "1": [
-      {"q": "Qual faixa de frequência é considerada Presença Baixa (Alerta)?", "opts": ["Abaixo de 50%", "50%–74,99%", "75% ou mais"], "c": 0, "fb": "Presença Baixa (Alerta) significa frequência abaixo de 50% — a faixa que precisa da sua atenção primeiro."},
-      {"q": "O que o HPR mede?", "opts": ["A % dos seus casos de alunos com frequência abaixo de 50%", "A % dos seus casos de alunos com frequência igual ou acima de 75%", "A % dos seus alunos que completaram a tarefa de casa"], "c": 1, "fb": "O HPR (High Presence Rate) é a proporção dos seus casos de alunos com frequência igual ou acima de 75%."},
+      {"q": "O que o HPR mede?", "opts": ["A proporção dos seus alunos com Presença em Sala de Aula abaixo de 50%", "A proporção dos seus alunos com Presença em Sala de Aula de 75% ou mais", "A proporção dos seus alunos que completaram a tarefa de casa"], "c": 1, "fb": "HPR (Taxa de Alta Presença) é a proporção dos seus alunos com 75% de presença ou mais — todos em 🟢 Saudável ou 🔵 Observação. A proporção abaixo de 50% é o LPR."},
       {"q": "Um aluno te diz que sente que \"não é bom\" em programação. Em qual categoria isso se encaixa?", "opts": ["Uma causa externa, já que é sobre a matéria, não sobre o tutor", "Uma causa interna — uma que você pode influenciar através de feedback e incentivo", "Nenhuma das duas — é um traço de personalidade, não um motivo real de falta"], "c": 1, "fb": "Sentir que \"não é bom\" na matéria é uma das causas internas — aquelas que você pode mudar através de como ensina e dá feedback."},
-      {"q": "A plataforma da sala de aula registra um aluno como presente em 40% da aula, mas o tutor o marcou manualmente como \"presente\" no BO depois. Como essa presença é contada oficialmente?", "opts": ["Como presente, já que o registro do tutor no BO é o registro final", "Como ausente — a presença oficial é baseada no registro automático da sala de aula, e exige mais de 50% da aula", "Depende de o TL aprovar a alteração manual"], "c": 1, "fb": "A presença é calculada a partir do registro automático da sala de aula, não de registros manuais no BO — e exige mais de 50% da aula."},
-      {"q": "Qual das opções a seguir <strong>NÃO</strong> é uma das causas internas de falta de frequência abordadas neste módulo?", "opts": ["O aluno se sente entediado na aula", "O aluno sente que \"não é bom\" nisso", "Um feriado nacional"], "c": 2, "fb": "Um feriado nacional é uma causa externa, fora do controle do tutor — as causas internas são o que este treinamento foca em mudar."}
+      {"q": "Um aluno aparece marcado como \"presente\" no Back Office, mas o registro da Classroom mostra que ele só ficou conectado por 40% da aula. Como isso conta?", "opts": ["Como Presente para ambas as medidas, já que o registro do BO sempre tem prioridade sobre o da Classroom", "Como Frequência (BO), já que a aula foi registrada como presente — mas NÃO como Presente para Presença em Sala de Aula, já que 40% está abaixo da linha dos 50%", "Como falta para ambas, já que 40% não atinge nenhum dos dois limites"], "c": 1, "fb": "Frequência (BO) e Presença em Sala de Aula são registradas separadamente: esse aluno conta para Frequência, mas não para Presença em Sala de Aula, já que nunca cruzou a linha dos 50%."},
+      {"q": "Qual das opções a seguir é o que a Frequência no BO realmente registra?", "opts": ["Se uma aula programada aconteceu e o aluno apareceu, segundo o Back Office", "Quanto tempo o aluno ficou conectado na sala de aula virtual", "A nota do aluno em tarefas de casa e trabalhos em aula"], "c": 0, "fb": "A Frequência no BO simplesmente confirma se uma aula programada aconteceu e o aluno apareceu — o quanto ele estava engajado é uma medida separada, a Presença em Sala de Aula."},
+      {"q": "No Back Office, o que transforma uma falta vermelha (sem justificativa) em uma amarela?", "opts": ["Assim que o motivo se torna conhecido, mudar a falta para amarela e selecionar esse motivo", "72 horas se passarem sem nenhuma ação", "Deixar um comentário no Back Office, sem mudar o tipo de falta"], "c": 0, "fb": "O que transforma uma falta vermelha em amarela é mudar o tipo e escolher o motivo assim que ele é conhecido — seja porque você descobriu diretamente ou porque o Atendimento ao Cliente te repassou. Um comentário sozinho, sem mudar o tipo, deixa vermelha."},
+      {"q": "Um dos seus alunos tem uma falta amarela (avisada) e Presença em Sala de Aula de 91%. Em qual grupo ele está?", "opts": ["ALERTA — qualquer falta move um aluno para um grupo de risco", "OBSERVAÇÃO — uma falta é um alerta antecipado", "Saudável — uma falta explicada com presença forte não é um sinal de risco"], "c": 2, "fb": "Uma falta amarela com presença acima de 85% deixa um aluno em Saudável. São necessárias duas amarelas para chegar a ALERTA. Uma falta avisada é uma situação que a família está gerenciando — não é um ponto negativo para você nem para eles."}
     ],
     "2": [
     {"q":"Um aluno entra com a câmera ligada, mas fica visivelmente retraído — quieto, olhando para a mesa. Como você começa?","opts":["Você o cumprimenta com carinho, faz uma breve pergunta pessoal sobre a semana dele e, quando ele responde, entra aos poucos no plano de hoje.","Você começa com um cumprimento enérgico e vai direto para a recapitulação do projeto da aula anterior, confiando que o embalo de começar vai trazer a atenção dele de volta.","Você o cumprimenta e pergunta se está tudo bem, e depois espera em silêncio que ele responda antes de decidir se começa a aula."],"c":0,"fb":"Um check-in pessoal genuíno antes de mergulhar no conteúdo é o que reengaja um aluno retraído — só energia ou uma postura passiva de esperar pra ver pulam essa etapa."},
@@ -444,10 +586,12 @@ const CONTENT={
       {"q": "Você está revisando as tarefas entregues e o projeto de um aluno está tecnicamente correto, mas nada especial. O que você escreve?", "opts": ["Só marcar como \"feito\" sem comentário — cumpriu os requisitos, já basta.", "Deixar uma lista longa de tudo que poderia melhorar, sem mencionar nenhum ponto positivo.", "Deixar um comentário curto e específico, destacando algo que ele fez bem e uma sugestão gentil — algo que os pais também possam ler."], "c": 2, "fb": "Revisar a tarefa de casa é uma oportunidade de feedback, não só uma marcação — também é uma chance de reforçar o vínculo com alunos e pais."}
     ],
     "6": [
-      {"q": "Duas ligações e mensagens essa semana, sem resposta do responsável. Qual é o melhor próximo passo?", "opts": ["Escalar para o seu TL imediatamente e pedir que o aluno seja removido do seu grupo, já que duas tentativas sem resposta sugerem desinteresse.", "Mandar mais uma mensagem calorosa e sem pressão, e compartilhar a gravação e o resumo da tarefa de casa, para que o aluno não fique ainda mais para trás enquanto espera.", "Parar de entrar em contato por enquanto, considerando que duas tentativas é um limite razoável e mais mensagens podem parecer excessivas."], "c": 1, "fb": "Um contato atencioso é sempre o próximo passo — persistente, mas caloroso, em vez de escalar ou desistir cedo demais."},
+      {"q": "Um aluno já faltou a duas aulas seguidas, e não houve resposta ao seu contato depois da primeira. Qual é o melhor próximo passo?", "opts": ["Esperar por uma terceira falta antes de fazer qualquer outra coisa, já que duas faltas sozinhas não confirmam um padrão.", "Reportar agora através da Avaliação do Aluno — duas seguidas é o ponto em que você age, não espera pela terceira.", "Parar de entrar em contato e deixar o Atendimento ao Cliente assumir o caso sem nenhuma participação sua."], "c": 1, "fb": "Duas faltas é o gatilho de escalonamento no Brasil — não espere pela terceira. É exatamente quando o caso deve passar de um acompanhamento particular para a Avaliação do Aluno."},
       {"q": "Um aluno faltou à aula por doença. Como o tutor fala com o responsável?", "opts": ["Mantém a conversa breve e neutra, evitando perguntas pessoais sobre a doença para não invadir a situação da família.", "Expressa uma preocupação genuína com o estado do aluno, menciona qualquer material extra disponível, e usa o retorno dele para compartilhar algo positivo.", "Foca principalmente em colocar o aluno em dia academicamente, já que dar apoio emocional sobre a doença não é realmente papel do tutor."], "c": 1, "fb": "Calor humano genuíno, ajuda prática e uma nota positiva no retorno cobrem a empatia que este módulo pede — ficar neutro ou puramente acadêmico deixa isso de lado."},
       {"q": "Um aluno que faltou a duas aulas volta e faz um ótimo trabalho hoje. Como o tutor usa isso com os pais?", "opts": ["Esperar até o próximo check-in programado para mencionar, para não entrar em contato com a família muitas vezes em pouco tempo.", "Entrar em contato por volta desta aula para compartilhar a conquista específica, reforçando a virada positiva tanto para o aluno quanto para o responsável.", "Mencionar isso brevemente apenas ao aluno, já que os pais costumam se interessar mais por padrões de frequência do que por conquistas diárias."], "c": 1, "fb": "Compartilhar a conquista enquanto ela está recente reforça a virada positiva tanto para o aluno quanto para o responsável — esperar ou não contar ao responsável desperdiça o momento."},
-      {"q": "Qual das opções a seguir <strong>NÃO</strong> é recomendada quando um aluno falta à aula?", "opts": ["Compartilhar a gravação e um breve resumo da tarefa de casa para que ele não fique para trás", "Fazer o acompanhamento com o responsável para perguntar como ele está e mencionar que o aluno fez falta", "Propor uma aula extra diretamente ao responsável sem antes avisar seu TL"], "c": 2, "fb": "Uma aula extra sempre passa primeiro pelo seu TL — propô-la diretamente ao responsável pula essa etapa obrigatória."}
+      {"q": "Qual das opções a seguir <strong>NÃO</strong> é algo que um tutor deveria fazer?", "opts": ["Encaminhar uma família que pergunta sobre mudar de curso, grupo ou horário para o Atendimento ao Cliente", "Oferecer uma aula 1 a 1 diretamente a uma família, sem antes perguntar ao seu TL", "Fazer o acompanhamento com a família no mesmo dia depois de uma falta sem aviso"], "c": 1, "fb": "Oferecer uma aula 1 a 1 (ou uma aula extra) exige a aprovação do seu TL primeiro — e um pedido para mudar de curso, grupo ou horário vai para o Atendimento ao Cliente em vez de ser resolvido diretamente por você."},
+      {"q": "Um aluno faltou à aula de terça-feira sem nenhum aviso, então você marcou como vermelha. Na quinta-feira o responsável responde que o aluno estava com gripe. O que você faz?", "opts": ["Deixar vermelha — não foi avisada na hora, e mudá-la depois distorceria o que aconteceu", "Mudar a falta para amarela, selecionar \"Problemas de saúde\", e adicionar um comentário com o que o responsável disse", "Adicionar um comentário com o que o responsável disse e deixar o tipo de falta como está"], "c": 1, "fb": "Vermelho significa \"não sabemos por quê\". Assim que você sabe, o registro deve dizer isso: mude o tipo, selecione o motivo, e comente. Um comentário sozinho deixa a falta vermelha."},
+      {"q": "Um aluno nunca compareceu a uma única aula desde o primeiro dia. De quem é esse caso?", "opts": ["Inteiramente do Atendimento ao Cliente — o tutor não tem nada a ver com isso aqui", "O Atendimento ao Cliente é responsável por resolvê-lo, mas o tutor deve perceber e escalar o quanto antes", "Só do tutor, já que o Atendimento ao Cliente só cuida de alunos ativos"], "c": 1, "fb": "O CS é responsável por resolver esse caso, mas você geralmente é a primeira pessoa que consegue perceber que isso está acontecendo — escale assim que perceber."}
     ]
   },
   "sortItems": [
