@@ -276,7 +276,7 @@ const CONTENT={
             {"type": "hi", "h": "Los primeros 5 minutos lo cambian todo", "b": "Un inicio cálido hace que el estudiante se sienta seguro. Un estudiante que se siente seguro es uno que se anima a intentar, fallar, aprender y volver."},
             {"type": "doavoid", "left": {"h": "✅ Qué Hacer", "items": ["Saluda con calidez: \"Qué gusto verte por aquí\"", "Pregunta algo personal, brevemente", "Presenta la lección con energía: \"Hoy vamos a construir algo increíble\"", "Refuerza la seguridad psicológica: \"Los errores son parte de aprender\""]}, "right": {"h": "❌ Qué Evitar", "items": ["Entrar directo al contenido: \"Vamos a abrir la actividad\"", "Saltarte el saludo", "No explicar qué van a hacer ni por qué", "Apurarte o sonar estresado"]}},
             {"type": "cute", "h": "Consejo", "b": "Esos minutos de charla — al inicio, al final, o durante una actividad — son los que le muestran a un estudiante que es una persona, no solo otro nombre en tu lista de clase."},
-            {"type": "video", "vkey": "m2-smalltalk", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1pUNpgA-QXWY_r17stiohCiHhqAq1xwTq/preview"}
+            {"type": "video", "vkey": "m2-smalltalk", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1kDZBCNgAeraVzpNwshgEg5prBE_wxNru/preview"}
           ]
         },
         {
@@ -296,7 +296,7 @@ const CONTENT={
               ["Corregir sin guiar", "Le quita autonomía — el estudiante espera correcciones en lugar de construir su propio criterio"],
               ["Varias correcciones al mismo tiempo", "Sobrecarga cognitiva — a esta edad, los estudiantes procesan de 1 a 2 comentarios a la vez"]
             ]},
-            {"type": "video", "vkey": "m2-feedback", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1r-g7udi3iFa_b7spDwPxQkeFubiMjNst/preview"},
+            {"type": "video", "vkey": "m2-feedback", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1RYNdxI1-6ewgJUNanK7Fn1xl2TRhByAI/preview"},
             {"type": "agefriendly", "intro": "Mira ejemplos de cómo puedes dar retroalimentación sobre un proyecto según la edad:", "younger": "\"Espera, la capa de tu personaje se mueve de verdad cuando salta — ¿descubriste ese truco de animación tú solo? ¡Qué detalle tan genial, hace que todo se sienta vivo!\"", "older": "\"La forma en que estructuraste esa función para que sea reutilizable en varios niveles — así es como muchos estudios de videojuegos reales lo hacen. ¿De dónde salió la idea?\""}
           ]
         },
@@ -315,7 +315,7 @@ const CONTENT={
               "Usa el trabajo en pareja o en grupos pequeños cuando la actividad lo permita",
               "Recuerda detalles entre clases — si alguien mencionó algo la semana pasada, pregunta cómo le fue"
             ]},
-            {"type": "video", "vkey": "m2-participation", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1Koh1dFj53slUEv5pqc_i9oJDUk23eaJH/preview"}
+            {"type": "video", "vkey": "m2-participation", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1VEyT_aLTnCrybiPdiEwENVQeSHkx7Bjh/preview"}
           ]
         },
         {
@@ -356,7 +356,7 @@ const CONTENT={
           "t": "🎬 Modelar Antes de Practicar",
           "cards": [
             {"type": "text", "b": "Nunca le pidas a un estudiante que haga algo que no ha visto hacer antes. Modelar el proceso paso a paso — pensando en voz alta mientras avanzas — les da un mapa claro de lo que se espera, y reduce la frustración de \"no sé por dónde empezar\". Antes de que comience la práctica, dale a los estudiantes una señal clara de lo que viene: \"Todos, ojos en mi pantalla dentro del salón virtual — les voy a mostrar cómo funciona esto, y cuando termine, lo harán ustedes mismos.\" Las expectativas claras sobre el orden de la clase — y lo que pasa justo después de que el tutor modela — mantienen al grupo enfocado y reducen la ansiedad sobre lo que sigue."},
-            {"type": "video", "vkey": "m3-model", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1XF1ztyk8SpE3h7w4JfLEBGkbA8PZ2KEv/preview"},
+            {"type": "video", "vkey": "m3-model", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/14wV5YfN08yOuwqJSIOrZNMXao3NNggO5/preview"},
             {"type": "agefriendly", "intro": "Mira ejemplos de cómo puedes modelar esta fase según la edad:", "younger": "\"Muy bien, a la cuenta de 3 todos corremos a la pestaña de Classroom — quien llegue me deja una reacción para saber que están listos para escuchar. Perfecto — ya está María, ya está Pedro, vi tu reacción Alejandra, ¡tú también llegaste! Genial, ahora que ya estamos todos, primero vamos a ver cómo lo hago yo, y una vez que lo hayamos visto, ustedes lo van a intentar. ¡Muéstrenme esos pulgares arriba en cámara!\"", "older": "\"Muy bien, ahora pasamos a la parte de teoría y práctica. Primero les voy a mostrar cómo se hace antes de que lo intenten por su cuenta — para eso necesito que todos estén en la pestaña de Classroom viendo mi pantalla, así que por favor reaccionen cuando ya estén ahí. Perfecto, ahora que veo que ya estamos listos, ¡empecemos!\""}
           ]
         },
@@ -377,7 +377,7 @@ const CONTENT={
               "<strong>Roblox / Minecraft:</strong> \"La próxima clase es la primera vez que publicarán algo que otros jugadores realmente podrán ver. Prepárense.\""
             ]},
             {"type": "cute", "h": "Consejo", "b": "Un buen cierre no es solo \"nos vemos la próxima\" — es sembrar la semilla de algo que ellos mismos quieren ver terminado."},
-            {"type": "video", "vkey": "m3-anticipation", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1wQW9fZvfJaTJlyKiupnD3lnbz6Hg2B2s/preview"},
+            {"type": "video", "vkey": "m3-anticipation", "native": true, "h": "Mira un ejemplo de una clase real", "src": "https://drive.google.com/file/d/1GM-dYE4Z5-4fyKNJdjs9_pwZ_Anmvq3Q/preview"},
             {"type": "agefriendly", "intro": "Mira cómo puedes adaptar la anticipación para la próxima clase según la edad:", "younger": "Conéctala con sus intereses personales — videojuegos favoritos, películas, sueños que quieren cumplir en Kodland, proyectos de corto plazo que hayan mencionado querer construir, o series que les gusten.", "older": "Conéctala con su futuro profesional — metas de proyectos a corto o largo plazo, y preguntas que hicieron antes en el curso y que ya es momento de explorar a fondo."}
           ]
         }
