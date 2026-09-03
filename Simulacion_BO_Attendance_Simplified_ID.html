@@ -1,5 +1,5 @@
 ?<!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -630,7 +630,7 @@ function renderSchedule(){
       <div class="field">${ICONS.clock}&nbsp;Waktu Sesi: ${LESSON_MODAL.time}</div>
       <div class="modal-actions">
         <a onclick="closeLessonModal()">Keluar</a>
-        <button class="btn btn-accent" onclick="simClick('Start the lesson / open the virtual classroom');closeLessonModal();">Mulai pelajaran</button>
+        <button class="btn btn-accent" onclick="simClick('Mulai pelajaran / buka ruang kelas virtual');closeLessonModal();">Mulai pelajaran</button>
       </div>
     </div>
   </div>`;
@@ -819,7 +819,7 @@ function gradeCheckCell(si,ti){
 function checkTaskIcon(type){ return {house:'🏠',asterisk:'✱',theory:'T',project:'⭐'}[type] || '🏠'; }
 function renderScheduleStatus(l){
   if(l.status==='completed') return `<span class="pill pill-green">Selesai</span>`;
-  return `<button class="btn btn-accent" onclick="simClick('Start lesson')">Mulai pelajaran</button>`;
+  return `<button class="btn btn-accent" onclick="simClick('Mulai pelajaran')">Mulai pelajaran</button>`;
 }
 
 function renderGroupDetail(){
@@ -865,8 +865,8 @@ function renderGroupDetail(){
       <div style="display:flex;justify-content:space-between;align-items:center">
         <h3 style="margin:0">Komentar</h3>
         <div style="display:flex;gap:8px">
-          <button class="grp-addbtn" title="Tambah komentar" onclick="simClick('Add group comment')">+</button>
-          <span class="grp-icbtn" title="Ekspor komentar" onclick="simClick('Export group comments')">⬇</span>
+          <button class="grp-addbtn" title="Tambah komentar" onclick="simClick('Tambah komentar kelompok')">+</button>
+          <span class="grp-icbtn" title="Ekspor komentar" onclick="simClick('Ekspor komentar kelompok')">⬇</span>
         </div>
       </div>
       <div class="grp-comment-empty">Tidak ada deskripsi</div>
@@ -1064,7 +1064,7 @@ function renderAssignmentsTab(cd){
 
 function renderStudents(){
   return `<h1 class="pagetitle">Siswa</h1>
-  <button class="btn btn-accent" style="margin-bottom:16px" onclick="simClick('Add a new student')">+ Tambah</button>
+  <button class="btn btn-accent" style="margin-bottom:16px" onclick="simClick('Tambah siswa baru')">+ Tambah</button>
   <div class="tablewrap" id="studentsTable">
     <button class="filterbtn">${ICONS.filter}</button>
     <table><thead><tr><th>Nama siswa</th><th>Kelompok aktif</th><th>Kelompok tidak aktif</th><th>Alamat e-mail</th><th>Mata uang</th><th>Saldo</th><th>Wilayah</th><th>Funnel penjualan</th><th>Status CRM</th></tr></thead>
@@ -1107,17 +1107,17 @@ function renderStudentDetail(){
     <div class="side-actions">
       <button id="loginLinkBtn" title="Tautan login ke platform" onclick="clickLoginLink()">${ICONS.link}</button>
       <button id="copyCredsBtn" title="Salin login dan kata sandi" onclick="clickCopyCreds()">${ICONS.lock}</button>
-      <button title="Pengaturan" onclick="simClick('Open advanced student settings')">${ICONS.gear}</button>
+      <button title="Pengaturan" onclick="simClick('Buka pengaturan lanjutan siswa')">${ICONS.gear}</button>
     </div>
   </div>
   <div class="detail-tabs" id="detailTabs">
     <button class="dtab ${state.dtab==='wallet'?'active':''}" data-dtab="wallet" onclick="goDetailTab('wallet')">💰 Dompet</button>
-    <button class="dtab" onclick="simClick('View Trial Class information')">📋 Kelas Percobaan</button>
-    <button class="dtab" onclick="simClick('View the student\'s Groups')">${ICONS.users} Kelompok</button>
+    <button class="dtab" onclick="simClick('Lihat informasi Kelas Percobaan')">📋 Kelas Percobaan</button>
+    <button class="dtab" onclick="simClick('Lihat Kelompok siswa')">${ICONS.users} Kelompok</button>
     <button class="dtab ${state.dtab==='progress'?'active':''}" data-dtab="progress" onclick="goDetailTab('progress')">📊 Kemajuan</button>
-    <button class="dtab" onclick="simClick('View HUB Projects')">🔧 Proyek HUB</button>
+    <button class="dtab" onclick="simClick('Lihat Proyek HUB')">🔧 Proyek HUB</button>
     <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Kelas Tambahan</button>
-    <button class="dtab" onclick="simClick('View lesson Feedback')">📝 Umpan Balik</button>
+    <button class="dtab" onclick="simClick('Lihat Umpan Balik pelajaran')">📝 Umpan Balik</button>
   </div>
   ${state.dtab==='wallet' ? renderWalletTab(s) : state.dtab==='progress' ? renderProgressTab(s) : state.dtab==='extra' ? renderExtraTab(s) : renderWalletTab(s)}
   `;
@@ -1130,9 +1130,9 @@ function renderWalletTab(s){
     <div class="balance-box">
       <div><div style="font-size:12px;color:var(--muted)">Saldo saat ini</div><div class="balance-num">${s.balanceNum} pelajaran</div></div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-accent" onclick="simClick('Top up lessons (Top Up)')">Isi Ulang</button>
-        <button class="btn btn-ghost" onclick="simClick('Subtract lessons (Substract)')">Kurangi</button>
-        <button class="btn btn-ghost" onclick="simClick('Generate an invoice')">Faktur</button>
+        <button class="btn btn-accent" onclick="simClick('Isi ulang pelajaran (Top Up)')">Isi Ulang</button>
+        <button class="btn btn-ghost" onclick="simClick('Kurangi pelajaran (Substract)')">Kurangi</button>
+        <button class="btn btn-ghost" onclick="simClick('Buat faktur')">Faktur</button>
       </div>
     </div>
     <div class="autopay-row">
@@ -1141,7 +1141,7 @@ function renderWalletTab(s){
     </div>
   </div>
   <div class="tablewrap">
-    <div class="tbl-toolbar" style="justify-content:space-between"><h3 style="margin:0">Pembayaran</h3><button class="btn btn-accent" onclick="simClick('Log a new payment')">Buat</button></div>
+    <div class="tbl-toolbar" style="justify-content:space-between"><h3 style="margin:0">Pembayaran</h3><button class="btn btn-accent" onclick="simClick('Catat pembayaran baru')">Buat</button></div>
     <table><thead><tr><th>Tanggal</th><th>Anggota staf</th><th>Jumlah</th><th>Mata uang</th><th>Pelajaran</th><th>Sistem pembayaran</th><th>Negara</th><th>Status</th></tr></thead>
     <tbody>${s.payments.map(p=>`<tr><td>${p.date}</td><td>${p.staff}</td><td>${p.amt}</td><td>${p.ccy}</td><td>${p.lessons}</td><td>${p.sys}</td><td>${p.country}</td><td>${p.status}</td></tr>`).join('')}</tbody></table>
     <div class="tbl-foot">Item per halaman: 5 &nbsp;|&nbsp; 1-1 dari 1</div>

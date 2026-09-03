@@ -1,5 +1,5 @@
 ?<!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -435,7 +435,7 @@ const PROBLEM_KIND_OPTIONS = [
 ];
 const STUDENTS = [
  {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lekcji',region:'LatAm | Kolumbia',funnel:'LatAm|Parallel+Inst sale demo',crm:'PORTFEL DOŁADOWANY',
-   age:9,gender:'Female',sen:'No',last:'11.08.2026, 18:20',
+   age:9,gender:'Dziewczynka',sen:'No',last:'11.08.2026, 18:20',
    parent:{name:'Laura Martínez',phone:'+57 300 111 2222',email:'laura.martinez.demo@example.com',country:'🇨🇴 Kolumbia',currency:'COP',funnel:'LatAm | Peru, Meksyk, Kolumbia',status:'PORTFEL DOŁADOWANY',local:'14:32 (UTC-05:00)'},
    comments:[
      {role:'CS',name:'Zespół CS',text:'Rodzina zadowolona z kursu, brak problemów. Ostatnia rozmowa kontrolna, brak nowych informacji.',time:'22.07.2026, 16:40'},
@@ -444,7 +444,7 @@ const STUDENTS = [
    payments:[{date:'02.02.2026, 09:10',staff:'L204 Ana P.',amt:'560.00$',ccy:'COP',lessons:40,sys:'stripe',country:'🇨🇴',branch:'LatAm',status:'✅'}]
  },
  {id:2,name:'Diego Ramírez',active:'PRM_DEMO_ATT-01',inactive:'',email:'diego.demo@example.com',currency:'USD',balance:'18 lekcji',region:'LatAm | Peru',funnel:'LatAm|Parallel+Inst sale demo',crm:'ZALEGŁOŚĆ',
-   age:10,gender:'Male',sen:'No',last:'10.08.2026, 17:05',
+   age:10,gender:'Chłopiec',sen:'No',last:'10.08.2026, 17:05',
    parent:{name:'Jorge Ramírez',phone:'+51 900 222 3333',email:'jorge.ramirez.demo@example.com',country:'🇵🇪 Peru',currency:'USD',funnel:'LatAm | Peru, Meksyk, Kolumbia',status:'ZALEGŁOŚĆ',local:'14:05 (UTC-05:00)'},
    comments:[
    ],
@@ -452,7 +452,7 @@ const STUDENTS = [
    payments:[{date:'12.03.2026, 11:00',staff:'L112 Marco V.',amt:'390.00$',ccy:'USD',lessons:30,sys:'stripe',country:'🇵🇪',branch:'LatAm',status:'✅'}]
  },
  {id:3,name:'Camila Torres',active:'PRM_DEMO_ATT-01',inactive:'',email:'camila.demo@example.com',currency:'MXN',balance:'55 lekcji',region:'LatAm | Meksyk',funnel:'LatAm|Parallel+Inst sale demo',crm:'PORTFEL DOŁADOWANY',
-   age:8,gender:'Female',sen:'No',last:'12.08.2026, 09:30',
+   age:8,gender:'Dziewczynka',sen:'No',last:'12.08.2026, 09:30',
    parent:{name:'Patricia Torres',phone:'+52 55 0000 4444',email:'patricia.torres.demo@example.com',country:'🇲🇽 Meksyk',currency:'MXN',funnel:'LatAm | Peru, Meksyk, Kolumbia',status:'PORTFEL DOŁADOWANY',local:'13:30 (UTC-05:00)'},
    comments:[
      {role:'CS',name:'Zespół CS',text:'Skontaktowałem/am się z rodziną w sprawie opuszczonej lekcji — w domu wystąpił problem z połączeniem podczas burzy. Wspomnieli też, że ostatni temat wydał się jej zbyt szybki; warto zrobić krótkie powtórzenie przed przejściem dalej.',time:'12.08.2026, 10:15'},
@@ -720,7 +720,7 @@ function buildGroupDetailData(gid){
   const attColors = ['green','green','orange','red','blue','pale','pale','pale'];
   const students = roster.map((n,i)=>({
     name:n.name, email:n.email,
-    package: g.premium==='Yes' ? 'Premium package' : 'Standard package',
+    package: g.premium==='Tak' ? 'Pakiet Premium' : 'Pakiet Standardowy',
     tasksDone: 2+(i%2), checked: i%2===0,
     cells: GROUP_DETAIL_LESSONS.map((l,li)=>{
       const fixed = FIXED_ATT[n.name];
@@ -736,10 +736,10 @@ function buildGroupDetailData(gid){
   return {
     group:g, students, checkTasks:GROUP_CHECK_TASKS, checkGridByLesson,
     schedule:[
-      {num:1,title:g.prev||'M5L10. For loops',tutor:g.tutor,date:'23.07.2026',day:'Th',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
-      {num:2,title:'M5L11. Nested conditionals',tutor:g.tutor,date:'30.07.2026',day:'Th',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
-      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Th',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
-      {num:4,title:'M5L13. Functions basics',tutor:g.tutor,date:'27.08.2026',day:'Th',status:'upcoming'},
+      {num:1,title:g.prev||'M5L10. Pętle for',tutor:g.tutor,date:'23.07.2026',day:'Czw',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
+      {num:2,title:'M5L11. Zagnieżdżone instrukcje warunkowe',tutor:g.tutor,date:'30.07.2026',day:'Czw',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
+      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Czw',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
+      {num:4,title:'M5L13. Podstawy funkcji',tutor:g.tutor,date:'27.08.2026',day:'Czw',status:'upcoming'},
     ],
   };
 }
@@ -756,9 +756,9 @@ function openAttPopup(si,ci,ev){
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
     <div class="fp-row">
-      <button style="background:var(--green);color:#0b2a1f" onclick="markAttendance('green')">Attended</button>
-      <button style="background:var(--red);color:#fff" onclick="markAttendance('red')">No-show</button>
-      <button style="background:var(--yellow);color:#2a2205" onclick="showAbsentReasons(event)">Absent</button>
+      <button style="background:var(--green);color:#0b2a1f" onclick="markAttendance('green')">Uczęszczany</button>
+      <button style="background:var(--red);color:#fff" onclick="markAttendance('red')">Wagary</button>
+      <button style="background:var(--yellow);color:#2a2205" onclick="showAbsentReasons(event)">Nieobecność</button>
     </div>`);
   fire('open-att-popup');
 }

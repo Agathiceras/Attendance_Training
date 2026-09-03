@@ -1,5 +1,5 @@
 ?<!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -383,15 +383,15 @@ document.querySelector('.side-bottom .side-icon').innerHTML = ICONS.person;
 const TEACHER = {
   name:'Camila Reyes', status:'Active', email:'c.reyes.demo@kodland.team', phone:'+57 300 000 0000',
   country:'🇨🇴 Colombia', telegram:'@Camila_Reyes_demo', region:'LatAm', tz:'America/Bogota (UTC-05:00)',
-  extra:'Assigned to: Demo Team', tags:['Micro-group','Small group','Regular group','+2 more']
+  extra:'Assegnato a: Demo Team', tags:['Micro-gruppo','Piccolo gruppo','Gruppo regolare','+2 altri']
 };
 const COURSES = [
- {id:1200,title:'[1200] Python Programming [2025][8-9][60 min][40L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:40,date:'12.03.2026'},
- {id:1450,title:'[1450] Graphic Design [2025][6-7][60 min][30L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:30,date:'02.02.2026'},
- {id:1330,title:'[1330] Creative Minecraft [2025][5-7][40 min][60L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:60,date:'19.01.2026'},
+ {id:1200,title:'[1200] Programmazione Python [2025][8-9][60 min][40L][LatAm][in corso]',branch:'LatAm',active:'Sì',lessons:40,date:'12.03.2026'},
+ {id:1450,title:'[1450] Design Grafico [2025][6-7][60 min][30L][LatAm][in corso]',branch:'LatAm',active:'Sì',lessons:30,date:'02.02.2026'},
+ {id:1330,title:'[1330] Minecraft Creativo [2025][5-7][40 min][60L][LatAm][in corso]',branch:'LatAm',active:'Sì',lessons:60,date:'19.01.2026'},
 ];
 const COURSE_DETAIL = {
- 1200:{emoji:'🐍',type:'coding',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:40,modulesCount:10,courseGroup:'Python',courseSet:'—',excluded:'No',certificate:'LATAM_Python_Level1_1200',intCert:'—',
+ 1200:{emoji:'🐍',type:'coding',branch:'LatAm',language:'Spagnolo',courseType:'Corsi a pagamento',lessonsCount:40,modulesCount:10,courseGroup:'Python',courseSet:'—',excluded:'No',certificate:'LATAM_Python_Level1_1200',intCert:'—',
    modules:[
      {id:3900,num:1,title:'M1. Primi passi',lessons:[
         {id:38871,num:1,title:'M1.L1 Introduzione',topic:'Introduzione al corso di Python',type:'DEFAULT_LESSON'},
@@ -402,9 +402,9 @@ const COURSE_DETAIL = {
         {id:39012,num:12,title:'M5.L12 Cicli e condizionali',topic:'Ripetere azioni con for e while',type:'DEFAULT_LESSON'},
      ]},
    ]},
- 1450:{emoji:'🎨',type:'creativity',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:30,modulesCount:8,courseGroup:'Design',courseSet:'—',excluded:'No',certificate:'LATAM_Design_Level1_1450',intCert:'—',
+ 1450:{emoji:'🎨',type:'creativity',branch:'LatAm',language:'Spagnolo',courseType:'Corsi a pagamento',lessonsCount:30,modulesCount:8,courseGroup:'Design',courseSet:'—',excluded:'No',certificate:'LATAM_Design_Level1_1450',intCert:'—',
    modules:[{id:9001,num:1,title:'M1. Fondamenti di design',lessons:[{id:91001,num:1,title:'M1.L1 Introduzione al design',topic:"Cos'è il design grafico",type:'DEFAULT_LESSON'}]}]},
- 1330:{emoji:'🧱',type:'coding',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:60,modulesCount:12,courseGroup:'Minecraft',courseSet:'—',excluded:'No',certificate:'LATAM_Minecraft_Level1_1330',intCert:'—',
+ 1330:{emoji:'🧱',type:'coding',branch:'LatAm',language:'Spagnolo',courseType:'Corsi a pagamento',lessonsCount:60,modulesCount:12,courseGroup:'Minecraft',courseSet:'—',excluded:'No',certificate:'LATAM_Minecraft_Level1_1330',intCert:'—',
    modules:[{id:9101,num:1,title:'M1. Il mio primo mondo',lessons:[{id:91101,num:1,title:'M1.L1 Introduzione a Minecraft',topic:'Esplorare la modalità creativa',type:'DEFAULT_LESSON'}]}]},
 };
 const LESSON_ASSIGNMENTS = {
@@ -421,7 +421,7 @@ const AVAILABILITY = [
  ['Venerdì',null],['Sabato','09:00-12:00'],['Domenica',null]
 ];
 const ALL_GROUPS = [
- {id:99001,title:'PRM_DEMO_ATT-01',tutor:'Camila Reyes',course:'[1200] Python Programming',courseId:1200,start:'05.02.2026',sp:'3/3',prev:'M1L3. If/else basics',next:'M1L4. Nested conditionals',type:'[26] Premium Group 3, 3 students, 60 minutes',branch:'LatAm',funnel:'LatAm | Peru, Mexico, Colombia',tz:'America/Bogota',premium:'Yes',tourTarget:true},
+ {id:99001,title:'PRM_DEMO_ATT-01',tutor:'Camila Reyes',course:'[1200] Programmazione Python',courseId:1200,start:'05.02.2026',sp:'3/3',prev:'M1L3. Basi di if/else',next:'M1L4. Condizionali annidati',type:'[26] Gruppo Premium 3, 3 studenti, 60 minuti',branch:'LatAm',funnel:'LatAm | Peru, Messico, Colombia',tz:'America/Bogota',premium:'Sì',tourTarget:true},
 ];
 const PROBLEM_KIND_OPTIONS = [
  'Il cliente vuole mettere in pausa/congelare il proprio account',
@@ -435,7 +435,7 @@ const PROBLEM_KIND_OPTIONS = [
 ];
 const STUDENTS = [
  {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lessons',region:'LatAm | Colombia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
-   age:9,gender:'Female',sen:'No',last:'11.08.2026, 18:20',
+   age:9,gender:'Femmina',sen:'No',last:'11.08.2026, 18:20',
    parent:{name:'Laura Martínez',phone:'+57 300 111 2222',email:'laura.martinez.demo@example.com',country:'🇨🇴 Colombia',currency:'COP',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'14:32 (UTC-05:00)'},
    comments:[
      {role:'CS',name:'CS Team',text:'Famiglia soddisfatta del corso, nessun problema. Ultima chiamata di follow-up, niente di nuovo da segnalare.',time:'22.07.2026, 16:40'},
@@ -444,7 +444,7 @@ const STUDENTS = [
    payments:[{date:'02.02.2026, 09:10',staff:'L204 Ana P.',amt:'560.00$',ccy:'COP',lessons:40,sys:'stripe',country:'🇨🇴',branch:'LatAm',status:'✅'}]
  },
  {id:2,name:'Diego Ramírez',active:'PRM_DEMO_ATT-01',inactive:'',email:'diego.demo@example.com',currency:'USD',balance:'18 lessons',region:'LatAm | Peru',funnel:'LatAm|Parallel+Inst sale demo',crm:'BACKLOG',
-   age:10,gender:'Male',sen:'No',last:'10.08.2026, 17:05',
+   age:10,gender:'Maschio',sen:'No',last:'10.08.2026, 17:05',
    parent:{name:'Jorge Ramírez',phone:'+51 900 222 3333',email:'jorge.ramirez.demo@example.com',country:'🇵🇪 Peru',currency:'USD',funnel:'LatAm | Peru, Mexico, Colombia',status:'BACKLOG',local:'14:05 (UTC-05:00)'},
    comments:[
    ],
@@ -452,7 +452,7 @@ const STUDENTS = [
    payments:[{date:'12.03.2026, 11:00',staff:'L112 Marco V.',amt:'390.00$',ccy:'USD',lessons:30,sys:'stripe',country:'🇵🇪',branch:'LatAm',status:'✅'}]
  },
  {id:3,name:'Camila Torres',active:'PRM_DEMO_ATT-01',inactive:'',email:'camila.demo@example.com',currency:'MXN',balance:'55 lessons',region:'LatAm | Mexico',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
-   age:8,gender:'Female',sen:'No',last:'12.08.2026, 09:30',
+   age:8,gender:'Femmina',sen:'No',last:'12.08.2026, 09:30',
    parent:{name:'Patricia Torres',phone:'+52 55 0000 4444',email:'patricia.torres.demo@example.com',country:'🇲🇽 Mexico',currency:'MXN',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'13:30 (UTC-05:00)'},
    comments:[
      {role:'CS',name:'CS Team',text:'Ho contattato la famiglia per la lezione persa — c\'era un problema di connessione a casa durante un temporale. Hanno anche detto che l\'ultimo argomento le è sembrato troppo veloce; vale la pena fare un breve ripasso prima di andare avanti.',time:'12.08.2026, 10:15'},
@@ -721,7 +721,7 @@ function buildGroupDetailData(gid){
   const attColors = ['green','green','orange','red','blue','pale','pale','pale'];
   const students = roster.map((n,i)=>({
     name:n.name, email:n.email,
-    package: g.premium==='Yes' ? 'Premium package' : 'Standard package',
+    package: g.premium==='Sì' ? 'Pacchetto Premium' : 'Pacchetto Standard',
     tasksDone: 2+(i%2), checked: i%2===0,
     cells: GROUP_DETAIL_LESSONS.map((l,li)=>{
       const fixed = FIXED_ATT[n.name];
@@ -737,10 +737,10 @@ function buildGroupDetailData(gid){
   return {
     group:g, students, checkTasks:GROUP_CHECK_TASKS, checkGridByLesson,
     schedule:[
-      {num:1,title:g.prev||'M5L10. For loops',tutor:g.tutor,date:'23.07.2026',day:'Th',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
-      {num:2,title:'M5L11. Nested conditionals',tutor:g.tutor,date:'30.07.2026',day:'Th',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
-      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Th',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
-      {num:4,title:'M5L13. Functions basics',tutor:g.tutor,date:'27.08.2026',day:'Th',status:'upcoming'},
+      {num:1,title:g.prev||'M5L10. Cicli for',tutor:g.tutor,date:'23.07.2026',day:'Gio',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
+      {num:2,title:'M5L11. Condizionali annidati',tutor:g.tutor,date:'30.07.2026',day:'Gio',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
+      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Gio',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
+      {num:4,title:'M5L13. Basi delle funzioni',tutor:g.tutor,date:'27.08.2026',day:'Gio',status:'upcoming'},
     ],
   };
 }

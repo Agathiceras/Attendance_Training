@@ -1,9 +1,9 @@
 ?<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BO Simulation — Marking Attendance</title>
+<title>Simulação BO — Registrar Presença</title>
 <style>
 :root{
   --bg:#211E33; --sidebar:#1B1830; --card:#2C2846; --card2:#342E56; --card3:#3A3460;
@@ -381,46 +381,46 @@ document.querySelector('.side-bottom .side-icon').innerHTML = ICONS.person;
 /* ---------- FAKE DATA (100% fictional, for training purposes only) ---------- */
 const TEACHER = {
   name:'Camila Reyes', status:'Active', email:'c.reyes.demo@kodland.team', phone:'+57 300 000 0000',
-  country:'🇨🇴 Colombia', telegram:'@Camila_Reyes_demo', region:'LatAm', tz:'America/Bogota (UTC-05:00)',
-  extra:'Assigned to: Demo Team', tags:['Micro-group','Small group','Regular group','+2 more']
+  country:'🇨🇴 Colômbia', telegram:'@Camila_Reyes_demo', region:'LatAm', tz:'America/Bogota (UTC-05:00)',
+  extra:'Atribuído a: Equipe Demo', tags:['Micro-turma','Turma pequena','Turma regular','+2 mais']
 };
 const COURSES = [
- {id:1200,title:'[1200] Python Programming [2025][8-9][60 min][40L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:40,date:'12.03.2026'},
- {id:1450,title:'[1450] Graphic Design [2025][6-7][60 min][30L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:30,date:'02.02.2026'},
- {id:1330,title:'[1330] Creative Minecraft [2025][5-7][40 min][60L][LatAm][in progress]',branch:'LatAm',active:'Yes',lessons:60,date:'19.01.2026'},
+ {id:1200,title:'[1200] Programação em Python [2025][8-9][60 min][40L][LatAm][em andamento]',branch:'LatAm',active:'Sim',lessons:40,date:'12.03.2026'},
+ {id:1450,title:'[1450] Design Gráfico [2025][6-7][60 min][30L][LatAm][em andamento]',branch:'LatAm',active:'Sim',lessons:30,date:'02.02.2026'},
+ {id:1330,title:'[1330] Minecraft Criativo [2025][5-7][40 min][60L][LatAm][em andamento]',branch:'LatAm',active:'Sim',lessons:60,date:'19.01.2026'},
 ];
 const COURSE_DETAIL = {
- 1200:{emoji:'🐍',type:'coding',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:40,modulesCount:10,courseGroup:'Python',courseSet:'—',excluded:'No',certificate:'LATAM_Python_Level1_1200',intCert:'—',
+ 1200:{emoji:'🐍',type:'coding',branch:'LatAm',language:'Espanhol',courseType:'Cursos pagos',lessonsCount:40,modulesCount:10,courseGroup:'Python',courseSet:'—',excluded:'No',certificate:'LATAM_Python_Level1_1200',intCert:'—',
    modules:[
-     {id:3900,num:1,title:'M1. First steps',lessons:[
-        {id:38871,num:1,title:'M1.L1 Introduction',topic:'Introduction to the Python course',type:'DEFAULT_LESSON'},
-        {id:38872,num:2,title:'M1.L2 Variables',topic:'Storing information in the program',type:'DEFAULT_LESSON'},
+     {id:3900,num:1,title:'M1. Primeiros passos',lessons:[
+        {id:38871,num:1,title:'M1.L1 Introdução',topic:'Introdução ao curso de Python',type:'DEFAULT_LESSON'},
+        {id:38872,num:2,title:'M1.L2 Variáveis',topic:'Armazenando informações no programa',type:'DEFAULT_LESSON'},
      ]},
-     {id:3904,num:5,title:'M5. Loops and conditionals',lessons:[
-        {id:39011,num:11,title:'M5.L11 Nested conditionals',topic:'Making decisions within decisions',type:'DEFAULT_LESSON'},
-        {id:39012,num:12,title:'M5.L12 Loops and conditionals',topic:'Repeating actions with for and while',type:'DEFAULT_LESSON'},
+     {id:3904,num:5,title:'M5. Laços e condicionais',lessons:[
+        {id:39011,num:11,title:'M5.L11 Condicionais aninhados',topic:'Tomando decisões dentro de decisões',type:'DEFAULT_LESSON'},
+        {id:39012,num:12,title:'M5.L12 Laços e condicionais',topic:'Repetindo ações com for e while',type:'DEFAULT_LESSON'},
      ]},
    ]},
- 1450:{emoji:'🎨',type:'creativity',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:30,modulesCount:8,courseGroup:'Design',courseSet:'—',excluded:'No',certificate:'LATAM_Design_Level1_1450',intCert:'—',
-   modules:[{id:9001,num:1,title:'M1. Design fundamentals',lessons:[{id:91001,num:1,title:'M1.L1 Introduction to design',topic:'What graphic design is',type:'DEFAULT_LESSON'}]}]},
- 1330:{emoji:'🧱',type:'coding',branch:'LatAm',language:'Spanish',courseType:'Paid courses',lessonsCount:60,modulesCount:12,courseGroup:'Minecraft',courseSet:'—',excluded:'No',certificate:'LATAM_Minecraft_Level1_1330',intCert:'—',
-   modules:[{id:9101,num:1,title:'M1. My first world',lessons:[{id:91101,num:1,title:'M1.L1 Introduction to Minecraft',topic:'Exploring creative mode',type:'DEFAULT_LESSON'}]}]},
+ 1450:{emoji:'🎨',type:'creativity',branch:'LatAm',language:'Espanhol',courseType:'Cursos pagos',lessonsCount:30,modulesCount:8,courseGroup:'Design',courseSet:'—',excluded:'No',certificate:'LATAM_Design_Level1_1450',intCert:'—',
+   modules:[{id:9001,num:1,title:'M1. Fundamentos de design',lessons:[{id:91001,num:1,title:'M1.L1 Introdução ao design',topic:'O que é design gráfico',type:'DEFAULT_LESSON'}]}]},
+ 1330:{emoji:'🧱',type:'coding',branch:'LatAm',language:'Espanhol',courseType:'Cursos pagos',lessonsCount:60,modulesCount:12,courseGroup:'Minecraft',courseSet:'—',excluded:'No',certificate:'LATAM_Minecraft_Level1_1330',intCert:'—',
+   modules:[{id:9101,num:1,title:'M1. Meu primeiro mundo',lessons:[{id:91101,num:1,title:'M1.L1 Introdução ao Minecraft',topic:'Explorando o modo criativo',type:'DEFAULT_LESSON'}]}]},
 };
 const LESSON_ASSIGNMENTS = {
- 39012:{inClass:[{num:1,title:'Challenge: loop counter',type:'Project',score:100}],homework:[{num:1,title:'Homework: multiplication table with for',type:'Project',score:100}],guides:[{id:75427,title:'Lesson manual'},{id:75428,title:'Presentation'}]},
+ 39012:{inClass:[{num:1,title:'Desafio: contador de loop',type:'Project',score:100}],homework:[{num:1,title:'Tarefa de casa: tabuada com for',type:'Project',score:100}],guides:[{id:75427,title:'Manual da aula'},{id:75428,title:'Apresentação'}]},
 };
-const DEFAULT_ASSIGNMENTS = {inClass:[],homework:[],guides:[{id:70000,title:'Lesson manual'}]};
+const DEFAULT_ASSIGNMENTS = {inClass:[],homework:[],guides:[{id:70000,title:'Manual da aula'}]};
 const TEACHER_GROUPS = [
- {name:'PRM_DEMO_MA-01',course:'[1200] Python Programming',students:'3/3',sched:'Tu, Th 14:00',start:'05.02.2026',nextDate:'20.08.2026',next:'M5L12. Loops and conditionals',status:'Active'},
- {name:'DEMO_MI-02',course:'[1450] Graphic Design',students:'2/2',sched:'We 16:00',start:'12.03.2026',nextDate:'19.08.2026',next:'M3L8. Composition and color',status:'Active'},
- {name:'PRM_DEMO_SA-03',course:'[1330] Creative Minecraft',students:'4/4',sched:'Sa 09:00',start:'22.01.2026',nextDate:'22.08.2026',next:'M6L15. My first video game',status:'Active'},
+ {name:'PRM_DEMO_MA-01',course:'[1200] Programação em Python',students:'3/3',sched:'Ter, Qui 14:00',start:'05.02.2026',nextDate:'20.08.2026',next:'M5L12. Laços e condicionais',status:'Active'},
+ {name:'DEMO_MI-02',course:'[1450] Design Gráfico',students:'2/2',sched:'Qua 16:00',start:'12.03.2026',nextDate:'19.08.2026',next:'M3L8. Composição e cor',status:'Active'},
+ {name:'PRM_DEMO_SA-03',course:'[1330] Minecraft Criativo',students:'4/4',sched:'Sáb 09:00',start:'22.01.2026',nextDate:'22.08.2026',next:'M6L15. Meu primeiro videogame',status:'Active'},
 ];
 const AVAILABILITY = [
- ['Monday',null],['Tuesday','14:00-18:00'],['Wednesday',null],['Thursday','14:00-18:00'],
- ['Friday',null],['Saturday','09:00-12:00'],['Sunday',null]
+ ['Segunda-feira',null],['Terça-feira','14:00-18:00'],['Quarta-feira',null],['Quinta-feira','14:00-18:00'],
+ ['Sexta-feira',null],['Sábado','09:00-12:00'],['Domingo',null]
 ];
 const ALL_GROUPS = [
- {id:99001,title:'PRM_DEMO_ATT-01',tutor:'Camila Reyes',course:'[1200] Python Programming',courseId:1200,start:'05.02.2026',sp:'3/3',prev:'M1L3. If/else basics',next:'M1L4. Nested conditionals',type:'[26] Premium Group 3, 3 students, 60 minutes',branch:'LatAm',funnel:'LatAm | Peru, Mexico, Colombia',tz:'America/Bogota',premium:'Yes',tourTarget:true},
+ {id:99001,title:'PRM_DEMO_ATT-01',tutor:'Camila Reyes',course:'[1200] Programação em Python',courseId:1200,start:'05.02.2026',sp:'3/3',prev:'M1L3. Fundamentos de if/else',next:'M1L4. Condicionais aninhados',type:'[26] Grupo Premium 3, 3 alunos, 60 minutos',branch:'LatAm',funnel:'LatAm | Peru, México, Colômbia',tz:'America/Bogota',premium:'Sim',tourTarget:true},
 ];
 const PROBLEM_KIND_OPTIONS = [
  'O cliente quer pausar/congelar a conta',
@@ -433,35 +433,35 @@ const PROBLEM_KIND_OPTIONS = [
  'Outro',
 ];
 const STUDENTS = [
- {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lessons',region:'LatAm | Colombia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
-   age:9,gender:'Female',sen:'No',last:'11.08.2026, 18:20',
-   parent:{name:'Laura Martínez',phone:'+57 300 111 2222',email:'laura.martinez.demo@example.com',country:'🇨🇴 Colombia',currency:'COP',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'14:32 (UTC-05:00)'},
+ {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lessons',region:'LatAm | Colômbia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
+   age:9,gender:'Feminino',sen:'Não',last:'11.08.2026, 18:20',
+   parent:{name:'Laura Martínez',phone:'+57 300 111 2222',email:'laura.martinez.demo@example.com',country:'🇨🇴 Colômbia',currency:'COP',funnel:'LatAm | Peru, México, Colômbia',status:'WALLET IS TOP UP',local:'14:32 (UTC-05:00)'},
    comments:[
-     {role:'CS',name:'CS Team',text:'Family happy with the course, no issues. Last follow-up call, nothing new to report.',time:'22.07.2026, 16:40'},
+     {role:'CS',name:'Equipe de CS',text:'Família satisfeita com o curso, sem problemas. Última ligação de acompanhamento, nada de novo a relatar.',time:'22.07.2026, 16:40'},
    ],
    balanceNum:32, monthly:1200, period:40,
    payments:[{date:'02.02.2026, 09:10',staff:'L204 Ana P.',amt:'560.00$',ccy:'COP',lessons:40,sys:'stripe',country:'🇨🇴',branch:'LatAm',status:'✅'}]
  },
  {id:2,name:'Diego Ramírez',active:'PRM_DEMO_ATT-01',inactive:'',email:'diego.demo@example.com',currency:'USD',balance:'18 lessons',region:'LatAm | Peru',funnel:'LatAm|Parallel+Inst sale demo',crm:'BACKLOG',
-   age:10,gender:'Male',sen:'No',last:'10.08.2026, 17:05',
-   parent:{name:'Jorge Ramírez',phone:'+51 900 222 3333',email:'jorge.ramirez.demo@example.com',country:'🇵🇪 Peru',currency:'USD',funnel:'LatAm | Peru, Mexico, Colombia',status:'BACKLOG',local:'14:05 (UTC-05:00)'},
+   age:10,gender:'Masculino',sen:'Não',last:'10.08.2026, 17:05',
+   parent:{name:'Jorge Ramírez',phone:'+51 900 222 3333',email:'jorge.ramirez.demo@example.com',country:'🇵🇪 Peru',currency:'USD',funnel:'LatAm | Peru, México, Colômbia',status:'BACKLOG',local:'14:05 (UTC-05:00)'},
    comments:[
    ],
    balanceNum:18, monthly:900, period:30,
    payments:[{date:'12.03.2026, 11:00',staff:'L112 Marco V.',amt:'390.00$',ccy:'USD',lessons:30,sys:'stripe',country:'🇵🇪',branch:'LatAm',status:'✅'}]
  },
- {id:3,name:'Camila Torres',active:'PRM_DEMO_ATT-01',inactive:'',email:'camila.demo@example.com',currency:'MXN',balance:'55 lessons',region:'LatAm | Mexico',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
-   age:8,gender:'Female',sen:'No',last:'12.08.2026, 09:30',
-   parent:{name:'Patricia Torres',phone:'+52 55 0000 4444',email:'patricia.torres.demo@example.com',country:'🇲🇽 Mexico',currency:'MXN',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'13:30 (UTC-05:00)'},
+ {id:3,name:'Camila Torres',active:'PRM_DEMO_ATT-01',inactive:'',email:'camila.demo@example.com',currency:'MXN',balance:'55 lessons',region:'LatAm | México',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
+   age:8,gender:'Feminino',sen:'Não',last:'12.08.2026, 09:30',
+   parent:{name:'Patricia Torres',phone:'+52 55 0000 4444',email:'patricia.torres.demo@example.com',country:'🇲🇽 México',currency:'MXN',funnel:'LatAm | Peru, México, Colômbia',status:'WALLET IS TOP UP',local:'13:30 (UTC-05:00)'},
    comments:[
-     {role:'CS',name:'CS Team',text:'Family mentioned the student has seemed a bit unmotivated this month. Keep an eye on it.',time:'02.08.2026, 17:22'},
+     {role:'CS',name:'Equipe de CS',text:'A família mencionou que a aluna tem parecido um pouco desmotivada este mês. Vale acompanhar de perto.',time:'02.08.2026, 17:22'},
    ],
    balanceNum:55, monthly:1650, period:60,
    payments:[{date:'22.01.2026, 08:45',staff:'L204 Ana P.',amt:'890.00$',ccy:'MXN',lessons:60,sys:'stripe',country:'🇲🇽',branch:'LatAm',status:'✅'}],
    tourTarget:true,
  },
 ];
-const LESSON_MODAL = {topic:'Loops and conditionals', module:5, lesson:12, course:'[1200] Python Programming', group:'PRM_DEMO_MA-01 - 3 students', time:'14:00 - 15:00'};
+const LESSON_MODAL = {topic:'Laços e condicionais', module:5, lesson:12, course:'[1200] Programação em Python', group:'PRM_DEMO_MA-01 - 3 alunos', time:'14:00 - 15:00'};
 
 /* ---------- STATE ---------- */
 let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
@@ -482,13 +482,13 @@ function closeLessonModal(){ const m=document.getElementById('lessonModal'); if(
 function reportContentIssue(lessonId){
   const url = 'https://product-surveys.kodland.com/coding?lang=en&lesson_id='+lessonId+'&user_id=DEMO2026&email='+encodeURIComponent(TEACHER.email);
   window.open(url, '_blank');
-  toast('🐞 In the real BO, this opens the content-quality survey in a new tab: '+url);
+  toast('🐞 No BO real, isso abre a pesquisa de qualidade de conteúdo em uma nova aba: '+url);
   fire('open-bug-report');
 }
 function openEvalModal(){ document.getElementById('evalModal').style.display='flex'; fire('open-evaluate-modal'); }
 function closeEvalModal(){ const m=document.getElementById('evalModal'); if(m) m.style.display='none'; }
-function confirmEvalModal(){ closeEvalModal(); toast('✅ Evaluation sent. Your Team Lead will review it.'); fire('confirm-evaluate-modal'); }
-function requestExtraLesson(){ toast('🧪 This is a simulation — in the real BO this opens the form to schedule the extra lesson. Remember to include a clear justification so your Team Leader can approve it.'); fire('click-add-lesson'); }
+function confirmEvalModal(){ closeEvalModal(); toast('✅ Avaliação enviada. Seu Team Lead vai revisá-la.'); fire('confirm-evaluate-modal'); }
+function requestExtraLesson(){ toast('🧪 Isto é uma simulação — no BO real, isso abriria o formulário para agendar a aula extra. Lembre-se de incluir uma justificativa clara para que seu Team Leader possa aprová-la.'); fire('click-add-lesson'); }
 function clickLoginLink(){ toast('🔗 Link copiado — permite que o aluno entre na plataforma já com a sessão iniciada, útil se ele tiver um problema técnico no meio da aula.'); fire('click-login-link'); }
 function clickCopyCreds(){ toast('🔒 Usuário e senha do aluno copiados para a área de transferência.'); fire('click-copy-credentials'); }
 
@@ -519,7 +519,8 @@ function simClick(label){ toast('🧪 Isto é uma simulação — no BO real, is
 /* ---------- RENDER HELPERS ---------- */
 function badge(status){
   const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey'};
-  return `<span class="pill ${map[status]||'pill-grey'}">${status}</span>`;
+  const labels={'Active':'Ativo'};
+  return `<span class="pill ${map[status]||'pill-grey'}">${labels[status]||status}</span>`;
 }
 function info(def,scale){ return `<span class="info-wrap"><span class="info-ic">i</span><span class="info-pop"><span class="def">${def}</span>${scale}</span></span>`; }
 function tierPill(pct,tiers){
@@ -547,7 +548,7 @@ function render(){
 
 function renderProfile(){
   return `
-  <h1 class="pagetitle">Profile</h1>
+  <h1 class="pagetitle">Perfil</h1>
   <div class="row3">
     <div class="card">
       <div class="profile-name">${TEACHER.name} ${badge(TEACHER.status)}</div>
@@ -561,19 +562,19 @@ function renderProfile(){
       <div class="tag-row">${TEACHER.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
     </div>
     <div class="card">
-      <h3>Teacher courses</h3>
+      <h3>Cursos do tutor</h3>
       ${COURSES.map(c=>`<div class="course-item">${c.title}</div>`).join('')}
     </div>
     <div class="card">
-      <h3>Availability hours ${ICONS.pencil}</h3>
-      <div class="avail-banner"><span class="warn">⚠️</span><button class="btn btn-orange">Update Hours</button><button class="btn btn-green">Hours Are Current</button></div>
-      ${AVAILABILITY.map(([d,v])=>`<div class="availrow"><span class="day">${d}:</span><span class="val ${v?'set':''}">${v||'Not assigned'}</span></div>`).join('')}
+      <h3>Horários de disponibilidade ${ICONS.pencil}</h3>
+      <div class="avail-banner"><span class="warn">⚠️</span><button class="btn btn-orange">Atualizar Horários</button><button class="btn btn-green">Horários Estão em Dia</button></div>
+      ${AVAILABILITY.map(([d,v])=>`<div class="availrow"><span class="day">${d}:</span><span class="val ${v?'set':''}">${v||'Não definido'}</span></div>`).join('')}
     </div>
   </div>
   <div class="tabs" id="teacherTabs">
-    <button class="tab ${state.ttab==='groups'?'active':''}" data-ttab="groups" onclick="goTeacherTab('groups')">${ICONS.users} Groups</button>
-    <button class="tab ${state.ttab==='schedule'?'active':''}" data-ttab="schedule" onclick="goTeacherTab('schedule')">${ICONS.clock} Schedule</button>
-    <button class="tab ${state.ttab==='rating'?'active':''}" data-ttab="rating" onclick="goTeacherTab('rating')">${ICONS.book} Rating</button>
+    <button class="tab ${state.ttab==='groups'?'active':''}" data-ttab="groups" onclick="goTeacherTab('groups')">${ICONS.users} Grupos</button>
+    <button class="tab ${state.ttab==='schedule'?'active':''}" data-ttab="schedule" onclick="goTeacherTab('schedule')">${ICONS.clock} Cronograma</button>
+    <button class="tab ${state.ttab==='rating'?'active':''}" data-ttab="rating" onclick="goTeacherTab('rating')">${ICONS.book} Avaliação</button>
   </div>
   ${state.ttab==='groups'?renderTeacherGroups():state.ttab==='schedule'?renderSchedule():renderRating()}
   `;
@@ -583,96 +584,96 @@ function renderTeacherGroups(){
   return `
   <div class="tablewrap" id="groupsTable">
     <div class="tbl-toolbar">
-      <input class="tbl-input" placeholder="Group name/ID" disabled>
-      <select class="tbl-select" disabled><option>Courses</option></select>
-      <select class="tbl-select" disabled><option>Active</option></select>
+      <input class="tbl-input" placeholder="Nome/ID do grupo" disabled>
+      <select class="tbl-select" disabled><option>Cursos</option></select>
+      <select class="tbl-select" disabled><option>Ativo</option></select>
     </div>
-    <table><thead><tr><th>Group name</th><th>Course</th><th>Students</th><th>Schedule</th><th>Start date</th><th>Next lesson date</th><th>Next lesson</th><th>Status</th></tr></thead>
+    <table><thead><tr><th>Nome do grupo</th><th>Curso</th><th>Alunos</th><th>Cronograma</th><th>Data de início</th><th>Data da próxima aula</th><th>Próxima aula</th><th>Status</th></tr></thead>
     <tbody>
     ${TEACHER_GROUPS.map(g=>`<tr><td><a>${g.name}</a></td><td>${g.course}</td><td>${g.students}</td><td>${g.sched}</td><td>${g.start}</td><td>${g.nextDate}</td><td><a>${g.next}</a></td><td>${badge(g.status)}</td></tr>`).join('')}
     </tbody></table>
-    <div class="tbl-foot">Items per page: 10 &nbsp;|&nbsp; 1-3 of 3</div>
+    <div class="tbl-foot">Itens por página: 10 &nbsp;|&nbsp; 1-3 de 3</div>
   </div>`;
 }
 
 function renderSchedule(){
-  const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-  const hours=['08:00 AM','09:00 AM','10:00 AM','11:00 AM','01:00 PM','02:00 PM','03:00 PM','04:00 PM'];
+  const days=['Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'];
+  const hours=['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'];
   return `
-  <div class="sched-nav"><button class="arrowbtn">${ICONS.back}</button><button class="btn btn-ghost">Current Week</button><button class="arrowbtn">${ICONS.arrow}</button></div>
+  <div class="sched-nav"><button class="arrowbtn">${ICONS.back}</button><button class="btn btn-ghost">Semana Atual</button><button class="arrowbtn">${ICONS.arrow}</button></div>
   <div class="sched-range">10.08 - 16.08.2026 📅</div>
   <div class="tablewrap" style="padding-bottom:6px" id="scheduleGrid">
     <div class="gridcal">
       <div class="hd"></div>${days.map(d=>`<div class="hd">${d}</div>`).join('')}
       ${hours.map((h,i)=>`<div class="hourlbl">${h}</div>${days.map((d)=>{
         let content='';
-        if((d==='Tuesday'||d==='Thursday')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Available</div>`;
-        if(d==='Saturday'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Available</div>`;
-        if(d==='Tuesday'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
+        if((d==='Terça-feira'||d==='Quinta-feira')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Disponível</div>`;
+        if(d==='Sábado'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Disponível</div>`;
+        if(d==='Terça-feira'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
         return `<div class="cell">${content}</div>`;
       }).join('')}`).join('')}
     </div>
   </div>
   <div class="modal-back" id="lessonModal">
     <div class="modal-box" style="width:min(460px,92vw)">
-      <h3>🕐 Lesson Information</h3>
-      <div class="field"><b style="color:var(--text)">Lesson topic:</b>&nbsp;${LESSON_MODAL.topic}</div>
+      <h3>🕐 Informações da Aula</h3>
+      <div class="field"><b style="color:var(--text)">Tópico da aula:</b>&nbsp;${LESSON_MODAL.topic}</div>
       <div class="row2" style="margin:10px 0 0">
-        <div class="field">#&nbsp;Module: ${LESSON_MODAL.module}</div>
-        <div class="field">#&nbsp;Lesson: ${LESSON_MODAL.lesson}</div>
+        <div class="field">#&nbsp;Módulo: ${LESSON_MODAL.module}</div>
+        <div class="field">#&nbsp;Aula: ${LESSON_MODAL.lesson}</div>
       </div>
       <div class="field"><a>${LESSON_MODAL.course}</a></div>
       <div class="field"><a>${LESSON_MODAL.group}</a></div>
-      <div class="field">${ICONS.clock}&nbsp;Session Time: ${LESSON_MODAL.time}</div>
+      <div class="field">${ICONS.clock}&nbsp;Horário da sessão: ${LESSON_MODAL.time}</div>
       <div class="modal-actions">
-        <a onclick="closeLessonModal()">Exit</a>
-        <button class="btn btn-accent" onclick="simClick('Start the lesson / open the virtual classroom');closeLessonModal();">Start lesson</button>
+        <a onclick="closeLessonModal()">Sair</a>
+        <button class="btn btn-accent" onclick="simClick('Iniciar a aula / abrir a sala de aula virtual');closeLessonModal();">Iniciar aula</button>
       </div>
     </div>
   </div>`;
 }
 
 function renderRating(){
-  const RET_SCALE = '<b>Amazing:</b> ≥86%<br><b>Good:</b> ≥77%<br><b>OK:</b> ≥71%<br><b>Bad:</b> &lt;71%';
-  const RET_TIERS = [{min:86,cls:'pill-green',label:'Amazing'},{min:77,cls:'pill-blue',label:'Good'},{min:71,cls:'pill-orange',label:'OK'},{min:-1,cls:'pill-red',label:'Bad'}];
+  const RET_SCALE = '<b>Excelente:</b> ≥86%<br><b>Bom:</b> ≥77%<br><b>OK:</b> ≥71%<br><b>Ruim:</b> &lt;71%';
+  const RET_TIERS = [{min:86,cls:'pill-green',label:'Excelente'},{min:77,cls:'pill-blue',label:'Bom'},{min:71,cls:'pill-orange',label:'OK'},{min:-1,cls:'pill-red',label:'Ruim'}];
   return `
   <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px">
-    <select class="tbl-select" disabled><option>Current</option></select>
-    <span class="badge-status" style="background:var(--grey-bg);color:var(--grey-t)">New Tutor (Good)</span>
+    <select class="tbl-select" disabled><option>Atual</option></select>
+    <span class="badge-status" style="background:var(--grey-bg);color:var(--grey-t)">Novo Tutor (Bom)</span>
   </div>
   <div class="card" style="margin-bottom:16px" id="retentionCard">
-    <h3>Retention ${info('% of your students who stay enrolled after a given period.',RET_SCALE)} <span class="badge-status" style="background:var(--accent-bg);color:#AEB8FA;font-size:11px">Good</span></h3>
+    <h3>Retenção ${info('% dos seus alunos que permanecem matriculados após um determinado período.',RET_SCALE)} <span class="badge-status" style="background:var(--accent-bg);color:#AEB8FA;font-size:11px">Bom</span></h3>
     <div class="row3">
-      <div class="retperiod"><div class="t">Period 1</div><div class="v">88%</div>${tierPill(88,RET_TIERS)}</div>
-      <div class="retperiod"><div class="t">Period 2</div><div class="v">79%</div>${tierPill(79,RET_TIERS)}</div>
-      <div class="retperiod"><div class="t">Period 3</div><div class="v">72%</div>${tierPill(72,RET_TIERS)}</div>
+      <div class="retperiod"><div class="t">Período 1</div><div class="v">88%</div>${tierPill(88,RET_TIERS)}</div>
+      <div class="retperiod"><div class="t">Período 2</div><div class="v">79%</div>${tierPill(79,RET_TIERS)}</div>
+      <div class="retperiod"><div class="t">Período 3</div><div class="v">72%</div>${tierPill(72,RET_TIERS)}</div>
     </div>
   </div>
   <div class="card" style="margin-bottom:16px" id="disciplineCard">
-    <h3>Discipline <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Amazing</span></h3>
-    <div class="ratrow" id="attendanceRow"><span class="lbl">Attendance ${info('% of your student cases with attendance at or above the expected threshold per lesson.','<b>Amazing:</b> ≥85%<br><b>Good:</b> ≥75%<br><b>OK:</b> ≥70%<br><b>Bad:</b> &lt;70%')}</span><div class="num"><b>92%</b><span class="pill pill-green">Amazing</span></div></div>
-    <div class="ratrow" id="replRow"><span class="lbl">Replacements/Cancellations ${info('% of your scheduled lessons that get rescheduled or cancelled.','<b>Amazing:</b> &lt;3%<br><b>Good:</b> 3-5%<br><b>Bad:</b> &gt;5%')}</span><div class="num"><b>0%</b><span class="pill pill-green">Amazing</span></div></div>
-    <div class="ratrow" id="cwhwRow"><span class="lbl">CW/HW Submitted ${info('% of classwork (CW) and homework (HW) your students actually submit.','<b>CW target:</b> ≥60%<br><b>HW target:</b> ≥40%')}</span><div class="num"><b style="color:var(--orange)">78%</b>&nbsp;/&nbsp;<b>85%</b></div></div>
-    <div class="ratrow"><span class="lbl">CW/HW Corrected</span><div class="num"><b>95%</b>&nbsp;/&nbsp;<b>100%</b></div></div>
+    <h3>Disciplina <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Excelente</span></h3>
+    <div class="ratrow" id="attendanceRow"><span class="lbl">Frequência ${info('% dos seus casos de alunos com frequência igual ou acima do limite esperado por aula.','<b>Excelente:</b> ≥85%<br><b>Bom:</b> ≥75%<br><b>OK:</b> ≥70%<br><b>Ruim:</b> &lt;70%')}</span><div class="num"><b>92%</b><span class="pill pill-green">Excelente</span></div></div>
+    <div class="ratrow" id="replRow"><span class="lbl">Reposições/Cancelamentos ${info('% das suas aulas agendadas que são reagendadas ou canceladas.','<b>Excelente:</b> &lt;3%<br><b>Bom:</b> 3-5%<br><b>Ruim:</b> &gt;5%')}</span><div class="num"><b>0%</b><span class="pill pill-green">Excelente</span></div></div>
+    <div class="ratrow" id="cwhwRow"><span class="lbl">Tarefas de Classe/Casa Entregues ${info('% do trabalho de classe (CW) e das tarefas de casa (HW) que seus alunos realmente entregam.','<b>Meta de CW:</b> ≥60%<br><b>Meta de HW:</b> ≥40%')}</span><div class="num"><b style="color:var(--orange)">78%</b>&nbsp;/&nbsp;<b>85%</b></div></div>
+    <div class="ratrow"><span class="lbl">Tarefas de Classe/Casa Corrigidas</span><div class="num"><b>95%</b>&nbsp;/&nbsp;<b>100%</b></div></div>
   </div>
   <div class="card" style="margin-bottom:16px" id="lessonQualityCard">
-    <h3>Lesson Quality ${info('Average quality score of your lessons, from audits/AutoQA.','<b>Amazing:</b> ≥90%<br><b>Good:</b> 65-89%<br><b>OK:</b> 35-64%<br><b>Bad:</b> 15-34%<br><b>Terrible:</b> &lt;15%')} <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Great</span></h3>
-    <div class="ratrow"><span class="lbl">Average score</span><div class="num"><b>90%</b></div></div>
+    <h3>Qualidade da Aula ${info('Nota média de qualidade das suas aulas, com base em auditorias/AutoQA.','<b>Excelente:</b> ≥90%<br><b>Bom:</b> 65-89%<br><b>OK:</b> 35-64%<br><b>Ruim:</b> 15-34%<br><b>Péssimo:</b> &lt;15%')} <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Ótimo</span></h3>
+    <div class="ratrow"><span class="lbl">Nota média</span><div class="num"><b>90%</b></div></div>
   </div>
   <div class="card" id="refundsCard">
-    <h3>Refunds ${info('Number of refund requests linked to your students in the period.','<b>Amazing:</b> 0<br><b>Good:</b> 1<br><b>Bad:</b> ≥2')} <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Amazing</span></h3>
-    <div class="ratrow"><span class="lbl">Refunds count</span><div class="num"><b>0</b></div></div>
+    <h3>Reembolsos ${info('Número de solicitações de reembolso relacionadas aos seus alunos no período.','<b>Excelente:</b> 0<br><b>Bom:</b> 1<br><b>Ruim:</b> ≥2')} <span class="badge-status" style="background:var(--green-bg);color:var(--green);font-size:11px">Excelente</span></h3>
+    <div class="ratrow"><span class="lbl">Total de reembolsos</span><div class="num"><b>0</b></div></div>
   </div>
   `;
 }
 
 function renderCourses(){
-  return `<h1 class="pagetitle">Courses</h1>
+  return `<h1 class="pagetitle">Cursos</h1>
   <div class="tablewrap">
     <button class="filterbtn">${ICONS.filter}</button>
-    <table><thead><tr><th>ID</th><th>Title</th><th>Business branch</th><th>Active</th><th>Number of lessons</th><th>Change date</th></tr></thead>
+    <table><thead><tr><th>ID</th><th>Título</th><th>Filial</th><th>Ativo</th><th>Número de aulas</th><th>Data de alteração</th></tr></thead>
     <tbody>${COURSES.map(c=>`<tr><td>${c.id}</td><td><a onclick="openCourseDetail(${c.id})">${c.title}</a></td><td>${c.branch}</td><td>${c.active}</td><td>${c.lessons}</td><td>${c.date}</td></tr>`).join('')}</tbody></table>
-    <div class="tbl-foot">Items per page: 100 &nbsp;|&nbsp; 1-3 of 3</div>
+    <div class="tbl-foot">Itens por página: 100 &nbsp;|&nbsp; 1-3 de 3</div>
   </div>`;
 }
 
@@ -717,7 +718,7 @@ function buildGroupDetailData(gid){
   const attColors = ['green','green','orange','red','blue','pale','pale','pale'];
   const students = roster.map((n,i)=>({
     name:n.name, email:n.email,
-    package: g.premium==='Yes' ? 'Premium package' : 'Standard package',
+    package: g.premium==='Sim' ? 'Pacote Premium' : 'Pacote Padrão',
     tasksDone: 2+(i%2), checked: i%2===0,
     cells: GROUP_DETAIL_LESSONS.map((l,li)=>{
       const fixed = FIXED_ATT[n.name];
@@ -733,10 +734,10 @@ function buildGroupDetailData(gid){
   return {
     group:g, students, checkTasks:GROUP_CHECK_TASKS, checkGridByLesson,
     schedule:[
-      {num:1,title:g.prev||'M5L10. For loops',tutor:g.tutor,date:'23.07.2026',day:'Th',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
-      {num:2,title:'M5L11. Nested conditionals',tutor:g.tutor,date:'30.07.2026',day:'Th',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
-      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Th',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
-      {num:4,title:'M5L13. Functions basics',tutor:g.tutor,date:'27.08.2026',day:'Th',status:'upcoming'},
+      {num:1,title:g.prev||'M5L10. Laços for',tutor:g.tutor,date:'23.07.2026',day:'Qui',status:'completed',rec:{time:'23.07.2026, 14:02 - 15:00',link:'https://s3.kodland-demo.com/rec/'+gid+'-10.mp4',duration:58}},
+      {num:2,title:'M5L11. Condicionais aninhados',tutor:g.tutor,date:'30.07.2026',day:'Qui',status:'completed',rec:{time:'30.07.2026, 14:01 - 14:59',link:'https://s3.kodland-demo.com/rec/'+gid+'-11.mp4',duration:58}},
+      {num:3,title:g.next,tutor:g.tutor,date:'20.08.2026',day:'Qui',status:'completed',rec:{time:'20.08.2026, 14:00 - 15:03',link:'https://s3.kodland-demo.com/rec/'+gid+'-12.mp4',duration:63}},
+      {num:4,title:'M5L13. Fundamentos de funções',tutor:g.tutor,date:'27.08.2026',day:'Qui',status:'upcoming'},
     ],
   };
 }
@@ -815,13 +816,13 @@ function gradeCheckCell(si,ti){
 function checkTaskIcon(type){ return {house:'🏠',asterisk:'✱',theory:'T',project:'⭐'}[type] || '🏠'; }
 function renderScheduleStatus(l){
   if(l.status==='completed') return `<span class="pill pill-green">Concluída</span>`;
-  return `<button class="btn btn-accent" onclick="simClick('Start lesson')">Iniciar aula</button>`;
+  return `<button class="btn btn-accent" onclick="simClick('Iniciar aula')">Iniciar aula</button>`;
 }
 
 function renderGroupDetail(){
   const data = getGroupData(state.gid);
   const g = data.group;
-  const durMatch = g.type.match(/(\d+) minutes/);
+  const durMatch = g.type.match(/(\d+) minutos/);
   const completedCount = data.schedule.filter(l=>l.status==='completed').length;
   return `
   <h1 class="pagetitle">${g.title}</h1>
@@ -829,7 +830,7 @@ function renderGroupDetail(){
     <div class="card">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <h3 style="margin:0">${g.title}</h3>
-        <span class="grp-icbtn" title="Copy group name" onclick="copyGroupName('${g.title}')">📋</span>
+        <span class="grp-icbtn" title="Copiar nome do grupo" onclick="copyGroupName('${g.title}')">📋</span>
         <span class="badge-status" style="background:var(--green-bg);color:var(--green)">Ativo</span>
       </div>
       <div class="grp-info-cols">
@@ -838,7 +839,7 @@ function renderGroupDetail(){
           <div class="grp-info-row"><span>Supervisor</span><b>Rodrigo Salas</b></div>
           <div class="grp-info-row"><span>Suporte Técnico</span><b>Ana Belén Ruiz</b></div>
           <div class="grp-info-row"><span>Filial</span><b>${g.branch}</b></div>
-          <div class="grp-info-row"><span>Funil AMO</span><a style="cursor:pointer" onclick="simClick('Open AMO funnel')"><b style="color:var(--accent)">${g.funnel}</b></a></div>
+          <div class="grp-info-row"><span>Funil AMO</span><a style="cursor:pointer" onclick="simClick('Abrir funil AMO')"><b style="color:var(--accent)">${g.funnel}</b></a></div>
           <div class="grp-info-row"><span>Idioma</span><b>🇧🇷 Português</b></div>
           <div class="grp-info-row" style="border-bottom:none"><span>Fuso horário</span><b>${g.tz}</b></div>
         </div>
@@ -861,8 +862,8 @@ function renderGroupDetail(){
       <div style="display:flex;justify-content:space-between;align-items:center">
         <h3 style="margin:0">Comentários</h3>
         <div style="display:flex;gap:8px">
-          <button class="grp-addbtn" title="Adicionar comentário" onclick="simClick('Add group comment')">+</button>
-          <span class="grp-icbtn" title="Exportar comentários" onclick="simClick('Export group comments')">⬇</span>
+          <button class="grp-addbtn" title="Adicionar comentário" onclick="simClick('Adicionar comentário do grupo')">+</button>
+          <span class="grp-icbtn" title="Exportar comentários" onclick="simClick('Exportar comentários do grupo')">⬇</span>
         </div>
       </div>
       <div class="grp-comment-empty">Sem descrição</div>
@@ -982,31 +983,31 @@ function renderGroupModals(){
 
 function renderCourseDetail(){
   const cd = COURSE_DETAIL[state.courseId];
-  const base = COURSES.find(c=>c.id===state.courseId) || {title:'Demo course'};
+  const base = COURSES.find(c=>c.id===state.courseId) || {title:'Curso demo'};
   return `
-  <a class="backlink" onclick="goPage('groups')">${ICONS.back} Back to Groups</a>
+  <a class="backlink" onclick="goPage('groups')">${ICONS.back} Voltar para Grupos</a>
   <div class="course-head">
     <div class="course-head-emoji">${cd.emoji}</div>
     <div style="flex:1;min-width:260px">
       <h1 class="pagetitle" style="margin-bottom:10px">${base.title}</h1>
-      <div class="course-badges"><span class="badge-active">Active</span><span class="badge-type">${cd.type}</span></div>
+      <div class="course-badges"><span class="badge-active">Ativo</span><span class="badge-type">${cd.type}</span></div>
       <div class="row2" style="margin-bottom:0">
         <div>
-          <div class="field">${ICONS.users}Business branch: ${cd.branch}</div>
-          <div class="field">${ICONS.lang}Language: ${cd.language}</div>
-          <div class="field">${ICONS.clock}Course type: ${cd.courseType}</div>
+          <div class="field">${ICONS.users}Filial: ${cd.branch}</div>
+          <div class="field">${ICONS.lang}Idioma: ${cd.language}</div>
+          <div class="field">${ICONS.clock}Tipo de curso: ${cd.courseType}</div>
         </div>
         <div>
-          <div class="field">${ICONS.book}Number of lessons: ${cd.lessonsCount}</div>
-          <div class="field">${ICONS.book}Number of modules: ${cd.modulesCount}</div>
-          <div class="field">${ICONS.grad}Certificate: <a>${cd.certificate}</a></div>
+          <div class="field">${ICONS.book}Número de aulas: ${cd.lessonsCount}</div>
+          <div class="field">${ICONS.book}Número de módulos: ${cd.modulesCount}</div>
+          <div class="field">${ICONS.grad}Certificado: <a>${cd.certificate}</a></div>
         </div>
       </div>
     </div>
   </div>
   <div class="tabs">
-    <button class="tab ${state.courseTab==='lessons'?'active':''}" onclick="goCourseTab('lessons')">${ICONS.book} Lessons</button>
-    <button class="tab ${state.courseTab==='assignments'?'active':''}" onclick="goCourseTab('assignments')">${ICONS.grad} Assignments</button>
+    <button class="tab ${state.courseTab==='lessons'?'active':''}" onclick="goCourseTab('lessons')">${ICONS.book} Aulas</button>
+    <button class="tab ${state.courseTab==='assignments'?'active':''}" onclick="goCourseTab('assignments')">${ICONS.grad} Tarefas</button>
   </div>
   ${state.courseTab==='lessons' ? renderModulesTable(cd) : renderAssignmentsTab(cd)}
   `;
@@ -1015,22 +1016,22 @@ function renderCourseDetail(){
 function renderModulesTable(cd){
   return `
   <div class="tablewrap" id="modulesTable">
-    <h3 style="padding:16px 18px 0">Modules</h3>
-    <table class="modtable"><thead><tr><th>ID</th><th>Title</th><th>Nº</th><th>Skills</th><th>Review</th><th>Actions</th></tr></thead>
+    <h3 style="padding:16px 18px 0">Módulos</h3>
+    <table class="modtable"><thead><tr><th>ID</th><th>Título</th><th>Nº</th><th>Habilidades</th><th>Revisão</th><th>Ações</th></tr></thead>
     <tbody>
     ${cd.modules.map(m=>`
       <tr><td>${m.id}</td><td>${m.title}</td><td>${m.num}</td><td>—</td><td>—</td>
       <td><button class="mod-expand ${m.id===state.expandedModuleId?'tour-course-target':''}" data-mod="${m.id}" onclick="expandModule(${m.id})">${ICONS.chevdown}</button></td></tr>
       ${m.id===state.expandedModuleId ? `
       <tr><td colspan="6" style="padding:0">
-        <table style="width:100%"><thead><tr><th>ID</th><th>Nº</th><th>Lesson title</th><th>Topic</th><th>Type</th><th>Actions</th></tr></thead>
+        <table style="width:100%"><thead><tr><th>ID</th><th>Nº</th><th>Título da aula</th><th>Tópico</th><th>Tipo</th><th>Ações</th></tr></thead>
         <tbody>
-        ${m.lessons.map(l=>`<tr class="lesson-row"><td>${l.id}</td><td>${l.num}</td><td><a onclick="openLessonAssignments(${state.courseId},${l.id})">${l.title}</a></td><td>${l.topic}</td><td>${l.type}</td><td><span class="bug-ic" title="Evaluate content quality" onclick="reportContentIssue(${l.id})">${ICONS.bug}</span></td></tr>`).join('')}
+        ${m.lessons.map(l=>`<tr class="lesson-row"><td>${l.id}</td><td>${l.num}</td><td><a onclick="openLessonAssignments(${state.courseId},${l.id})">${l.title}</a></td><td>${l.topic}</td><td>${l.type}</td><td><span class="bug-ic" title="Avaliar qualidade do conteúdo" onclick="reportContentIssue(${l.id})">${ICONS.bug}</span></td></tr>`).join('')}
         </tbody></table>
       </td></tr>` : ''}
     `).join('')}
     </tbody></table>
-    <div class="tbl-foot">Items per page: 100 &nbsp;|&nbsp; 1-${cd.modules.length} of ${cd.modules.length}</div>
+    <div class="tbl-foot">Itens por página: 100 &nbsp;|&nbsp; 1-${cd.modules.length} de ${cd.modules.length}</div>
   </div>`;
 }
 
@@ -1042,30 +1043,30 @@ function renderAssignmentsTab(cd){
   return `
   <div class="tablewrap" id="studyGuidesTable">
     <div style="padding:16px 18px 0">
-      <label style="font-size:12px;color:var(--muted);font-weight:700">Lesson</label>
+      <label style="font-size:12px;color:var(--muted);font-weight:700">Aula</label>
       <select class="tbl-select" style="margin-top:6px;width:100%;max-width:340px">${allLessons.map(l=>`<option ${l.id===lid?'selected':''}>${l.title}</option>`).join('')}</select>
     </div>
-    <h3 style="padding:20px 18px 0">In-class assignments</h3>
-    <table><thead><tr><th>Nº</th><th>Title</th><th>Type</th><th>Max score</th></tr></thead>
-    <tbody>${data.inClass.length?data.inClass.map(a=>`<tr><td>${a.num}</td><td>${a.title}</td><td>${a.type}</td><td>${a.score}</td></tr>`).join(''):'<tr class="empty-row"><td colspan="4">No data available</td></tr>'}</tbody></table>
-    <h3 style="padding:20px 18px 0">Homework assignments</h3>
-    <table><thead><tr><th>Nº</th><th>Title</th><th>Type</th><th>Max score</th></tr></thead>
-    <tbody>${data.homework.length?data.homework.map(a=>`<tr><td>${a.num}</td><td>${a.title}</td><td>${a.type}</td><td>${a.score}</td></tr>`).join(''):'<tr class="empty-row"><td colspan="4">No data available</td></tr>'}</tbody></table>
-    <h3 style="padding:20px 18px 0">Study guides</h3>
-    <table><thead><tr><th>ID</th><th>Title</th></tr></thead>
-    <tbody>${data.guides.map(g=>`<tr><td>${g.id}</td><td><a onclick="simClick('Open '+'${g.title}'+' (the lesson\'s real manual)')">${g.title}</a></td></tr>`).join('')}</tbody></table>
-    <div class="tbl-foot">This is where you'll find the lesson's step-by-step manual and the presentation you'll use in class.</div>
+    <h3 style="padding:20px 18px 0">Tarefas em sala</h3>
+    <table><thead><tr><th>Nº</th><th>Título</th><th>Tipo</th><th>Nota máxima</th></tr></thead>
+    <tbody>${data.inClass.length?data.inClass.map(a=>`<tr><td>${a.num}</td><td>${a.title}</td><td>${a.type}</td><td>${a.score}</td></tr>`).join(''):'<tr class="empty-row"><td colspan="4">Nenhum dado disponível</td></tr>'}</tbody></table>
+    <h3 style="padding:20px 18px 0">Tarefas de casa</h3>
+    <table><thead><tr><th>Nº</th><th>Título</th><th>Tipo</th><th>Nota máxima</th></tr></thead>
+    <tbody>${data.homework.length?data.homework.map(a=>`<tr><td>${a.num}</td><td>${a.title}</td><td>${a.type}</td><td>${a.score}</td></tr>`).join(''):'<tr class="empty-row"><td colspan="4">Nenhum dado disponível</td></tr>'}</tbody></table>
+    <h3 style="padding:20px 18px 0">Materiais de apoio</h3>
+    <table><thead><tr><th>ID</th><th>Título</th></tr></thead>
+    <tbody>${data.guides.map(g=>`<tr><td>${g.id}</td><td><a onclick="simClick('Abrir '+'${g.title}'+' (o manual real da aula)')">${g.title}</a></td></tr>`).join('')}</tbody></table>
+    <div class="tbl-foot">É aqui que você encontra o manual passo a passo da aula e a apresentação que vai usar em sala.</div>
   </div>`;
 }
 
 function renderStudents(){
-  return `<h1 class="pagetitle">Students</h1>
-  <button class="btn btn-accent" style="margin-bottom:16px" onclick="simClick('Add a new student')">+ Add</button>
+  return `<h1 class="pagetitle">Alunos</h1>
+  <button class="btn btn-accent" style="margin-bottom:16px" onclick="simClick('Adicionar novo aluno')">+ Adicionar</button>
   <div class="tablewrap" id="studentsTable">
     <button class="filterbtn">${ICONS.filter}</button>
-    <table><thead><tr><th>Student's name</th><th>Active groups</th><th>Inactive groups</th><th>E-mail address</th><th>Currency</th><th>Balance</th><th>Region</th><th>Sales funnel</th><th>CRM status</th></tr></thead>
+    <table><thead><tr><th>Nome do aluno</th><th>Grupos ativos</th><th>Grupos inativos</th><th>Endereço de e-mail</th><th>Moeda</th><th>Saldo</th><th>Região</th><th>Funil de vendas</th><th>Status no CRM</th></tr></thead>
     <tbody>${STUDENTS.map(s=>`<tr class="clickable ${s.tourTarget?'tour-student-target':''}" onclick="openStudent(${s.id})"><td><a>${s.name}</a></td><td>${s.active}</td><td>${s.inactive||'—'}</td><td>${s.email}</td><td>${s.currency}</td><td>${s.balance}</td><td>${s.region}</td><td>${s.funnel}</td><td>${badge(s.crm)}</td></tr>`).join('')}</tbody></table>
-    <div class="tbl-foot">Items per page: 100 &nbsp;|&nbsp; 1-${STUDENTS.length} of ${STUDENTS.length}</div>
+    <div class="tbl-foot">Itens por página: 100 &nbsp;|&nbsp; 1-${STUDENTS.length} de ${STUDENTS.length}</div>
   </div>`;
 }
 
@@ -1073,47 +1074,47 @@ function renderStudentDetail(){
   const s = STUDENTS.find(x=>x.id===state.sid) || tourStudent();
   const initials = s.name.split(' ').map(w=>w[0]).slice(0,2).join('');
   return `
-  <a class="backlink" onclick="goPage('students')">${ICONS.back} Back to Students</a>
+  <a class="backlink" onclick="goPage('students')">${ICONS.back} Voltar para Alunos</a>
   <div class="row3-student">
     <div class="card" style="text-align:center">
       <div class="avatar-circle">${initials}</div>
       <div style="font-weight:700;font-size:16px;margin-bottom:12px">${s.name}</div>
-      <div class="field" style="justify-content:center;border:none">Age: ${s.age}</div>
-      <div class="field" style="justify-content:center;border:none">Child gender: ${s.gender}</div>
-      <div class="field" id="senField" style="justify-content:center;border:none">SEN: ${s.sen==='No'?'No':`<span class="senflag">${s.sen}</span>`}</div>
-      <div class="field" style="justify-content:center;border:none">Lesson Balance: ${s.balanceNum}</div>
-      <div class="field" style="justify-content:center;border:none">Last seen: ${s.last}</div>
+      <div class="field" style="justify-content:center;border:none">Idade: ${s.age}</div>
+      <div class="field" style="justify-content:center;border:none">Gênero da criança: ${s.gender}</div>
+      <div class="field" id="senField" style="justify-content:center;border:none">NEE: ${s.sen==='Não'?'Não':`<span class="senflag">${s.sen}</span>`}</div>
+      <div class="field" style="justify-content:center;border:none">Saldo de aulas: ${s.balanceNum}</div>
+      <div class="field" style="justify-content:center;border:none">Visto por último: ${s.last}</div>
     </div>
     <div class="card">
-      <h3>Family information</h3>
-      <div class="subtabs"><a class="stlink active">Parent</a><a class="stlink">Family Members&nbsp;0</a></div>
-      <div class="field">Parent's name: ${s.parent.name}</div>
+      <h3>Informações da família</h3>
+      <div class="subtabs"><a class="stlink active">Responsável</a><a class="stlink">Membros da Família&nbsp;0</a></div>
+      <div class="field">Nome do responsável: ${s.parent.name}</div>
       <div class="field">${ICONS.phone}${s.parent.phone}</div>
       <div class="field">${ICONS.mail}<a>${s.parent.email}</a></div>
       <div class="field">${ICONS.flag}${s.parent.country}</div>
-      <div class="field">Currency: ${s.parent.currency}</div>
-      <div class="field">AMO Funnel: <a>${s.parent.funnel}</a></div>
-      <div class="field">AMO Status: ${s.parent.status}</div>
-      <div class="field">${ICONS.clock}Local time: ${s.parent.local}</div>
+      <div class="field">Moeda: ${s.parent.currency}</div>
+      <div class="field">Funil AMO: <a>${s.parent.funnel}</a></div>
+      <div class="field">Status AMO: ${s.parent.status}</div>
+      <div class="field">${ICONS.clock}Horário local: ${s.parent.local}</div>
     </div>
     <div class="card">
-      <div class="subtabs"><a class="stlink active">Comments</a><a class="stlink">More Info</a></div>
-      ${s.comments.length?s.comments.map(c=>`<div class="comment"><div class="cavatar">${c.role}</div><div><span class="croletag">${c.role}</span><div class="cname">${c.name}</div><div class="ctext">${c.text}</div><div class="ctime">${ICONS.pin} ${c.time}</div></div></div>`).join(''):`<div style="color:var(--muted);font-size:13px;padding:14px 0">No description</div>`}
+      <div class="subtabs"><a class="stlink active">Comentários</a><a class="stlink">Mais Informações</a></div>
+      ${s.comments.length?s.comments.map(c=>`<div class="comment"><div class="cavatar">${c.role}</div><div><span class="croletag">${c.role}</span><div class="cname">${c.name}</div><div class="ctext">${c.text}</div><div class="ctime">${ICONS.pin} ${c.time}</div></div></div>`).join(''):`<div style="color:var(--muted);font-size:13px;padding:14px 0">Sem descrição</div>`}
     </div>
     <div class="side-actions">
-      <button id="loginLinkBtn" title="Login link to the platform" onclick="clickLoginLink()">${ICONS.link}</button>
-      <button id="copyCredsBtn" title="Copy login and password" onclick="clickCopyCreds()">${ICONS.lock}</button>
-      <button title="Settings" onclick="simClick('Open advanced student settings')">${ICONS.gear}</button>
+      <button id="loginLinkBtn" title="Link de login para a plataforma" onclick="clickLoginLink()">${ICONS.link}</button>
+      <button id="copyCredsBtn" title="Copiar login e senha" onclick="clickCopyCreds()">${ICONS.lock}</button>
+      <button title="Configurações" onclick="simClick('Abrir configurações avançadas do aluno')">${ICONS.gear}</button>
     </div>
   </div>
   <div class="detail-tabs" id="detailTabs">
-    <button class="dtab ${state.dtab==='wallet'?'active':''}" data-dtab="wallet" onclick="goDetailTab('wallet')">💰 Wallet</button>
-    <button class="dtab" onclick="simClick('View Trial Class information')">📋 Trial Class</button>
-    <button class="dtab" onclick="simClick('View the student\'s Groups')">${ICONS.users} Groups</button>
-    <button class="dtab ${state.dtab==='progress'?'active':''}" data-dtab="progress" onclick="goDetailTab('progress')">📊 Progress</button>
-    <button class="dtab" onclick="simClick('View HUB Projects')">🔧 HUB Projects</button>
-    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Extra Lessons</button>
-    <button class="dtab" onclick="simClick('View lesson Feedback')">📝 Feedback</button>
+    <button class="dtab ${state.dtab==='wallet'?'active':''}" data-dtab="wallet" onclick="goDetailTab('wallet')">💰 Carteira</button>
+    <button class="dtab" onclick="simClick('Ver informações da Aula Experimental')">📋 Aula Experimental</button>
+    <button class="dtab" onclick="simClick('Ver os Grupos do aluno')">${ICONS.users} Grupos</button>
+    <button class="dtab ${state.dtab==='progress'?'active':''}" data-dtab="progress" onclick="goDetailTab('progress')">📊 Progresso</button>
+    <button class="dtab" onclick="simClick('Ver Projetos HUB')">🔧 Projetos HUB</button>
+    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Aulas Extra</button>
+    <button class="dtab" onclick="simClick('Ver Feedback da aula')">📝 Feedback</button>
   </div>
   ${state.dtab==='wallet' ? renderWalletTab(s) : state.dtab==='progress' ? renderProgressTab(s) : state.dtab==='extra' ? renderExtraTab(s) : renderWalletTab(s)}
   `;
@@ -1122,25 +1123,25 @@ function renderStudentDetail(){
 function renderWalletTab(s){
   return `
   <div class="card" style="margin-bottom:16px" id="walletCard">
-    <h3>Balance</h3>
+    <h3>Saldo</h3>
     <div class="balance-box">
-      <div><div style="font-size:12px;color:var(--muted)">Current balance</div><div class="balance-num">${s.balanceNum} lessons</div></div>
+      <div><div style="font-size:12px;color:var(--muted)">Saldo atual</div><div class="balance-num">${s.balanceNum} aulas</div></div>
       <div style="display:flex;gap:8px">
-        <button class="btn btn-accent" onclick="simClick('Top up lessons (Top Up)')">Top Up</button>
-        <button class="btn btn-ghost" onclick="simClick('Subtract lessons (Substract)')">Substract</button>
-        <button class="btn btn-ghost" onclick="simClick('Generate an invoice')">Invoice</button>
+        <button class="btn btn-accent" onclick="simClick('Recarregar aulas (Top Up)')">Recarregar</button>
+        <button class="btn btn-ghost" onclick="simClick('Subtrair aulas (Substract)')">Subtrair</button>
+        <button class="btn btn-ghost" onclick="simClick('Gerar uma fatura')">Fatura</button>
       </div>
     </div>
     <div class="autopay-row">
-      <div><div style="font-size:12px;color:var(--muted)">Monthly payment: <b style="color:var(--text)">${s.monthly}</b></div><div style="font-size:12px;color:var(--muted)">Replenishment period: <b style="color:var(--text)">${s.period}</b></div></div>
-      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:12.5px;color:var(--text2)">Enable autopayments in SimplePay</span><span class="toggle"></span></div>
+      <div><div style="font-size:12px;color:var(--muted)">Pagamento mensal: <b style="color:var(--text)">${s.monthly}</b></div><div style="font-size:12px;color:var(--muted)">Período de reposição: <b style="color:var(--text)">${s.period}</b></div></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:12.5px;color:var(--text2)">Ativar pagamentos automáticos no SimplePay</span><span class="toggle"></span></div>
     </div>
   </div>
   <div class="tablewrap">
-    <div class="tbl-toolbar" style="justify-content:space-between"><h3 style="margin:0">Payments</h3><button class="btn btn-accent" onclick="simClick('Log a new payment')">Create</button></div>
-    <table><thead><tr><th>Date</th><th>Staff member</th><th>Amount</th><th>Currency</th><th>Lessons</th><th>Payment system</th><th>Country</th><th>Status</th></tr></thead>
+    <div class="tbl-toolbar" style="justify-content:space-between"><h3 style="margin:0">Pagamentos</h3><button class="btn btn-accent" onclick="simClick('Registrar um novo pagamento')">Criar</button></div>
+    <table><thead><tr><th>Data</th><th>Colaborador</th><th>Valor</th><th>Moeda</th><th>Aulas</th><th>Sistema de pagamento</th><th>País</th><th>Status</th></tr></thead>
     <tbody>${s.payments.map(p=>`<tr><td>${p.date}</td><td>${p.staff}</td><td>${p.amt}</td><td>${p.ccy}</td><td>${p.lessons}</td><td>${p.sys}</td><td>${p.country}</td><td>${p.status}</td></tr>`).join('')}</tbody></table>
-    <div class="tbl-foot">Items per page: 5 &nbsp;|&nbsp; 1-1 of 1</div>
+    <div class="tbl-foot">Itens por página: 5 &nbsp;|&nbsp; 1-1 de 1</div>
   </div>`;
 }
 
@@ -1165,34 +1166,34 @@ function setProgressSub(sub){ state.progressSub = sub; render(); }
 function openProgressLegend(){ document.getElementById('progressLegendModal').style.display='flex'; }
 function closeProgressLegend(){ document.getElementById('progressLegendModal').style.display='none'; }
 function gradeHomework(lbl, hasScore){
-  if(!hasScore){ toast('⚠️ '+lbl+' — nothing was submitted yet, so there is nothing to grade.'); return; }
-  toast('📄 Simulation: this would open the platform where the student submitted '+lbl+', so you can review and grade it.');
+  if(!hasScore){ toast('⚠️ '+lbl+' — ainda não foi entregue nada, então não há nada para avaliar.'); return; }
+  toast('📄 Simulação: isso abriria a plataforma onde o aluno entregou '+lbl+', para que você possa revisar e avaliar.');
 }
 function renderProgressLegend(){
   return `
   <div class="modal-back" id="progressLegendModal">
     <div class="modal-box" style="width:min(620px,94vw)">
-      <h3>Legend<a onclick="closeProgressLegend()" style="cursor:pointer;font-weight:800">✕</a></h3>
+      <h3>Legenda<a onclick="closeProgressLegend()" style="cursor:pointer;font-weight:800">✕</a></h3>
       <div style="display:flex;gap:30px;flex-wrap:wrap">
         <div style="flex:1;min-width:220px">
-          <b style="font-size:13px;display:block;margin-bottom:8px">In the class:</b>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></span>Student was absent from the lesson</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></span>Absent for well-founded reasons</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></span>Student attended the lesson</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.blue}"></span>Student's presence was not marked</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.pale};border:1px solid var(--border2)"></span>Next lesson</div>
+          <b style="font-size:13px;display:block;margin-bottom:8px">Em sala:</b>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></span>Aluno faltou à aula</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></span>Ausente por motivo justificado</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></span>Aluno compareceu à aula</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.blue}"></span>Presença do aluno não foi marcada</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.pale};border:1px solid var(--border2)"></span>Próxima aula</div>
         </div>
         <div style="flex:1;min-width:220px">
-          <b style="font-size:13px;display:block;margin-bottom:8px">Assignments:</b>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></span>Assignment reviewed</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></span>Assignment not submitted</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></span>Assignment submitted after deadline</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.yellow}"></span>Assignment to be reviewed</div>
-          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.grey}"></span>No assignments in the lesson</div>
-          <div class="legend-row">— &nbsp;Not graded assignment</div>
-          <div class="legend-row">✱ &nbsp;Additional task</div>
-          <div class="legend-row">T &nbsp;Theory</div>
-          <div class="legend-row">★ &nbsp;Project</div>
+          <b style="font-size:13px;display:block;margin-bottom:8px">Tarefas:</b>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.green}"></span>Tarefa revisada</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.red}"></span>Tarefa não entregue</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.orange}"></span>Tarefa entregue após o prazo</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.yellow}"></span>Tarefa a ser revisada</div>
+          <div class="legend-row"><span class="legend-dot" style="background:${PROGRESS_LEGEND_HEX.grey}"></span>Sem tarefas na aula</div>
+          <div class="legend-row">— &nbsp;Tarefa não avaliada</div>
+          <div class="legend-row">✱ &nbsp;Tarefa adicional</div>
+          <div class="legend-row">T &nbsp;Teoria</div>
+          <div class="legend-row">★ &nbsp;Projeto</div>
         </div>
       </div>
     </div>
@@ -1219,55 +1220,55 @@ function renderProgressTab(s){
   <div class="card" style="margin-bottom:16px" id="progressHeader">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px">
       <div>
-        <h3 style="margin-bottom:10px">Progress</h3>
-        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:4px">Choose the group</label>
-        <select class="tbl-select" onchange="toast('🧪 This is a simulation — switching groups would reload this Progress view for the new group.')">
+        <h3 style="margin-bottom:10px">Progresso</h3>
+        <label style="font-size:11px;color:var(--muted);font-weight:700;display:block;margin-bottom:4px">Escolha o grupo</label>
+        <select class="tbl-select" onchange="toast('🧪 Isto é uma simulação — trocar de grupo recarregaria esta visão de Progresso para o novo grupo.')">
           <option>${s.active}</option>
         </select>
       </div>
       <div style="text-align:right;font-size:12.5px;color:var(--muted);font-weight:600">
-        Status: <b style="color:var(--green)">Admitted</b> &nbsp; Points: <b style="color:var(--text)">210/260</b> &nbsp; Rating: <b style="color:var(--text)">3/4</b>
+        Status: <b style="color:var(--green)">Admitido</b> &nbsp; Pontos: <b style="color:var(--text)">210/260</b> &nbsp; Avaliação: <b style="color:var(--text)">3/4</b>
       </div>
     </div>
     <div class="subtabs" style="margin-top:18px;align-items:center;justify-content:space-between">
       <div style="display:flex;gap:14px">
-        <a class="stlink ${sub==='class'?'active':''}" onclick="setProgressSub('class')">In The Class</a>
-        <a class="stlink ${sub==='home'?'active':''}" onclick="setProgressSub('home')">At Home</a>
+        <a class="stlink ${sub==='class'?'active':''}" onclick="setProgressSub('class')">Em Sala</a>
+        <a class="stlink ${sub==='home'?'active':''}" onclick="setProgressSub('home')">Em Casa</a>
       </div>
-      <span class="progress-legend-ic" onclick="openProgressLegend()" title="What do the colors mean?">i</span>
+      <span class="progress-legend-ic" onclick="openProgressLegend()" title="O que significam as cores?">i</span>
     </div>
     <p style="font-size:12px;color:var(--muted);margin:10px 0 0">
       ${sub==='class'
-        ? 'Attendance and in-lesson participation, module by module.'
-        : 'Homework: how many tasks were submitted and whether each was reviewed on time. Click a task to open it for grading.'}
+        ? 'Frequência e participação em sala, módulo por módulo.'
+        : 'Tarefas de casa: quantas foram entregues e se cada uma foi revisada a tempo. Clique em uma tarefa para abri-la e avaliá-la.'}
     </p>
     ${sub==='class' ? renderProgressModules(PROGRESS_CLASS_MODULES,false) : renderProgressModules(PROGRESS_HOME_MODULES,true)}
   </div>
   ${renderProgressLegend()}
   <div class="tablewrap" id="tutorsEvalPanel">
     <div class="tbl-toolbar" style="justify-content:space-between">
-      <h3 style="margin:0">Tutors' Evaluations</h3>
-      <button class="btn btn-accent" id="evalStudentBtn" onclick="openEvalModal()">${ICONS.star} Evaluate The Student</button>
+      <h3 style="margin:0">Avaliações dos Tutores</h3>
+      <button class="btn btn-accent" id="evalStudentBtn" onclick="openEvalModal()">${ICONS.star} Avaliar o Aluno</button>
     </div>
     <div style="padding:0 18px 20px">
       <div class="evalentry">
-        <b>Jan 20, 2026, 11:10 AM, Camila Reyes (you)</b><br>
-        Please review this case — the family mentioned in the Trial Class that the student has diagnosed ADHD.<br>
-        <b>Problem Kind:</b> Edit the students personal information (Name, email, phone number)<br>
-        <b>Comment:</b> Suggest confirming with CS whether the 60-minute lesson length is appropriate, or if an individual class with shorter blocks would work better.
+        <b>20 de jan. de 2026, 11:10, Camila Reyes (você)</b><br>
+        Por favor, revise este caso — a família mencionou na Aula Experimental que o aluno tem diagnóstico de TDAH.<br>
+        <b>Tipo de problema:</b> Editar as informações pessoais do aluno (Nome, e-mail, telefone)<br>
+        <b>Comentário:</b> Sugiro confirmar com o CS se a duração de 60 minutos por aula é adequada, ou se uma aula individual com blocos mais curtos funcionaria melhor.
       </div>
     </div>
   </div>
   <div class="modal-back" id="evalModal">
     <div class="modal-box">
-      <h3>⭐ Evaluate the student</h3>
-      <label>Problem Kind</label>
+      <h3>⭐ Avaliar o aluno</h3>
+      <label>Tipo de problema</label>
       <select id="problemKindSel">${PROBLEM_KIND_OPTIONS.map(o=>`<option>${o}</option>`).join('')}</select>
-      <label>Choose the group</label>
+      <label>Escolha o grupo</label>
       <select><option>${s.active}</option></select>
-      <label>Write comment</label>
-      <textarea placeholder="E.g.: I contacted the parent with empathy, explained I noticed the absence, offered the recording and an extra lesson..."></textarea>
-      <div class="modal-actions"><a onclick="closeEvalModal()">Cancel</a><button class="btn btn-accent" onclick="confirmEvalModal()">Confirm</button></div>
+      <label>Escrever comentário</label>
+      <textarea placeholder="Ex.: Entrei em contato com o responsável com empatia, expliquei que notei a falta, ofereci a gravação e uma aula extra..."></textarea>
+      <div class="modal-actions"><a onclick="closeEvalModal()">Cancelar</a><button class="btn btn-accent" onclick="confirmEvalModal()">Confirmar</button></div>
     </div>
   </div>
   `;
@@ -1277,11 +1278,11 @@ function renderExtraTab(s){
   return `
   <div class="tablewrap" id="extraLessonsPanel">
     <div class="tbl-toolbar" style="justify-content:space-between">
-      <h3 style="margin:0">Extra Lessons</h3>
-      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Add Lesson</button>
+      <h3 style="margin:0">Aulas Extra</h3>
+      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Adicionar Aula</button>
     </div>
-    <table><thead><tr><th>ID</th><th>Request date</th><th>Initiator</th><th>Lesson type</th><th>Status</th><th>Actions</th></tr></thead>
-    <tbody><tr class="empty-row"><td colspan="6">No data available</td></tr></tbody></table>
+    <table><thead><tr><th>ID</th><th>Data da solicitação</th><th>Solicitante</th><th>Tipo de aula</th><th>Status</th><th>Ações</th></tr></thead>
+    <tbody><tr class="empty-row"><td colspan="6">Nenhum dado disponível</td></tr></tbody></table>
   </div>`;
 }
 
