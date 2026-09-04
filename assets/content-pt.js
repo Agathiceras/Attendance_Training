@@ -461,16 +461,16 @@ const CONTENT={
           ]
         },
         {
-          "t": "⏱️ Prazos: O Gatilho de Duas Faltas",
+          "t": "⏱️ Prazos: Quando Escalar",
           "cards": [
-            {"type": "text", "b": "O Módulo 1 apresentou as faltas 🟡 amarela e 🔴 vermelha. O gatilho de escalonamento é <strong>duas faltas</strong> — não uma única vermelha sem resposta como em outras regiões."},
+            {"type": "text", "b": "O Módulo 1 apresentou as faltas 🟡 amarela e 🔴 vermelha. Você escala quando acontece <strong>qualquer um</strong> destes dois casos: duas faltas amarelas, ou uma falta vermelha sem resposta da família."},
             {"type": "table", "h": "O que muda conforme as faltas se acumulam", "head": ["Contagem", "O que você faz", "Até quando"], "rows": [
-              ["Uma falta vermelha", "Entre em contato com a família você mesmo, consiga o motivo, depois mude a falta para amarela e selecione-o.", "No mesmo dia. Nunca deixe uma vermelha sem explicação por mais de 48 horas."],
-              ["Uma falta amarela", "Compartilhe a gravação e um breve resumo da tarefa de casa para que ele não fique para trás. Nada para escalar.", "Antes da próxima aula"],
-              ["Duas faltas, ou nenhuma resposta depois da segunda", "Este é o gatilho — escale agora através da Avaliação do Aluno, para que o Atendimento ao Cliente possa entrar em contato com a família diretamente.", "Agora"]
+              ["Uma falta vermelha", "Entre em contato com a família você mesmo, consiga o motivo, depois mude a falta para amarela e selecione-o. Se a família não responder, esse é o gatilho — escale agora.", "No mesmo dia. Nunca deixe uma vermelha sem explicação por mais de 48 horas."],
+              ["Uma falta amarela", "Compartilhe a gravação e um breve resumo da tarefa de casa para que ele não fique para trás. Nada para escalar ainda.", "Antes da próxima aula"],
+              ["Duas faltas amarelas", "Este também é o gatilho — escale agora através da Avaliação do Aluno, para que o Atendimento ao Cliente possa entrar em contato com a família diretamente.", "Agora"]
             ]},
-            {"type": "tip", "txt": "O gatilho são duas faltas — mas nem um dia a mais. Se a família não respondeu até a segunda falta, esse é o momento de passar para o Atendimento ao Cliente."},
-            {"type": "warn", "txt": "\"Avise alguém — não espere pela terceira.\" Duas faltas é exatamente o ponto em que um aluno que está se afastando ainda pode ser recuperado, e você geralmente é a única pessoa que percebe isso a tempo."}
+            {"type": "tip", "txt": "O gatilho é: duas faltas amarelas, ou uma vermelha sem resposta. Assim que qualquer um dos dois acontecer, esse é o momento de passar para o Atendimento ao Cliente."},
+            {"type": "warn", "txt": "\"Avise alguém — não espere pela terceira.\" Esse ponto é exatamente onde um aluno que está se afastando ainda pode ser recuperado, e você geralmente é a única pessoa que percebe isso a tempo."}
           ]
         },
         {
@@ -482,7 +482,7 @@ const CONTENT={
               "Quando o aluno participar novamente, aproveite o momento para compartilhar as conquistas dele em aula com os pais.",
               "Carinho não custa nada e é toda a diferença entre uma família que continua engajada com o curso e uma que silenciosamente para de responder."
             ]},
-            {"type": "warnbox", "h": "⚠️ O Que Você Nunca Deve Fazer", "b": "Nunca ofereça um curso, grupo ou horário diferente por conta própria — encaminhe a família para o Atendimento ao Cliente. Nunca ofereça uma aula 1 a 1 sem a aprovação do seu TL. E nunca ofereça uma aula extra por conta própria — isso passa pelo seu TL, ou vem diretamente do Atendimento ao Cliente."}
+            {"type": "warnbox", "h": "⚠️ O Que Você Nunca Deve Fazer", "b": "Nunca ofereça um curso, grupo ou horário diferente por conta própria — encaminhe a família para o Atendimento ao Cliente. Nunca ofereça uma aula 1 a 1 sem a aprovação do seu TL. E nunca ofereça uma aula extra por conta própria — quando o Atendimento ao Cliente decide que um aluno precisa de uma, o pedido chega até você pelo seu TL ou Team Lead Assistant, nunca diretamente da família ou do Atendimento ao Cliente."}
           ]
         },
         {
@@ -490,8 +490,7 @@ const CONTENT={
           "cards": [
             {"type": "list", "h": "Agora uma lista curta — o mecanismo em si está na primeira seção acima", "items": [
               "Defina o tipo de falta e o motivo. Amarela mais o motivo correspondente dos seis grupos se te disseram por quê; vermelha se ninguém te disse nada.",
-              "Adicione um comentário com o que a família realmente disse. Curto está bom. Isso é o que seu TL e o Atendimento ao Cliente leem se o caso sair das suas mãos.",
-              "Se você está pedindo uma aula extra, use o modelo de comentário pré-preenchido junto com o link para o perfil do aluno."
+              "Adicione um comentário com o que a família realmente disse. Curto está bom. Isso é o que seu TL e o Atendimento ao Cliente leem se o caso sair das suas mãos."
             ]}
           ]
         },
@@ -503,7 +502,7 @@ const CONTENT={
               ["<span class=\"rowic\">⚡</span>Imediatamente", "Mostre que você notou a ausência — com carinho, e em particular, não na frente do grupo.", "Segundo contato com a família, por um canal diferente do primeiro, antes da segunda falta."],
               ["<span class=\"rowic\">➡️</span>Depois", "Observe a presença dele, não só a frequência. Se ele aparece mas fica em 40% na sala, o problema se moveu para dentro da aula — isso são os Módulos 2 a 4, não este.", "Abra a Avaliação do Aluno no BO depois da segunda falta. O caso sai do acompanhamento particular aqui."],
               ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Quem mais você envolve", "Seu TL, se o aluno ficou para trás o suficiente para precisar de uma aula extra.", "Seu TL, e o Atendimento ao Cliente, que entra em contato com a família diretamente assim que você escalar."],
-              ["<span class=\"rowic\">👨‍👩‍👧</span>Os pais", "Compartilhe algo concreto que o aluno fez na aula em que voltou.", "Mantenha-os informados, e não prometa nada — nenhuma aula extra sem o seu TL, e nenhuma mudança de curso, grupo ou horário sem encaminhar para o Atendimento ao Cliente."]
+              ["<span class=\"rowic\">👨‍👩‍👧</span>Os pais", "Compartilhe algo concreto que o aluno fez na aula em que voltou.", "Mantenha-os informados do progresso do curso: compartilhe gravações, avise sobre partes interessantes que virão nas próximas aulas, ou algo do curso que o aluno mencionou gostar antes. Comece com carinho — algo como \"Espero que [nome] esteja bem, sentimos a falta dele(a)\". Mas não prometa nada — nenhuma aula extra sem o seu TL, e nenhuma mudança de curso, grupo ou horário sem encaminhar para o Atendimento ao Cliente."]
             ]},
             {"type": "redbox", "h": "Ele voltou, mas ainda não está realmente ali.", "b": "Este é o resultado mais comum de todos, e é fácil arquivar como resolvido porque a frequência voltou ao normal. Não está resolvido: o aluno agora está na sala e desengajado, o que é um problema de facilitação, não de falta.<br><br>Esse caso pertence aos Módulos 2, 3 e 4 — como você abre, para quem você pergunta, como você fecha."}
           ]
@@ -513,13 +512,11 @@ const CONTENT={
           "cards": [
             {"type": "text", "b": "<strong>Falar primeiro com seu TL está correto</strong> — aqui está o caminho completo:"},
             {"type": "flow", "steps": [
-              {"ic": "📋", "h": "1 · Abra a Avaliação do Aluno", "b": "No BO, selecione \"É necessária uma aula adicional.\" Duas ou mais faltas contam — para os Módulos 1 e 8, uma falta já é suficiente. Máximo uma aula extra por aluno por mês.", "color": "blue"},
-              {"ic": "💬", "h": "2 · Avise seu TL", "b": "Envie uma mensagem privada para que ele possa analisar e aprovar o caso.", "color": "red"},
-              {"ic": "📞", "h": "3 · Entre em contato com a família", "b": "Somente depois da aprovação, entre em contato diretamente com a família você mesmo para agendar a aula extra (30 min, gratuita).", "color": "green"},
-              {"ic": "⏰", "h": "4 · Se o aluno não entrar", "b": "Envie um lembrete por WhatsApp. Se ainda não houver resposta, a aula é cancelada após 15 minutos.", "color": "orange"},
-              {"ic": "✅", "h": "5 · Depois da aula", "b": "Você pode atualizar a frequência do aluno para verde no BO.", "color": "purple"}
+              {"ic": "💬", "h": "1 · Avise seu TL", "b": "Comente que você vai pedir uma aula extra para esse aluno antes de registrar o pedido — continua sendo o certo a fazer, mesmo que já não seja mais uma etapa formal do sistema.", "color": "red"},
+              {"ic": "📋", "h": "2 · Abra pelo perfil do aluno", "b": "Vá ao perfil do aluno → aba <strong>Aulas Adicionais</strong> → \"Adicionar Aula\". Escolha o Motivo, o Objetivo da Aula, o Grupo, a Aula, a Duração (60 minutos — 40 minutos para o curso Funtech) e uma data e horário preliminares, e escreva uma Justificativa honesta. Depois \"Enviar Para Revisão\".", "color": "blue"},
+              {"ic": "✅", "h": "3 · Seu TL aprova", "b": "O pedido vai automaticamente para o seu Team Lead, que aprova (ou recusa) e define a data e o horário finais.", "color": "green"},
+              {"ic": "🗓️", "h": "4 · Aparece no seu Horário", "b": "Depois de aprovada, a aula extra aparece diretamente no seu Horário, igual a qualquer outra aula programada — você recebe uma notificação.", "color": "orange"}
             ]},
-            {"type": "text", "b": "Uma aula extra também pode vir diretamente do Atendimento ao Cliente, se eles decidirem oferecer uma à família por conta própria — mas você nunca deve oferecer uma por conta própria sem a aprovação do seu TL primeiro."},
             {"type": "warnbox", "h": "⚠️ Se você começou, fica com você", "b": "Se <strong>você</strong> iniciou o caso, não redirecione o aluno para o Atendimento ao Cliente depois — a responsabilidade de acompanhar até o fim fica com você."},
             {"type": "text", "h": "🖥️ Pratique Você Mesmo", "b": "É hora de praticar como você lidaria com isso no BO com um caso real:"},
             {"type": "simulation", "title": "Simulação de BO — Pedindo uma Aula Extra", "src": "Simulacion_BO_Attendance_2_PT.html"}

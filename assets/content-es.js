@@ -491,8 +491,7 @@ const CONTENT={
             {"type": "list", "h": "Ahora una lista corta — el mecanismo en sí está en la primera sección de arriba", "items": [
               "Establece el tipo de ausencia y la razón. Amarilla más la razón correspondiente de los seis grupos si te dijeron por qué; roja si nadie te dijo nada.",
               "Agrega un comentario con lo que la familia realmente dijo. Corto está bien. Esto es lo que tu TL y Servicio al Cliente leen si el caso sale de tus manos.",
-              "Si la familia nunca responde y sigue en rojo, Servicio al Cliente lo retoma — pero solo tu comentario les dice qué ya se intentó, así que un caso sin comentario les cuesta una llamada que tú ya hiciste.",
-              "Si estás pidiendo una clase extra, usa la plantilla de comentario prellenada junto con el enlace al perfil del estudiante — no la escribas desde cero."
+              "Si la familia nunca responde y sigue en rojo, Servicio al Cliente lo retoma — pero solo tu comentario les dice qué ya se intentó, así que un caso sin comentario les cuesta una llamada que tú ya hiciste."
             ]}
           ]
         },
@@ -514,11 +513,10 @@ const CONTENT={
           "cards": [
             {"type": "text", "b": "<strong>Contactar primero a tu TL es correcto</strong> — aquí está el camino completo:"},
             {"type": "flow", "steps": [
-              {"ic": "📋", "h": "1 · Abre la Evaluación del Alumno", "b": "En BO, selecciona \"Se necesita una clase adicional\" (esto abre un ticket de OMNI automáticamente). Dos o más ausencias consecutivas califican — para los Módulos 1 y 8, una ausencia es suficiente. Máximo una clase extra por estudiante al mes.", "color": "blue"},
-              {"ic": "💬", "h": "2 · Avísale a tu TL", "b": "Envíale un mensaje privado de Slack para que pueda revisar y aprobar el caso — este es el paso de \"contacta primero a tu TL\".", "color": "red"},
-              {"ic": "📞", "h": "3 · Contacta a la familia", "b": "Solo después de la aprobación, contacta directamente a la familia tú mismo para agendar la clase extra (30 min, sin costo).", "color": "green"},
-              {"ic": "⏰", "h": "4 · Si el estudiante no se conecta", "b": "Envía un recordatorio por WhatsApp. Si sigue sin haber respuesta, la clase se cancela después de 15 minutos.", "color": "orange"},
-              {"ic": "✅", "h": "5 · Después de la clase", "b": "Puedes actualizar la asistencia del estudiante a verde en BO.", "color": "purple"}
+              {"ic": "💬", "h": "1 · Avísale a tu TL", "b": "Coméntale que vas a pedir una clase extra para este estudiante antes de registrarla — sigue siendo lo correcto, aunque ya no sea un paso formal del sistema.", "color": "red"},
+              {"ic": "📋", "h": "2 · Ábrela desde el perfil del estudiante", "b": "Ve al perfil del estudiante → pestaña <strong>Lecciones Adicionales</strong> → \"Agregar Clase\". Elige el Motivo, el Objetivo de la Lección, el Grupo, la Clase, la Duración (60 minutos es lo habitual) y una fecha y hora preliminar, y escribe una Justificación honesta. Luego \"Enviar Para Revisión\".", "color": "blue"},
+              {"ic": "✅", "h": "3 · Tu TL la aprueba", "b": "La solicitud pasa automáticamente a tu Team Lead, quien la aprueba (o la rechaza) y asigna la fecha y hora final.", "color": "green"},
+              {"ic": "🗓️", "h": "4 · Aparece en tu Horario", "b": "Una vez aprobada, la clase extra aparece directamente en tu Horario, igual que cualquier otra lección programada — te llega una notificación.", "color": "orange"}
             ]},
             {"type": "warnbox", "h": "⚠️ Si tú lo iniciaste, se queda contigo", "b": "Si <strong>tú</strong> iniciaste el caso, no redirijas al estudiante a Servicio al Cliente después — la responsabilidad de darle seguimiento se queda contigo."},
             {"type": "text", "h": "🖥️ Practícalo tú mismo", "b": "Es momento de practicar cómo manejarías esto en BO con un caso real:"},
