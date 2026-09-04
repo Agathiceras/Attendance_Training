@@ -749,6 +749,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nazwa grupy "'+name+'" skopiowana do schowka.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -905,7 +906,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Link logowania do platformy" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1289,10 +1290,10 @@ function renderExtraTab(s){
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Otwórz swoją grupę',body:'Tutaj znajdziesz swoje grupy. Kliknij <b>PRM_DEMO_ATT-01</b>, aby ją otworzyć.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · Siatka obecności',body:'Każda pigułka to jedna lekcja dla jednego ucznia. <b>Sofía</b> i <b>Diego</b> mają jak dotąd nienaganny rekord — same zielone.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila opuściła dwie lekcje z rzędu',body:'L3 Camili jest 🟡 żółte (zgłoszone/usprawiedliwione), a L4 🔴 czerwone (wagary, bez żadnego uprzedzenia). Kliknij jej pigułkę <b>L4</b>, aby zobaczyć jak odnotowuje się obecność.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila opuściła dwie lekcje z rzędu',body:'L3 Camili jest 🟡 żółte (zgłoszone/usprawiedliwione), a L4 🔴 czerwone (wagary, bez żadnego uprzedzenia). Kliknij prawym przyciskiem myszy jej pigułkę <b>L4</b>, aby zobaczyć jak odnotowuje się obecność — w prawdziwym BO to kliknięcie prawym przyciskiem otwiera opcje obecności.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Trzy opcje',body:'🟢 <b>Uczęszczany</b>, 🔴 <b>Wagary</b> (bez żadnego uprzedzenia) lub 🟡 <b>Nieobecność</b> (rodzina podała powód wcześniej). Kliknij <b>Nieobecność</b>, aby zobaczyć co dzieje się dalej.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Wybierz powód',body:'Gdy nieobecność jest usprawiedliwiona, BO prosi o podanie konkretnego powodu, aby zapis był dokładny. Wybierz dowolną opcję.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Teraz spróbuj sam(a)',body:'Kliknij dowolną <b>zieloną</b> pigułkę Sofíi lub Diega i oznacz ją jako <b>Wagary</b>, żeby poczuć jak to działa.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Teraz spróbuj sam(a)',body:'Kliknij prawym przyciskiem myszy dowolną <b>zieloną</b> pigułkę Sofíi lub Diega i oznacz ją jako <b>Wagary</b>, żeby poczuć jak to działa.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'7 · To wszystko!',body:'To cały proces: otwórz grupę, znajdź pigułkę, wybierz właściwy status. Kliknij <b>Zakończ</b>, aby dokończyć.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;

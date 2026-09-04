@@ -176,6 +176,8 @@ tbody tr.clickable{cursor:pointer}
 .evt.avail{background:rgba(52,211,153,.18);color:#7FE8BE;border:1px solid rgba(52,211,153,.35)}
 .evt.lesson{background:var(--accent);color:#fff}
 .evt.lesson:hover{background:var(--accent-d)}
+.evt.extra{background:var(--orange);color:#2a2205}
+.evt.extra:hover{filter:brightness(1.08)}
 /* RATING + INFO TOOLTIP */
 .badge-status{display:inline-block;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:700}
 .ratrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--border)}
@@ -428,10 +430,12 @@ const PROBLEM_KIND_OPTIONS = [
  'Problema técnico, por favor, póngase en contacto con el estudiante',
  "El cliente no responde/no asiste a las clases (el tutor intentó ponerse en contacto primero)",
  'Editar la información personal del estudiante (Nombre, correo, teléfono)',
- 'Se necesita una clase extra',
  'El cliente quiere cambiar el horario',
  'Otro',
 ];
+const EXTRA_LESSON_REASONS = ['No entendió el material','Problemas con el proyecto final','Primer módulo, baja actividad en clase','Lección adicional después de una pausa','Lección de regalo','Retraso debido a problemas técnicos'];
+const EXTRA_LESSON_OBJECTIVES = ['Ayudar a ponerse al día con el material de la lección','Ayudar con el proyecto final'];
+const EXTRA_LESSON_DURATIONS = ['30 minutos','40 minutos','60 minutos','90 minutos'];
 const STUDENTS = [
  {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lecciones',region:'LatAm | Colombia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
    age:9,gender:'Femenino',sen:'No',last:'11.08.2026, 18:20',
@@ -464,7 +468,7 @@ const STUDENTS = [
 const LESSON_MODAL = {topic:'Bucles y condicionales', module:5, lesson:12, course:'[1200] Programación en Python', group:'PRM_DEMO_MA-01 - 3 estudiantes', time:'14:00 - 15:00'};
 
 /* ---------- STATE ---------- */
-let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
 
 function tourStudent(){ return STUDENTS.find(s=>s.tourTarget) || STUDENTS[0]; }
 
@@ -488,7 +492,6 @@ function reportContentIssue(lessonId){
 function openEvalModal(){ document.getElementById('evalModal').style.display='flex'; fire('open-evaluate-modal'); }
 function closeEvalModal(){ const m=document.getElementById('evalModal'); if(m) m.style.display='none'; }
 function confirmEvalModal(){ closeEvalModal(); toast('✅ Evaluación enviada. Tu Team Lead la revisará.'); fire('confirm-evaluate-modal'); }
-function requestExtraLesson(){ toast('🧪 Esto es una simulación — en el BO real esto abre el formulario para programar la clase extra. Recuerda incluir una justificación clara para que tu Team Leader pueda aprobarla.'); fire('click-add-lesson'); }
 function clickLoginLink(){ toast('🔗 Enlace copiado — permite que el estudiante entre a la plataforma ya con la sesión iniciada, útil si tiene un problema técnico a mitad de la clase.'); fire('click-login-link'); }
 function clickCopyCreds(){ toast('🔒 Usuario y contraseña del estudiante copiados al portapapeles.'); fire('click-copy-credentials'); }
 
@@ -518,7 +521,7 @@ function simClick(label){ toast('🧪 Esto es una simulación — en el BO real,
 
 /* ---------- RENDER HELPERS ---------- */
 function badge(status){
-  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey'};
+  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey','En revisión':'pill-orange','Aprobada':'pill-green'};
   const labels={'Active':'Activo'};
   return `<span class="pill ${map[status]||'pill-grey'}">${labels[status]||status}</span>`;
 }
@@ -610,6 +613,7 @@ function renderSchedule(){
         if((d==='Martes'||d==='Jueves')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Disponible</div>`;
         if(d==='Sábado'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Disponible</div>`;
         if(d==='Martes'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
+        if(state.extraLessonScheduled&&d==='Miércoles'&&i===3) content=`<div class="evt extra" onclick="simClick('Ver el detalle de la clase extra agendada')">11:00-12:00 ✨ Clase Extra<br>Camila Torres</div>`;
         return `<div class="cell">${content}</div>`;
       }).join('')}`).join('')}
     </div>
@@ -680,7 +684,7 @@ function renderCourses(){
 function renderGroups(){
   return `<h1 class="pagetitle">Grupos</h1>
   <div style="display:flex;gap:10px;margin-bottom:16px">
-    <button class="btn btn-ghost">Clases Extra</button>
+    <button class="btn btn-ghost">Lecciones Adicionales</button>
     <button class="btn btn-ghost">Grupos Paralelos</button>
   </div>
   <div class="tablewrap" id="allGroupsTable">
@@ -750,6 +754,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nombre del grupo "'+name+'" copiado al portapapeles.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -906,7 +911,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Enlace de acceso a la plataforma" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1113,7 +1118,7 @@ function renderStudentDetail(){
     <button class="dtab" onclick="simClick('Ver los Grupos del alumno')">${ICONS.users} Grupos</button>
     <button class="dtab ${state.dtab==='progress'?'active':''}" data-dtab="progress" onclick="goDetailTab('progress')">📊 Progreso</button>
     <button class="dtab" onclick="simClick('Ver Proyectos HUB')">🔧 Proyectos HUB</button>
-    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Clases extra</button>
+    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Lecciones Adicionales</button>
     <button class="dtab" onclick="simClick('Ver la Retroalimentación de la lección')">📝 Retroalimentación</button>
   </div>
   ${state.dtab==='wallet' ? renderWalletTab(s) : state.dtab==='progress' ? renderProgressTab(s) : state.dtab==='extra' ? renderExtraTab(s) : renderWalletTab(s)}
@@ -1275,25 +1280,85 @@ function renderProgressTab(s){
 }
 
 function renderExtraTab(s){
+  const rows = state.extraLessonRequests;
   return `
   <div class="tablewrap" id="extraLessonsPanel">
     <div class="tbl-toolbar" style="justify-content:space-between">
-      <h3 style="margin:0">Clases extra</h3>
-      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Agregar clase</button>
+      <h3 style="margin:0">Lecciones Adicionales</h3>
+      <button class="btn btn-accent" id="addLessonBtn" onclick="openExtraLessonModal('${s.active}')">+ Agregar clase</button>
     </div>
     <table><thead><tr><th>ID</th><th>Fecha de solicitud</th><th>Solicitante</th><th>Tipo de lección</th><th>Estado</th><th>Acciones</th></tr></thead>
-    <tbody><tr class="empty-row"><td colspan="6">No hay datos disponibles</td></tr></tbody></table>
+    <tbody>${rows.length?rows.map(r=>`<tr><td>${r.id}</td><td>${r.date}</td><td>${r.initiator}</td><td>${r.type}</td><td>${badge(r.status)}</td><td><span class="grp-icbtn" style="cursor:pointer" onclick="simClick('Ver el detalle de la solicitud de clase extra')">👁</span></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">No hay datos disponibles</td></tr>'}</tbody></table>
+  </div>
+  <div class="modal-back" id="extraLessonModal">
+    <div class="modal-box" style="width:min(480px,92vw)">
+      <h3>✨ Lección Adicional</h3>
+      <label>Tipo de lección</label>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="btn ${state.extraLessonKind!=='Experto'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Adicional')">Adicional</button>
+        <button class="btn ${state.extraLessonKind==='Experto'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Experto')">Experto</button>
+      </div>
+      <label>Motivo *</label>
+      <select id="extraReasonSel"><option value="">Selecciona…</option>${EXTRA_LESSON_REASONS.map(r=>`<option>${r}</option>`).join('')}</select>
+      <label>Objetivo de la Lección *</label>
+      <select id="extraObjectiveSel"><option value="">Selecciona…</option>${EXTRA_LESSON_OBJECTIVES.map(o=>`<option>${o}</option>`).join('')}</select>
+      <label>Grupo *</label>
+      <select id="extraGroupSel"><option>${s.active}</option></select>
+      <label>Clase *</label>
+      <select id="extraLessonSel"><option value="">Selecciona…</option><option>M1L5. Repaso: variables y tipos de datos</option><option>M1L6. Operadores y expresiones</option></select>
+      <label>Duración *</label>
+      <select id="extraDurationSel">${EXTRA_LESSON_DURATIONS.map(d=>`<option${d==='60 minutos'?' selected':''}>${d}</option>`).join('')}</select>
+      <label>Fecha y Hora Preliminares (Hora Local del Estudiante)</label>
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:14px" onclick="simClick('Elegir la fecha y hora preliminares de la clase extra')">📅 No Seleccionado</button>
+      <label>Justificación *</label>
+      <textarea id="extraJustTextarea" placeholder="Ej.: La familia pidió ponerla al día antes de la próxima lección grupal..."></textarea>
+      <div class="modal-actions">
+        <a onclick="closeExtraLessonModal()">Cancelar</a>
+        <button class="btn btn-ghost" onclick="saveExtraLessonDraft()">Guardar Borrador</button>
+        <button class="btn btn-accent" onclick="submitExtraLessonForReview()">Enviar Para Revisión</button>
+      </div>
+    </div>
   </div>`;
+}
+function setExtraLessonKind(k){ state.extraLessonKind=k; render(); const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
+function openExtraLessonModal(groupName){
+  state.extraLessonKind='Adicional';
+  state.extraLessonGroup=groupName;
+  render();
+  document.getElementById('extraLessonModal').style.display='flex';
+  fire('click-add-lesson');
+}
+function closeExtraLessonModal(){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='none'; }
+function saveExtraLessonDraft(){
+  closeExtraLessonModal();
+  toast('💾 Borrador guardado — puedes terminarlo más tarde desde la pestaña Lecciones Adicionales.');
+}
+function submitExtraLessonForReview(){
+  const reason=document.getElementById('extraReasonSel').value;
+  closeExtraLessonModal();
+  const id = 'x'+Math.random().toString(16).slice(2,10);
+  state.extraLessonRequests.push({id, date:new Date().toLocaleDateString('es-ES')+' '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}), initiator:'Camila Reyes (tú)', type:state.extraLessonKind||'Adicional', status:'En revisión'});
+  render();
+  toast('✅ Solicitud enviada — pasa a tu Team Lead para aprobación'+(reason?' ('+reason+').':'.'));
+  fire('submit-extra-lesson');
+  setTimeout(()=>{
+    const r = state.extraLessonRequests.find(x=>x.id===id);
+    if(r) r.status='Aprobada';
+    state.extraLessonScheduled = true;
+    render();
+    toast('🎉 Tu Team Lead aprobó la clase — ya aparece agendada en tu Horario.');
+    fire('approve-extra-lesson');
+  }, 1600);
 }
 
 /* ---------- GUIDED TOUR ---------- */
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Abre tu grupo',body:'Aquí es donde encontrarás tus grupos. Haz clic en <b>PRM_DEMO_ATT-01</b> para abrirlo.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · La cuadrícula de asistencia',body:'Cada óvalo es una lección para un estudiante. <b>Sofía</b> y <b>Diego</b> tienen un registro perfecto hasta ahora — todo en verde.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila faltó dos veces seguidas',body:'La L3 de Camila está en 🟡 amarillo (avisada/justificada) y la L4 en 🔴 rojo (ausente, sin ningún aviso). Haz clic en su óvalo de <b>L4</b> para ver cómo marcarías la asistencia.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila faltó dos veces seguidas',body:'La L3 de Camila está en 🟡 amarillo (avisada/justificada) y la L4 en 🔴 rojo (ausente, sin ningún aviso). Haz <b>clic derecho</b> en su óvalo de <b>L4</b> para ver cómo marcarías la asistencia — en el BO real, el clic derecho es lo que abre las opciones.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Tres opciones',body:'🟢 <b>Asistió</b>, 🔴 <b>Ausente</b> (sin ningún aviso), o 🟡 <b>Ausente</b> (la familia te dio una razón con anticipación). Haz clic en <b>Ausente</b> (la amarilla) para ver qué pasa después.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Elige la razón',body:'Cuando está justificada, BO pide la razón específica para que el registro sea preciso. Elige cualquier opción.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Ahora inténtalo tú',body:'Haz clic en cualquier óvalo <b>verde</b> de Sofía o Diego y márcalo como <b>Ausente</b> (no-show), solo para sentir cómo funciona.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Ahora inténtalo tú',body:'Haz <b>clic derecho</b> en cualquier óvalo <b>verde</b> de Sofía o Diego y márcalo como <b>Ausente</b> (no-show), solo para sentir cómo funciona.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'7 · ¡Eso es todo!',body:'Ese es todo el proceso: abrir el grupo, encontrar el óvalo, elegir el estado correcto. Haz clic en <b>Finalizar</b> para terminar.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;
@@ -1308,6 +1373,7 @@ function goToStepPage(){
   const st = STEPS[stepIdx];
   const keepEvalOpen = !!(st.sel && st.sel.indexOf('#evalModal')!==-1);
   const keepLessonOpen = !!(st.sel && st.sel.indexOf('#lessonModal')!==-1);
+  const keepExtraOpen = !!(st.sel && st.sel.indexOf('#extraLessonModal')!==-1);
   if(!keepLessonOpen) closeLessonModal();
   if(!keepEvalOpen) closeEvalModal();
   state.page = st.page;
@@ -1322,6 +1388,7 @@ function goToStepPage(){
   render();
   if(keepEvalOpen){ const m=document.getElementById('evalModal'); if(m) m.style.display='flex'; }
   if(keepLessonOpen){ const m=document.getElementById('lessonModal'); if(m) m.style.display='flex'; }
+  if(keepExtraOpen){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
 }
 function showStepCard(){
   const st = STEPS[stepIdx];
@@ -1378,7 +1445,7 @@ function closeCelebration(){
 function restartTour(){
   document.getElementById('celebrateBack').style.display='none';
   GROUP_RUNTIME = {};
-  state = {page:'groups', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+  state = {page:'groups', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
   stepIdx = 0;
   goToStepPage();
   showStepCard();

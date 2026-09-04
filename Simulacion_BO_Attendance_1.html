@@ -749,6 +749,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Group name "'+name+'" copied to the clipboard.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -905,7 +906,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Login link to the platform" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1289,10 +1290,10 @@ function renderExtraTab(s){
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Open your group',body:'This is where you\'ll find your groups. Click on <b>PRM_DEMO_ATT-01</b> to open it.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · The attendance grid',body:'Each pill is one lesson for one student. <b>Sofía</b> and <b>Diego</b> have a perfect record so far — all green.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila missed two in a row',body:'Camila\'s L3 is 🟡 yellow (announced/justified) and L4 is 🔴 red (a no-show, no warning at all). Click her <b>L4</b> pill to see how you\'d mark attendance.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila missed two in a row',body:'Camila\'s L3 is 🟡 yellow (announced/justified) and L4 is 🔴 red (a no-show, no warning at all). Right-click her <b>L4</b> pill to see how you\'d mark attendance — on the real BO, right-clicking is what opens the attendance options.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Three options',body:'🟢 <b>Attended</b>, 🔴 <b>No-show</b> (no warning at all), or 🟡 <b>Absent</b> (the family gave you a reason beforehand). Click <b>Absent</b> to see what happens next.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Pick the reason',body:'When it\'s justified, BO asks for the specific reason so the record is accurate. Pick any option.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Now you try it',body:'Click any <b>green</b> pill for Sofía or Diego and mark it as <b>No-show</b>, just to feel how it works.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Now you try it',body:'Right-click any <b>green</b> pill for Sofía or Diego and mark it as <b>No-show</b>, just to feel how it works.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'7 · That\'s it!',body:'That\'s the whole flow: open the group, find the pill, pick the right status. Click <b>Finish</b> to wrap up.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;

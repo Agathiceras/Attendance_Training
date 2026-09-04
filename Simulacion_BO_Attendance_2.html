@@ -452,6 +452,7 @@ const STUDENTS = [
    age:8,gender:'Female',sen:'No',last:'12.08.2026, 09:30',
    parent:{name:'Patricia Torres',phone:'+52 55 0000 4444',email:'patricia.torres.demo@example.com',country:'🇲🇽 Mexico',currency:'MXN',funnel:'LatAm | Peru, Mexico, Colombia',status:'WALLET IS TOP UP',local:'13:30 (UTC-05:00)'},
    comments:[
+     {role:'CS',name:'CS Team',text:'Confirmed with the family that the extra lesson is scheduled — they appreciated the quick follow-up and said Camila is looking forward to catching up.',time:'13.08.2026, 09:10'},
      {role:'CS',name:'CS Team',text:'Family mentioned the student has seemed a bit unmotivated this month. Keep an eye on it.',time:'02.08.2026, 17:22'},
    ],
    balanceNum:55, monthly:1650, period:60,
@@ -469,6 +470,7 @@ function tourStudent(){ return STUDENTS.find(s=>s.tourTarget) || STUDENTS[0]; }
 function goPage(p){ state.page=p; if(p!=='studentDetail') state.sid=null; render(); fire('go-'+p); }
 function goTeacherTab(t){ state.ttab=t; render(); fire('open-'+t+'-tab'); }
 function openStudent(id){ state.page='studentDetail'; state.sid=id; state.dtab='wallet'; render(); fire('open-student'); }
+function openStudentByName(name){ const st=STUDENTS.find(x=>x.name===name); if(st) openStudent(st.id); }
 function goDetailTab(t){ state.dtab=t; render(); fire('open-detail-tab-'+t); }
 function openCourseDetail(courseId){ state.page='courseDetail'; state.courseId=courseId; state.courseTab='lessons'; state.expandedModuleId=null; render(); fire('open-course-detail'); }
 function expandModule(modId){ state.expandedModuleId = (state.expandedModuleId===modId?null:modId); render(); fire('expand-module'); }
@@ -943,7 +945,7 @@ function renderGroupStudentsTab(data){
         ${data.students.map((s,si)=>`
         <tr>
           <td class="grp-student-cell">
-            <b>${s.name}</b><span>${s.email}</span>
+            <a class="clickable${s.name==='Camila Torres'?' tour-student-name-target':''}" onclick="openStudentByName('${s.name}')"><b>${s.name}</b></a><span>${s.email}</span>
             <div class="grp-student-badges">
               <span class="pill pill-blue">${ICONS.book} ${s.tasksDone} lessons</span>
               <span class="pill ${s.checked?'pill-green':'pill-grey'}">${s.checked?'✓':'—'}</span>
@@ -1344,7 +1346,9 @@ const STEPS = [
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'9 · Case B: what if the parent never replies?',body:'Now picture the same situation, but the parent never answered any of your messages. Click the ⭐ star icon again.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'10 · Choose "Client is not replying"',body:'Select this option instead — a different template appears.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'11 · Fill it in and confirm',body:'Complete the template, then click <b>Confirm</b> to finish this case.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'12 · That\'s the full protocol',body:'You just practiced escalating a real attendance case from start to finish. Click <b>Finish</b> to wrap up.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'12 · One habit worth keeping: check her profile',body:'Before you move on, click <b>Camila Torres\'s name</b> to see what\'s already logged on her profile — cases like this often have more context waiting there than what fits in a BO comment.',advance:'studentopen',waitFor:'open-student'},
+ {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'13 · Read the comments',body:'This is where Customer Service (and anyone else who has touched this case) leaves what they know — confirmations, family context, anything relevant. Get in the habit of checking here, whether or not you were the one handling the case.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'14 · That\'s the full protocol',body:'You just practiced escalating a real attendance case from start to finish. Click <b>Finish</b> to wrap up.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;
 

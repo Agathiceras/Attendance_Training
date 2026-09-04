@@ -752,6 +752,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nazwa grupy „'+name+'” skopiowana do schowka.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -908,7 +909,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Link do logowania na platformę" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1292,7 +1293,7 @@ function renderExtraTab(s){
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Otwórz swoją grupę',body:'Tutaj znajdziesz swoje grupy. Kliknij <b>PRM_DEMO_ATT-01</b>, aby ją otworzyć.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · Siatka obecności',body:'Każda pigułka to jedna lekcja dla jednego ucznia. <b>Sofía</b> i <b>Diego</b> mają jak dotąd idealny wynik — same zielone.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila opuściła dwie lekcje z rzędu',body:'L3 Camili jest 🟡 żółta (zgłoszona/usprawiedliwiona), a L4 jest 🔴 czerwona (nieobecność bez żadnego ostrzeżenia). Kliknij jej pigułkę <b>L4</b>, aby zobaczyć, jak oznaczyć obecność.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila opuściła dwie lekcje z rzędu',body:'L3 Camili jest 🟡 żółta (zgłoszona/usprawiedliwiona), a L4 jest 🔴 czerwona (nieobecność bez żadnego ostrzeżenia). Kliknij prawym przyciskiem myszy jej pigułkę <b>L4</b>, aby zobaczyć, jak oznaczyć obecność — w prawdziwym BO to kliknięcie prawym przyciskiem otwiera opcje obecności.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Trzy opcje',body:'🟢 <b>Uczęszczany</b>, 🔴 <b>Wagary</b> (bez żadnego ostrzeżenia), lub 🟡 <b>Nieobecność</b> (rodzina podała powód z wyprzedzeniem). Kliknij <b>Nieobecność</b>, aby zobaczyć, co się dzieje dalej.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Wybierz powód',body:'Gdy nieobecność jest usprawiedliwiona, BO prosi o konkretny powód, aby zapis był dokładny. Wybierz dowolną opcję.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Obsługa Klienta przejmuje sprawę',body:'Oznaczyłeś/aś nieobecność — to twoja część. Teraz kliknij <b>imię Camili Torres</b>, aby zobaczyć, co Obsługa Klienta już zapisała w jej profilu po kontakcie z rodziną.',advance:'studentopen',waitFor:'open-student'},

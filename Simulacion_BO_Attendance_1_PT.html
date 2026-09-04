@@ -750,6 +750,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nome do grupo "'+name+'" copiado para a área de transferência.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -906,7 +907,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Link de acesso à plataforma" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1290,10 +1291,10 @@ function renderExtraTab(s){
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Abra seu grupo',body:'É aqui que você encontra seus grupos. Clique em <b>PRM_DEMO_ATT-01</b> para abri-lo.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · A grade de frequência',body:'Cada oval é uma aula para um aluno. <b>Sofía</b> e <b>Diego</b> têm um registro perfeito até agora — tudo verde.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila faltou duas vezes seguidas',body:'A L3 de Camila está 🟡 amarela (avisada/justificada) e a L4 está 🔴 vermelha (não compareceu, sem nenhum aviso). Clique no oval de <b>L4</b> dela para ver como marcar a frequência.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila faltou duas vezes seguidas',body:'A L3 de Camila está 🟡 amarela (avisada/justificada) e a L4 está 🔴 vermelha (não compareceu, sem nenhum aviso). Clique com o <b>botão direito</b> no oval de <b>L4</b> dela para ver como marcar a frequência — no BO real, o clique direito é o que abre as opções de frequência.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Três opções',body:'🟢 <b>Compareceu</b>, 🔴 <b>Não compareceu</b> (sem nenhum aviso), ou 🟡 <b>Ausente</b> (a família te deu um motivo com antecedência). Clique em <b>Ausente</b> para ver o que acontece a seguir.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Escolha o motivo',body:'Quando é justificada, o BO pede o motivo específico para que o registro seja preciso. Escolha qualquer opção.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Agora tente você',body:'Clique em qualquer oval <b>verde</b> de Sofía ou Diego e marque como <b>Não compareceu</b>, só para sentir como funciona.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'6 · Agora tente você',body:'Clique com o <b>botão direito</b> em qualquer oval <b>verde</b> de Sofía ou Diego e marque como <b>Não compareceu</b>, só para sentir como funciona.',advance:'marked',waitFor:'mark-attendance',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'7 · Isso é tudo!',body:'Esse é todo o processo: abrir o grupo, encontrar o oval, escolher o status certo. Clique em <b>Finalizar</b> para terminar.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;

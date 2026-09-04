@@ -176,6 +176,8 @@ tbody tr.clickable{cursor:pointer}
 .evt.avail{background:rgba(52,211,153,.18);color:#7FE8BE;border:1px solid rgba(52,211,153,.35)}
 .evt.lesson{background:var(--accent);color:#fff}
 .evt.lesson:hover{background:var(--accent-d)}
+.evt.extra{background:var(--orange);color:#2a2205}
+.evt.extra:hover{filter:brightness(1.08)}
 /* RATING + INFO TOOLTIP */
 .badge-status{display:inline-block;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:700}
 .ratrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--border)}
@@ -282,7 +284,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="introwrap">
     <div class="intro-eyebrow">🎓 Симуляция BO</div>
     <h1>Эскалация случая посещаемости в BO 🖥️✨</h1>
-    <p class="lead">В этой симуляции ты потренируешься в полном протоколе для реального случая: обновление посещаемости после ответа семьи и правильное оформление отчёта через <b>«Оценить ученика»</b> — как в случае, когда родитель просит дополнительное занятие, так и когда родитель перестаёт отвечать.</p>
+    <p class="lead">В этой симуляции ты потренируешься в полном протоколе для реального случая: обновление посещаемости после ответа семьи, запрос дополнительного занятия через вкладку <b>«Дополнительные занятия»</b> в профиле ученика, и правильное оформление случая «клиент не отвечает» через <b>«Оценить ученика»</b>.</p>
     <p class="lead" style="margin-top:20px">Всё время мы будем находиться в разделе «Группы» — остальная часть боковой панели здесь не рассматривается.</p>
     <button class="intro-cta" onclick="startTour()">🚀 Начать пошаговое руководство</button>
     <div class="intro-note">Сейчас ты пройдёшь через копию BO с полностью вымышленными данными. Руководство будет пошагово показывать, куда смотреть и куда нажимать.</div>
@@ -333,7 +335,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="celebrate-box">
     <div class="celebrate-emoji">🎉</div>
     <div class="celebrate-title">Отличная работа!</div>
-    <div class="celebrate-text">Ты только что отработал(а) полный протокол: обновление посещаемости после ответа семьи и оформление отчёта как по <b>запросу дополнительного занятия</b>, так и по случаю <b>«клиент не отвечает»</b> — каждый раз с правильным шаблоном. Помни: если ты начал(а) вести случай, он остаётся за тобой до его разрешения. Теперь вернись и продолжи изучение остальной части обучения.</div>
+    <div class="celebrate-text">Ты только что отработал(а) полный протокол: обновление посещаемости после ответа семьи, запрос <b>дополнительного занятия</b> через новую вкладку в профиле ученика, и оформление случая <b>«клиент не отвечает»</b> через «Оценить ученика». Помни: если ты начал(а) вести случай, он остаётся за тобой до его разрешения. Теперь вернись и продолжи изучение остальной части обучения.</div>
     <button class="celebrate-close" onclick="restartTour()">🔁 Повторить руководство</button>
   </div>
 </div>
@@ -427,10 +429,12 @@ const PROBLEM_KIND_OPTIONS = [
  'Техническая проблема, пожалуйста, свяжитесь с учеником',
  "Клиент не отвечает/не посещает занятия (тьютор уже пытался связаться первым)",
  'Изменить личные данные ученика (имя, email, номер телефона)',
- 'Нужно дополнительное занятие',
  'Клиент хочет изменить расписание',
  'Другое',
 ];
+const EXTRA_LESSON_REASONS = ['Не понял(а) материал','Проблемы с итоговым проектом','Первый модуль, низкая активность на занятии','Дополнительное занятие после перерыва','Занятие в подарок','Опоздание из-за технических проблем'];
+const EXTRA_LESSON_OBJECTIVES = ['Помочь наверстать материал занятия','Помочь с итоговым проектом'];
+const EXTRA_LESSON_DURATIONS = ['30 минут','40 минут','60 минут','90 минут'];
 const STUDENTS = [
  {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 занятия',region:'LatAm | Колумбия',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
    age:9,gender:'Женский',sen:'Нет',last:'11.08.2026, 18:20',
@@ -463,7 +467,7 @@ const STUDENTS = [
 const LESSON_MODAL = {topic:'Циклы и условия', module:5, lesson:12, course:'[1200] Программирование на Python', group:'PRM_DEMO_MA-01 - 3 ученика', time:'14:00 - 15:00'};
 
 /* ---------- STATE ---------- */
-let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
 
 function tourStudent(){ return STUDENTS.find(s=>s.tourTarget) || STUDENTS[0]; }
 
@@ -488,7 +492,6 @@ function reportContentIssue(lessonId){
 function openEvalModal(){ document.getElementById('evalModal').style.display='flex'; fire('open-evaluate-modal'); }
 function closeEvalModal(){ const m=document.getElementById('evalModal'); if(m) m.style.display='none'; }
 function confirmEvalModal(){ closeEvalModal(); toast('✅ Оценка отправлена. Твой тимлид её рассмотрит.'); fire('confirm-evaluate-modal'); }
-function requestExtraLesson(){ toast('🧪 Это симуляция — в реальном BO это открывает форму для планирования дополнительного занятия. Не забудь указать чёткое обоснование, чтобы тимлид мог его одобрить.'); fire('click-add-lesson'); }
 function clickLoginLink(){ toast('🔗 Ссылка скопирована — она позволяет ученику войти на платформу уже авторизованным, что полезно при технических проблемах во время урока.'); fire('click-login-link'); }
 function clickCopyCreds(){ toast('🔒 Логин и пароль ученика скопированы в буфер обмена.'); fire('click-copy-credentials'); }
 
@@ -518,7 +521,7 @@ function simClick(label){ toast('🧪 Это симуляция — в реал�
 
 /* ---------- RENDER HELPERS ---------- */
 function badge(status){
-  const map={'Активный':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey'};
+  const map={'Активный':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey','На рассмотрении':'pill-orange','Одобрена':'pill-green'};
   return `<span class="pill ${map[status]||'pill-grey'}">${status}</span>`;
 }
 function info(def,scale){ return `<span class="info-wrap"><span class="info-ic">i</span><span class="info-pop"><span class="def">${def}</span>${scale}</span></span>`; }
@@ -550,8 +553,7 @@ function render(){
       if(sel && state.evalKind) sel.value=state.evalKind;
       const ta=document.getElementById('evalTextarea');
       if(ta){
-        if(state.evalKind==='Нужно дополнительное занятие') ta.value=TEMPLATE_EXTRA_CLASS;
-        else if(state.evalKind && state.evalKind.indexOf('Клиент не отвечает')===0) ta.value=TEMPLATE_NOT_REPLYING;
+        if(state.evalKind && state.evalKind.indexOf('Клиент не отвечает')===0) ta.value=TEMPLATE_NOT_REPLYING;
       }
     }
   }
@@ -622,6 +624,7 @@ function renderSchedule(){
         if((d==='Вторник'||d==='Четверг')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Доступно</div>`;
         if(d==='Суббота'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Доступно</div>`;
         if(d==='Вторник'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
+        if(state.extraLessonScheduled&&d==='Среда'&&i===3) content=`<div class="evt extra" onclick="simClick('Посмотреть детали запланированного дополнительного занятия')">11:00-12:00 ✨ Доп. занятие<br>Камила Торрес</div>`;
         return `<div class="cell">${content}</div>`;
       }).join('')}`).join('')}
     </div>
@@ -762,6 +765,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Название группы «'+name+'» скопировано в буфер обмена.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -782,7 +786,6 @@ function showAbsentReasons(ev){
     </div>`;
   fire('open-absence-reasons');
 }
-const TEMPLATE_EXTRA_CLASS = 'Причина дополнительного занятия:\n Обсуждалось ли это с учеником?: да/нет\n Пытался(-ась) ли ученик наверстать материал, посмотрев записи уроков?: да/нет';
 const TEMPLATE_NOT_REPLYING = 'Пожалуйста, свяжитесь с клиентом.\n Дата следующего урока:\n Когда ученик перестал посещать занятия:\n Как и где я пытался(-ась) связаться с клиентом/результат:\n Модуль и номер следующего урока (только 1-1):\n Почему я хотел(-а) связаться с клиентом:';
 function markAttendance(status, reason){
   if(!state.attTarget) return;
@@ -812,8 +815,7 @@ function applyEvalTemplate(){
   const v=document.getElementById('problemKindSel').value;
   const ta=document.getElementById('evalTextarea');
   state.evalKind=v;
-  if(v==='Нужно дополнительное занятие'){ ta.value=TEMPLATE_EXTRA_CLASS; fire('select-extra-class'); }
-  else if(v.indexOf('Клиент не отвечает')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
+  if(v.indexOf('Клиент не отвечает')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
   else { ta.value=''; }
 }
 function confirmGroupEvalModal(){
@@ -953,7 +955,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Ссылка для входа на платформу" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1322,33 +1324,96 @@ function renderProgressTab(s){
 }
 
 function renderExtraTab(s){
+  const rows = state.extraLessonRequests;
   return `
   <div class="tablewrap" id="extraLessonsPanel">
     <div class="tbl-toolbar" style="justify-content:space-between">
       <h3 style="margin:0">Дополнительные занятия</h3>
-      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Добавить занятие</button>
+      <button class="btn btn-accent" id="addLessonBtn" onclick="openExtraLessonModal('${s.active}')">+ Добавить занятие</button>
     </div>
     <table><thead><tr><th>ID</th><th>Дата запроса</th><th>Инициатор</th><th>Тип занятия</th><th>Статус</th><th>Действия</th></tr></thead>
-    <tbody><tr class="empty-row"><td colspan="6">Нет данных</td></tr></tbody></table>
+    <tbody>${rows.length?rows.map(r=>`<tr><td>${r.id}</td><td>${r.date}</td><td>${r.initiator}</td><td>${r.type}</td><td>${badge(r.status)}</td><td><span class="grp-icbtn" style="cursor:pointer" onclick="simClick('Посмотреть детали запроса на дополнительное занятие')">👁</span></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">Нет данных</td></tr>'}</tbody></table>
+  </div>
+  <div class="modal-back" id="extraLessonModal">
+    <div class="modal-box" style="width:min(480px,92vw)">
+      <h3>✨ Дополнительное занятие</h3>
+      <label>Тип занятия</label>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="btn ${state.extraLessonKind!=='Экспертное'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Дополнительное')">Дополнительное</button>
+        <button class="btn ${state.extraLessonKind==='Экспертное'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Экспертное')">Экспертное</button>
+      </div>
+      <label>Причина *</label>
+      <select id="extraReasonSel"><option value="">Выбери…</option>${EXTRA_LESSON_REASONS.map(r=>`<option>${r}</option>`).join('')}</select>
+      <label>Цель занятия *</label>
+      <select id="extraObjectiveSel"><option value="">Выбери…</option>${EXTRA_LESSON_OBJECTIVES.map(o=>`<option>${o}</option>`).join('')}</select>
+      <label>Группа *</label>
+      <select id="extraGroupSel"><option>${s.active}</option></select>
+      <label>Урок *</label>
+      <select id="extraLessonSel"><option value="">Выбери…</option><option>M1L5. Повторение: переменные и типы данных</option><option>M1L6. Операторы и выражения</option></select>
+      <label>Длительность *</label>
+      <select id="extraDurationSel">${EXTRA_LESSON_DURATIONS.map(d=>`<option${d==='60 минут'?' selected':''}>${d}</option>`).join('')}</select>
+      <label>Предварительные дата и время (местное время ученика)</label>
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:14px" onclick="simClick('Выбрать предварительные дату и время дополнительного занятия')">📅 Не выбрано</button>
+      <label>Обоснование *</label>
+      <textarea id="extraJustTextarea" placeholder="Напр.: Семья попросила помочь ученику наверстать материал перед следующим групповым занятием..."></textarea>
+      <div class="modal-actions">
+        <a onclick="closeExtraLessonModal()">Отмена</a>
+        <button class="btn btn-ghost" onclick="saveExtraLessonDraft()">Сохранить черновик</button>
+        <button class="btn btn-accent" onclick="submitExtraLessonForReview()">Отправить на рассмотрение</button>
+      </div>
+    </div>
   </div>`;
+}
+function setExtraLessonKind(k){ state.extraLessonKind=k; render(); const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
+function openExtraLessonModal(groupName){
+  state.extraLessonKind='Дополнительное';
+  state.extraLessonGroup=groupName;
+  render();
+  document.getElementById('extraLessonModal').style.display='flex';
+  fire('click-add-lesson');
+}
+function closeExtraLessonModal(){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='none'; }
+function saveExtraLessonDraft(){
+  closeExtraLessonModal();
+  toast('💾 Черновик сохранён — ты можешь закончить его позже во вкладке «Дополнительные занятия».');
+}
+function submitExtraLessonForReview(){
+  const reason=document.getElementById('extraReasonSel').value;
+  closeExtraLessonModal();
+  const id = 'x'+Math.random().toString(16).slice(2,10);
+  state.extraLessonRequests.push({id, date:new Date().toLocaleDateString('ru-RU')+' '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}), initiator:'Камила Рейес (ты)', type:state.extraLessonKind||'Дополнительное', status:'На рассмотрении'});
+  render();
+  toast('✅ Заявка отправлена — она уходит твоему Team Lead на рассмотрение'+(reason?' ('+reason+').':'.'));
+  fire('submit-extra-lesson');
+  setTimeout(()=>{
+    const r = state.extraLessonRequests.find(x=>x.id===id);
+    if(r) r.status='Одобрена';
+    state.extraLessonScheduled = true;
+    render();
+    toast('🎉 Твой Team Lead одобрил занятие — оно уже появилось в твоём расписании.');
+    fire('approve-extra-lesson');
+  }, 1600);
 }
 
 /* ---------- GUIDED TOUR ---------- */
 const STEPS = [
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'1 · Камила отсутствует сегодня',body:'Камила уже недавно пропустила урок (жёлтый), а сегодня у неё <b>прогул</b> (красный). Ты связываешься с семьёй, чтобы узнать, что случилось.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · Семья отвечает: это была техническая проблема',body:'Семья объясняет, что в тот день отключили электричество. Нажми на красную отметку Камилы, чтобы обновить её посещаемость.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · Семья отвечает: это была техническая проблема',body:'Семья объясняет, что в тот день отключили электричество. Нажми <b>правой кнопкой мыши</b> на красную отметку Камилы, чтобы обновить её посещаемость — в реальном BO именно правый клик открывает варианты посещаемости.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'3 · Отметь как «Отсутствие»',body:'Поскольку теперь причина уважительная, нажми <b>Отсутствие</b>.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Выбери «Технические проблемы»',body:'Нажми <b>Технические проблемы</b> — в тот день отключили электричество. Обрати внимание: BO автоматически записывает это объяснение, а отметка меняется с красной на жёлтую.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'5 · На следующем уроке снова отсутствие',body:'Камила пропускает и следующий урок тоже (L5, красный). Дальше с семьёй может произойти одно из двух.',advance:'next',onEnter:'addNextLesson',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'6 · Случай A: родитель просит дополнительное занятие',body:'Родитель отвечает и просит дополнительное занятие. Прежде чем что-либо ему подтверждать, нажми на значок ⭐ в строке Камилы, чтобы запросить это в BO.',advance:'evalopen',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'7 · Выбери «Нужно дополнительное занятие»',body:'Выбери этот тип проблемы. Обрати внимание: поле комментария автоматически заполняется шаблоном.',advance:'template1',waitFor:'select-extra-class',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'8 · Заполни шаблон и подтверди',body:'Честно заполни шаблон, затем нажми <b>Подтвердить</b>. Тем временем отправь семье записи уроков, чтобы Камила не отставала, пока ты ждёшь одобрения — и помни: связаться с тимлидом первым делом правильно, но случай всё равно остаётся за тобой.',advance:'confirmed1',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'9 · Случай B: а что, если родитель так и не ответит?',body:'Теперь представь ту же ситуацию, но родитель так и не ответил ни на одно твоё сообщение. Снова нажми на значок ⭐.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'10 · Выбери «Клиент не отвечает»',body:'На этот раз выбери этот вариант — появится другой шаблон.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'11 · Заполни и подтверди',body:'Заполни шаблон, затем нажми <b>Подтвердить</b>, чтобы закрыть этот случай.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'12 · Полезная привычка: проверь её профиль',body:'Прежде чем двигаться дальше, нажми на <b>имя Camila Torres</b>, чтобы посмотреть, что уже записано в её профиле — в подобных случаях там часто есть больше контекста, чем помещается в комментарий BO.',advance:'studentopen',waitFor:'open-student'},
- {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'13 · Прочитай комментарии',body:'Именно здесь служба поддержки (Customer Service) и все остальные, кто соприкасался с этим случаем, оставляют то, что им известно — подтверждения, контекст от семьи, любые детали. Возьми за привычку проверять здесь, независимо от того, ты ли вёл(-а) этот случай.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'14 · Это полный протокол',body:'Ты только что отработал(а) эскалацию реального случая посещаемости от начала до конца. Нажми <b>Далее</b>, чтобы завершить.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Случай A: родитель просит дополнительное занятие',body:'Родитель отвечает и просит дополнительное занятие. Дополнительные занятия больше не запрашиваются через Оценку ученика — теперь у них своя вкладка в профиле ученика. Нажми на <b>имя Camila Torres</b>, чтобы открыть её профиль.',advance:'studentopen',waitFor:'open-student'},
+ {page:'studentDetail',sel:'[data-dtab="extra"]',hl:['[data-dtab="extra"]'],title:'7 · Открой вкладку «Дополнительные занятия»',body:'Нажми <b>✨ Дополнительные занятия</b>.',advance:'extratab',waitFor:'open-detail-tab-extra'},
+ {page:'studentDetail',dtab:'extra',sel:'#addLessonBtn',hl:['#addLessonBtn'],title:'8 · Добавь занятие',body:'Нажми <b>+ Добавить занятие</b>, чтобы открыть форму.',advance:'extramodal',waitFor:'click-add-lesson'},
+ {page:'studentDetail',dtab:'extra',sel:'#extraLessonModal .modal-box',hl:['#extraLessonModal .btn-accent'],title:'9 · Заполни форму',body:'Выбери <b>Причину</b> (например, «Дополнительное занятие после перерыва») и <b>Цель занятия</b>, проверь длительность (обычно 60 минут) и напиши честное <b>Обоснование</b>. Связаться с тимлидом первым делом по-прежнему правильно — но теперь запись и одобрение проходят здесь, а не через шаблон комментария. Нажми <b>Отправить на рассмотрение</b>, чтобы завершить.',advance:'submitted',waitFor:'submit-extra-lesson',cardPos:'left'},
+ {page:'studentDetail',dtab:'extra',sel:'#extraLessonsPanel',title:'10 · Пока ты ждёшь',body:'Твоя заявка появляется в этой таблице со статусом <b>На рассмотрении</b>, пока её проверяет твой Team Lead. В этой симуляции она одобряется сама через несколько секунд. Нажми <b>Далее</b>, когда закончишь читать.',advance:'next'},
+ {page:'profile',ttab:'schedule',sel:'.evt.extra',hl:['.evt.extra'],title:'11 · Уже появилось в твоём расписании',body:'После одобрения дополнительное занятие появляется прямо в твоём расписании, как любое другое запланированное занятие.',advance:'next'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'12 · Случай B: а что, если родитель так и не ответит?',body:'Теперь представь ту же ситуацию, но родитель так и не ответил ни на одно твоё сообщение. Это по-прежнему проходит через Оценку ученика — нажми на значок ⭐ в строке Камилы.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'13 · Выбери «Клиент не отвечает»',body:'Выбери этот вариант — шаблон появится автоматически.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'14 · Заполни и подтверди',body:'Заполни шаблон, затем нажми <b>Подтвердить</b>, чтобы закрыть этот случай.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'15 · Полезная привычка: проверь её профиль',body:'Нажми на <b>имя Camila Torres</b> ещё раз, чтобы посмотреть, что уже записано в её профиле — в подобных случаях там часто есть больше контекста, чем помещается в комментарий BO.',advance:'studentopen2',waitFor:'open-student'},
+ {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'16 · Прочитай комментарии',body:'Именно здесь служба поддержки (Customer Service) и все остальные, кто соприкасался с этим случаем, оставляют то, что им известно — подтверждения, контекст от семьи, любые детали. Возьми за привычку проверять здесь, независимо от того, ты ли вёл(-а) этот случай.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'17 · Это полный протокол',body:'Ты только что отработал(а) эскалацию реального случая посещаемости от начала до конца, включая запрос дополнительного занятия через новую вкладку. Нажми <b>Далее</b>, чтобы завершить.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;
 
@@ -1362,6 +1427,7 @@ function goToStepPage(){
   const st = STEPS[stepIdx];
   const keepEvalOpen = !!(st.sel && st.sel.indexOf('#evalModal')!==-1);
   const keepLessonOpen = !!(st.sel && st.sel.indexOf('#lessonModal')!==-1);
+  const keepExtraOpen = !!(st.sel && st.sel.indexOf('#extraLessonModal')!==-1);
   if(!keepLessonOpen) closeLessonModal();
   if(!keepEvalOpen) closeEvalModal();
   state.page = st.page;
@@ -1376,6 +1442,7 @@ function goToStepPage(){
   render();
   if(keepEvalOpen){ const m=document.getElementById('evalModal'); if(m) m.style.display='flex'; }
   if(keepLessonOpen){ const m=document.getElementById('lessonModal'); if(m) m.style.display='flex'; }
+  if(keepExtraOpen){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
   if(st.onEnter && window[st.onEnter]) window[st.onEnter]();
 }
 function showStepCard(){
@@ -1433,7 +1500,7 @@ function closeCelebration(){
 function restartTour(){
   document.getElementById('celebrateBack').style.display='none';
   GROUP_RUNTIME = {};
-  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
   stepIdx = 0;
   goToStepPage();
   showStepCard();

@@ -176,6 +176,8 @@ tbody tr.clickable{cursor:pointer}
 .evt.avail{background:rgba(52,211,153,.18);color:#7FE8BE;border:1px solid rgba(52,211,153,.35)}
 .evt.lesson{background:var(--accent);color:#fff}
 .evt.lesson:hover{background:var(--accent-d)}
+.evt.extra{background:var(--orange);color:#2a2205}
+.evt.extra:hover{filter:brightness(1.08)}
 /* RATING + INFO TOOLTIP */
 .badge-status{display:inline-block;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:700}
 .ratrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--border)}
@@ -282,7 +284,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="introwrap">
     <div class="intro-eyebrow">🎓 Simulação de BO</div>
     <h1>Escalando um Caso de Frequência no BO 🖥️✨</h1>
-    <p class="lead">Nesta simulação você vai praticar o protocolo completo para um caso real: atualizar a frequência quando uma família responde, e reportar isso corretamente através de <b>Avaliar o Aluno</b> — tanto quando um responsável pede uma aula extra, quanto quando ele para de responder.</p>
+    <p class="lead">Nesta simulação você vai praticar o protocolo completo para um caso real: atualizar a frequência quando uma família responde, pedir uma aula extra pela aba <b>Aulas Adicionais</b> do perfil do aluno, e reportar corretamente um caso de cliente que não responde através de <b>Avaliar o Aluno</b>.</p>
     <p class="lead" style="margin-top:20px">Vamos ficar dentro da seção de Grupos o tempo todo — o resto da barra lateral não é coberto aqui.</p>
     <button class="intro-cta" onclick="startTour()">🚀 Começar o passo a passo guiado</button>
     <div class="intro-note">Você está prestes a percorrer uma réplica do BO com dados completamente fictícios. O passo a passo vai te guiar, etapa por etapa, sobre o que olhar e onde clicar.</div>
@@ -333,7 +335,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="celebrate-box">
     <div class="celebrate-emoji">🎉</div>
     <div class="celebrate-title">Bom trabalho!</div>
-    <div class="celebrate-text">Você acabou de praticar o protocolo completo: atualizar a frequência quando a família responde, e reportar tanto um <b>pedido de aula extra</b> quanto um caso de <b>cliente que não responde</b> — cada um com o modelo correto. Lembre-se: se você iniciou o caso, ele fica com você até ser resolvido. Agora volte e continue lendo o restante do treinamento.</div>
+    <div class="celebrate-text">Você acabou de praticar o protocolo completo: atualizar a frequência quando a família responde, pedir uma <b>aula extra</b> pela nova aba dedicada no perfil do aluno, e reportar um caso de <b>cliente que não responde</b> através de Avaliar o Aluno. Lembre-se: se você iniciou o caso, ele fica com você até ser resolvido. Agora volte e continue lendo o restante do treinamento.</div>
     <button class="celebrate-close" onclick="restartTour()">🔁 Repetir o passo a passo</button>
   </div>
 </div>
@@ -427,10 +429,12 @@ const PROBLEM_KIND_OPTIONS = [
  'Problema técnico, por favor, entre em contato com o aluno',
  "O cliente não responde/não comparece às aulas (o tutor tentou entrar em contato primeiro)",
  'Editar as informações pessoais do aluno (Nome, e-mail, telefone)',
- 'É necessária uma aula extra',
  'O cliente quer mudar o horário',
  'Outro',
 ];
+const EXTRA_LESSON_REASONS = ['Não entendeu o material','Problemas com o projeto final','Primeiro módulo, baixa atividade na aula','Aula adicional após uma pausa','Aula de presente','Atraso devido a problemas técnicos'];
+const EXTRA_LESSON_OBJECTIVES = ['Ajudar a recuperar o material da aula','Ajudar com o projeto final'];
+const EXTRA_LESSON_DURATIONS = ['30 minutos','40 minutos','60 minutos','90 minutos'];
 const STUDENTS = [
  {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 aulas',region:'LatAm | Colômbia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
    age:9,gender:'Feminino',sen:'No',last:'11.08.2026, 18:20',
@@ -463,7 +467,7 @@ const STUDENTS = [
 const LESSON_MODAL = {topic:'Laços e condicionais', module:5, lesson:12, course:'[1200] Python Programming', group:'PRM_DEMO_MA-01 - 3 alunos', time:'14:00 - 15:00'};
 
 /* ---------- STATE ---------- */
-let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
 
 function tourStudent(){ return STUDENTS.find(s=>s.tourTarget) || STUDENTS[0]; }
 
@@ -488,7 +492,6 @@ function reportContentIssue(lessonId){
 function openEvalModal(){ document.getElementById('evalModal').style.display='flex'; fire('open-evaluate-modal'); }
 function closeEvalModal(){ const m=document.getElementById('evalModal'); if(m) m.style.display='none'; }
 function confirmEvalModal(){ closeEvalModal(); toast('✅ Avaliação enviada. Seu Team Lead vai revisá-la.'); fire('confirm-evaluate-modal'); }
-function requestExtraLesson(){ toast('🧪 Isto é uma simulação — no BO real, isso abre o formulário para agendar a aula extra. Lembre-se de incluir uma justificativa clara para que seu Team Leader possa aprová-la.'); fire('click-add-lesson'); }
 function clickLoginLink(){ toast('🔗 Link copiado — permite que o aluno entre na plataforma já com a sessão iniciada, útil se ele tiver um problema técnico no meio da aula.'); fire('click-login-link'); }
 function clickCopyCreds(){ toast('🔒 Usuário e senha do aluno copiados para a área de transferência.'); fire('click-copy-credentials'); }
 
@@ -518,7 +521,7 @@ function simClick(label){ toast('🧪 Isto é uma simulação — no BO real, is
 
 /* ---------- RENDER HELPERS ---------- */
 function badge(status){
-  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey'};
+  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey','Em revisão':'pill-orange','Aprovada':'pill-green'};
   const labels={'Active':'Ativo'};
   return `<span class="pill ${map[status]||'pill-grey'}">${labels[status]||status}</span>`;
 }
@@ -551,8 +554,7 @@ function render(){
       if(sel && state.evalKind) sel.value=state.evalKind;
       const ta=document.getElementById('evalTextarea');
       if(ta){
-        if(state.evalKind==='É necessária uma aula extra') ta.value=TEMPLATE_EXTRA_CLASS;
-        else if(state.evalKind && state.evalKind.indexOf('O cliente não responde')===0) ta.value=TEMPLATE_NOT_REPLYING;
+        if(state.evalKind && state.evalKind.indexOf('O cliente não responde')===0) ta.value=TEMPLATE_NOT_REPLYING;
       }
     }
   }
@@ -623,6 +625,7 @@ function renderSchedule(){
         if((d==='Terça-feira'||d==='Quinta-feira')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Disponível</div>`;
         if(d==='Sábado'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Disponível</div>`;
         if(d==='Terça-feira'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
+        if(state.extraLessonScheduled&&d==='Quarta-feira'&&i===3) content=`<div class="evt extra" onclick="simClick('Ver o detalhe da aula extra agendada')">11:00-12:00 ✨ Aula Extra<br>Camila Torres</div>`;
         return `<div class="cell">${content}</div>`;
       }).join('')}`).join('')}
     </div>
@@ -763,6 +766,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nome do grupo "'+name+'" copiado para a área de transferência.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -783,7 +787,6 @@ function showAbsentReasons(ev){
     </div>`;
   fire('open-absence-reasons');
 }
-const TEMPLATE_EXTRA_CLASS = 'Motivo da aula extra:\n Isso foi discutido com o aluno?: sim/não\n O aluno tentou se recuperar assistindo às gravações das aulas?: sim/não';
 const TEMPLATE_NOT_REPLYING = 'Por favor, entre em contato com o cliente.\n Data da próxima aula:\n Quando o aluno deixou de frequentar as aulas:\n Como e onde tentei entrar em contato com o cliente/resultado:\n Módulo e número da próxima aula (apenas 1-1):\n Por que eu queria entrar em contato com o cliente:';
 function markAttendance(status, reason){
   if(!state.attTarget) return;
@@ -813,8 +816,7 @@ function applyEvalTemplate(){
   const v=document.getElementById('problemKindSel').value;
   const ta=document.getElementById('evalTextarea');
   state.evalKind=v;
-  if(v==='É necessária uma aula extra'){ ta.value=TEMPLATE_EXTRA_CLASS; fire('select-extra-class'); }
-  else if(v.indexOf('O cliente não responde')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
+  if(v.indexOf('O cliente não responde')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
   else { ta.value=''; }
 }
 function confirmGroupEvalModal(){
@@ -954,7 +956,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Link de acesso à plataforma" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1161,7 +1163,7 @@ function renderStudentDetail(){
     <button class="dtab" onclick="simClick('Ver os Grupos do aluno')">${ICONS.users} Grupos</button>
     <button class="dtab ${state.dtab==='progress'?'active':''}" data-dtab="progress" onclick="goDetailTab('progress')">📊 Progresso</button>
     <button class="dtab" onclick="simClick('Ver Projetos HUB')">🔧 Projetos HUB</button>
-    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Aulas Extra</button>
+    <button class="dtab ${state.dtab==='extra'?'active':''}" data-dtab="extra" onclick="goDetailTab('extra')">✨ Aulas Adicionais</button>
     <button class="dtab" onclick="simClick('Ver o Feedback das aulas')">📝 Feedback</button>
   </div>
   ${state.dtab==='wallet' ? renderWalletTab(s) : state.dtab==='progress' ? renderProgressTab(s) : state.dtab==='extra' ? renderExtraTab(s) : renderWalletTab(s)}
@@ -1323,33 +1325,96 @@ function renderProgressTab(s){
 }
 
 function renderExtraTab(s){
+  const rows = state.extraLessonRequests;
   return `
   <div class="tablewrap" id="extraLessonsPanel">
     <div class="tbl-toolbar" style="justify-content:space-between">
-      <h3 style="margin:0">Aulas Extra</h3>
-      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Adicionar Aula</button>
+      <h3 style="margin:0">Aulas Adicionais</h3>
+      <button class="btn btn-accent" id="addLessonBtn" onclick="openExtraLessonModal('${s.active}')">+ Adicionar Aula</button>
     </div>
     <table><thead><tr><th>ID</th><th>Data da solicitação</th><th>Solicitante</th><th>Tipo de aula</th><th>Status</th><th>Ações</th></tr></thead>
-    <tbody><tr class="empty-row"><td colspan="6">Nenhum dado disponível</td></tr></tbody></table>
+    <tbody>${rows.length?rows.map(r=>`<tr><td>${r.id}</td><td>${r.date}</td><td>${r.initiator}</td><td>${r.type}</td><td>${badge(r.status)}</td><td><span class="grp-icbtn" style="cursor:pointer" onclick="simClick('Ver o detalhe da solicitação de aula extra')">👁</span></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">Nenhum dado disponível</td></tr>'}</tbody></table>
+  </div>
+  <div class="modal-back" id="extraLessonModal">
+    <div class="modal-box" style="width:min(480px,92vw)">
+      <h3>✨ Aula Adicional</h3>
+      <label>Tipo de lição</label>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="btn ${state.extraLessonKind!=='Especialista'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Adicional')">Adicional</button>
+        <button class="btn ${state.extraLessonKind==='Especialista'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Especialista')">Especialista</button>
+      </div>
+      <label>Motivo *</label>
+      <select id="extraReasonSel"><option value="">Selecione…</option>${EXTRA_LESSON_REASONS.map(r=>`<option>${r}</option>`).join('')}</select>
+      <label>Objetivo da Aula *</label>
+      <select id="extraObjectiveSel"><option value="">Selecione…</option>${EXTRA_LESSON_OBJECTIVES.map(o=>`<option>${o}</option>`).join('')}</select>
+      <label>Grupo *</label>
+      <select id="extraGroupSel"><option>${s.active}</option></select>
+      <label>Aula *</label>
+      <select id="extraLessonSel"><option value="">Selecione…</option><option>M1L5. Revisão: variáveis e tipos de dados</option><option>M1L6. Operadores e expressões</option></select>
+      <label>Duração *</label>
+      <select id="extraDurationSel">${EXTRA_LESSON_DURATIONS.map(d=>`<option${d==='60 minutos'?' selected':''}>${d}</option>`).join('')}</select>
+      <label>Data e Horário Preliminares (Horário Local do Aluno)</label>
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:14px" onclick="simClick('Escolher a data e horário preliminares da aula extra')">📅 Não Selecionado</button>
+      <label>Justificativa *</label>
+      <textarea id="extraJustTextarea" placeholder="Ex.: A família pediu para colocá-lo em dia antes da próxima aula em grupo..."></textarea>
+      <div class="modal-actions">
+        <a onclick="closeExtraLessonModal()">Cancelar</a>
+        <button class="btn btn-ghost" onclick="saveExtraLessonDraft()">Salvar Rascunho</button>
+        <button class="btn btn-accent" onclick="submitExtraLessonForReview()">Enviar Para Revisão</button>
+      </div>
+    </div>
   </div>`;
+}
+function setExtraLessonKind(k){ state.extraLessonKind=k; render(); const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
+function openExtraLessonModal(groupName){
+  state.extraLessonKind='Adicional';
+  state.extraLessonGroup=groupName;
+  render();
+  document.getElementById('extraLessonModal').style.display='flex';
+  fire('click-add-lesson');
+}
+function closeExtraLessonModal(){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='none'; }
+function saveExtraLessonDraft(){
+  closeExtraLessonModal();
+  toast('💾 Rascunho salvo — você pode terminá-lo mais tarde na aba Aulas Adicionais.');
+}
+function submitExtraLessonForReview(){
+  const reason=document.getElementById('extraReasonSel').value;
+  closeExtraLessonModal();
+  const id = 'x'+Math.random().toString(16).slice(2,10);
+  state.extraLessonRequests.push({id, date:new Date().toLocaleDateString('pt-BR')+' '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}), initiator:'Camila Reyes (você)', type:state.extraLessonKind||'Adicional', status:'Em revisão'});
+  render();
+  toast('✅ Solicitação enviada — vai para seu Team Lead para aprovação'+(reason?' ('+reason+').':'.'));
+  fire('submit-extra-lesson');
+  setTimeout(()=>{
+    const r = state.extraLessonRequests.find(x=>x.id===id);
+    if(r) r.status='Aprovada';
+    state.extraLessonScheduled = true;
+    render();
+    toast('🎉 Seu Team Lead aprovou a aula — já aparece agendada no seu Horário.');
+    fire('approve-extra-lesson');
+  }, 1600);
 }
 
 /* ---------- GUIDED TOUR ---------- */
 const STEPS = [
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'1 · Camila está ausente hoje',body:'Camila já faltou a uma aula recentemente (amarelo) e hoje ela <b>não compareceu</b> (vermelho). Você entra em contato com a família para saber o que aconteceu.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · A família responde: foi um problema técnico',body:'A família explica que a luz acabou naquele dia. Clique no oval vermelho de Camila para atualizar a frequência dela.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · A família responde: foi um problema técnico',body:'A família explica que a luz acabou naquele dia. Clique com o <b>botão direito</b> no oval vermelho de Camila para atualizar a frequência dela — no BO real, o clique direito é o que abre as opções de frequência.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'3 · Marque como Ausente',body:'Já que agora está justificada, clique em <b>Ausente</b>.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Escolha "Problemas técnicos"',body:'Clique em <b>Problemas técnicos</b> — a luz acabou naquele dia. Note que o BO registra essa explicação automaticamente; o oval passa de vermelho para amarelo.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'5 · A próxima aula, ainda ausente',body:'Camila também falta à próxima aula (L5, vermelho). A partir daqui, duas coisas diferentes podem acontecer com a família.',advance:'next',onEnter:'addNextLesson',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'6 · Caso A: o responsável pede uma aula extra',body:'O responsável responde e pede uma aula extra. Antes de confirmar qualquer coisa a ele, clique no ícone de ⭐ estrela na linha de Camila para solicitá-la no BO.',advance:'evalopen',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'7 · Escolha "É necessária uma aula extra"',body:'Selecione este Tipo de problema. Note que o campo de comentário se preenche com um modelo automaticamente.',advance:'template1',waitFor:'select-extra-class',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'8 · Preencha o modelo e confirme',body:'Complete o modelo com honestidade, depois clique em <b>Confirmar</b>. Enquanto isso, envie as gravações da aula para a família para que Camila não fique para trás enquanto você espera a aprovação — e lembre-se, falar primeiro com seu TL está correto, mas o caso continua com você.',advance:'confirmed1',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'9 · Caso B: e se o responsável nunca responder?',body:'Agora imagine a mesma situação, mas o responsável nunca respondeu a nenhuma das suas mensagens. Clique no ícone de ⭐ estrela novamente.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'10 · Escolha "O cliente não responde"',body:'Selecione esta opção em vez disso — um modelo diferente aparece.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'11 · Preencha e confirme',body:'Complete o modelo, depois clique em <b>Confirmar</b> para finalizar este caso.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'12 · Um hábito que vale a pena manter: veja o perfil dela',body:'Antes de continuar, clique no <b>nome de Camila Torres</b> para ver o que já está registrado no perfil dela — casos como este geralmente têm mais contexto ali do que cabe em um comentário do BO.',advance:'studentopen',waitFor:'open-student'},
- {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'13 · Leia os comentários',body:'É aqui que o Atendimento ao Cliente (e qualquer outra pessoa que tenha lidado com este caso) deixa o que sabe — confirmações, contexto da família, qualquer coisa relevante. Crie o hábito de verificar aqui, tenha você lidado com o caso ou não.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'14 · Esse é o protocolo completo',body:'Você acabou de praticar como escalar um caso real de frequência do início ao fim. Clique em <b>Finalizar</b> para terminar.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Caso A: o responsável pede uma aula extra',body:'O responsável responde e pede uma aula extra. As aulas extra não são mais pedidas pela Avaliação do Aluno — agora elas têm sua própria aba no perfil do estudante. Clique no <b>nome de Camila Torres</b> para abrir o perfil dela.',advance:'studentopen',waitFor:'open-student'},
+ {page:'studentDetail',sel:'[data-dtab="extra"]',hl:['[data-dtab="extra"]'],title:'7 · Abra a aba Aulas Adicionais',body:'Clique em <b>✨ Aulas Adicionais</b>.',advance:'extratab',waitFor:'open-detail-tab-extra'},
+ {page:'studentDetail',dtab:'extra',sel:'#addLessonBtn',hl:['#addLessonBtn'],title:'8 · Adicione a aula',body:'Clique em <b>+ Adicionar Aula</b> para abrir o formulário.',advance:'extramodal',waitFor:'click-add-lesson'},
+ {page:'studentDetail',dtab:'extra',sel:'#extraLessonModal .modal-box',hl:['#extraLessonModal .btn-accent'],title:'9 · Preencha o formulário',body:'Escolha o <b>Motivo</b> (por exemplo, "Aula adicional após uma pausa") e o <b>Objetivo da Aula</b>, confira a duração (60 minutos é o habitual, 40 minutos para o curso Funtech), e escreva uma <b>Justificativa</b> honesta. Falar primeiro com seu TL continua sendo correto — mas agora o registro e a aprovação passam por aqui, não por um modelo de comentário. Clique em <b>Enviar Para Revisão</b> para terminar.',advance:'submitted',waitFor:'submit-extra-lesson',cardPos:'left'},
+ {page:'studentDetail',dtab:'extra',sel:'#extraLessonsPanel',title:'10 · Enquanto espera',body:'Sua solicitação aparece como <b>Em revisão</b> nesta tabela enquanto seu Team Lead a analisa. Nesta simulação, ela é aprovada sozinha em alguns segundos. Clique em <b>Próximo</b> quando terminar de ler.',advance:'next'},
+ {page:'profile',ttab:'schedule',sel:'.evt.extra',hl:['.evt.extra'],title:'11 · Já aparece no seu Horário',body:'Depois de aprovada, a aula extra aparece diretamente no seu Horário, igual a qualquer outra aula programada.',advance:'next'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'12 · Caso B: e se o responsável nunca responder?',body:'Agora imagine a mesma situação, mas o responsável nunca respondeu a nenhuma das suas mensagens. Isso sim ainda passa pela Avaliação do Aluno — clique no ícone de ⭐ estrela na linha de Camila.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'13 · Escolha "O cliente não responde"',body:'Selecione esta opção — um modelo aparece automaticamente.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'14 · Preencha e confirme',body:'Complete o modelo, depois clique em <b>Confirmar</b> para finalizar este caso.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'15 · Um hábito que vale a pena manter: veja o perfil dela',body:'Clique no <b>nome de Camila Torres</b> novamente para ver o que já está registrado no perfil dela — casos como este geralmente têm mais contexto ali do que cabe em um comentário do BO.',advance:'studentopen2',waitFor:'open-student'},
+ {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'16 · Leia os comentários',body:'É aqui que o Atendimento ao Cliente (e qualquer outra pessoa que tenha lidado com este caso) deixa o que sabe — confirmações, contexto da família, qualquer coisa relevante. Crie o hábito de verificar aqui, tenha você lidado com o caso ou não.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'17 · Esse é o protocolo completo',body:'Você acabou de praticar como escalar um caso real de frequência do início ao fim, incluindo como pedir uma aula extra pela nova aba. Clique em <b>Finalizar</b> para terminar.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;
 
@@ -1363,6 +1428,7 @@ function goToStepPage(){
   const st = STEPS[stepIdx];
   const keepEvalOpen = !!(st.sel && st.sel.indexOf('#evalModal')!==-1);
   const keepLessonOpen = !!(st.sel && st.sel.indexOf('#lessonModal')!==-1);
+  const keepExtraOpen = !!(st.sel && st.sel.indexOf('#extraLessonModal')!==-1);
   if(!keepLessonOpen) closeLessonModal();
   if(!keepEvalOpen) closeEvalModal();
   state.page = st.page;
@@ -1377,6 +1443,7 @@ function goToStepPage(){
   render();
   if(keepEvalOpen){ const m=document.getElementById('evalModal'); if(m) m.style.display='flex'; }
   if(keepLessonOpen){ const m=document.getElementById('lessonModal'); if(m) m.style.display='flex'; }
+  if(keepExtraOpen){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
   if(st.onEnter && window[st.onEnter]) window[st.onEnter]();
 }
 function showStepCard(){
@@ -1434,7 +1501,7 @@ function closeCelebration(){
 function restartTour(){
   document.getElementById('celebrateBack').style.display='none';
   GROUP_RUNTIME = {};
-  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
   stepIdx = 0;
   goToStepPage();
   showStepCard();

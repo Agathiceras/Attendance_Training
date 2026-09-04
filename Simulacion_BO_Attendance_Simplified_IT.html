@@ -753,6 +753,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nome del gruppo "'+name+'" copiato negli appunti.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -909,7 +910,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Link di accesso alla piattaforma" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1293,7 +1294,7 @@ function renderExtraTab(s){
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Apri il tuo gruppo',body:'Qui troverai i tuoi gruppi. Clicca su <b>PRM_DEMO_ATT-01</b> per aprirlo.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · La griglia delle presenze',body:'Ogni pillola rappresenta una lezione per uno studente. <b>Sofía</b> e <b>Diego</b> hanno finora un record perfetto — tutto verde.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila ha saltato due lezioni di fila',body:'La L3 di Camila è 🟡 gialla (annunciata/giustificata) e la L4 è 🔴 rossa (un\'assenza senza preavviso). Clicca la sua pillola <b>L4</b> per vedere come si segna la presenza.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila ha saltato due lezioni di fila',body:'La L3 di Camila è 🟡 gialla (annunciata/giustificata) e la L4 è 🔴 rossa (un\'assenza senza preavviso). Fai clic con il tasto destro sulla sua pillola <b>L4</b> per vedere come si segna la presenza — nel BO reale è il clic destro ad aprire le opzioni di presenza.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Tre opzioni',body:'🟢 <b>Frequentato</b>, 🔴 <b>Saltato</b> (nessun preavviso), oppure 🟡 <b>Assente</b> (la famiglia ti ha dato un motivo in anticipo). Clicca <b>Assente</b> per vedere cosa succede dopo.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Scegli il motivo',body:'Quando è giustificata, il BO chiede il motivo specifico affinché il record sia accurato. Scegli un\'opzione qualsiasi.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Il Servizio Clienti se ne occupa da qui',body:'Hai segnato l\'assenza — questa è la tua parte. Ora clicca sul <b>nome di Camila Torres</b> per vedere cosa il Servizio Clienti ha già lasciato nel suo profilo dopo aver contattato la famiglia.',advance:'studentopen',waitFor:'open-student'},

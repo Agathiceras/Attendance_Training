@@ -753,6 +753,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Nama kelompok "'+name+'" disalin ke papan klip.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -909,7 +910,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Tautan login ke platform" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1293,7 +1294,7 @@ function renderExtraTab(s){
 const STEPS = [
  {page:'groups',sel:'.tour-group-target',hl:['.tour-group-target'],title:'1 · Buka kelompokmu',body:'Di sinilah kamu akan menemukan kelompokmu. Klik <b>PRM_DEMO_ATT-01</b> untuk membukanya.',advance:'groupdetail',waitFor:'open-group-detail'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-students-table',title:'2 · Kisi kehadiran',body:'Setiap pil mewakili satu pelajaran untuk satu siswa. <b>Sofía</b> dan <b>Diego</b> memiliki catatan sempurna sejauh ini — semuanya hijau.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila tidak hadir dua kali berturut-turut',body:'L3 milik Camila berwarna 🟡 kuning (diumumkan/beralasan) dan L4 berwarna 🔴 merah (membolos, tanpa pemberitahuan sama sekali). Klik pil <b>L4</b> miliknya untuk melihat cara menandai kehadiran.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'3 · Camila tidak hadir dua kali berturut-turut',body:'L3 milik Camila berwarna 🟡 kuning (diumumkan/beralasan) dan L4 berwarna 🔴 merah (membolos, tanpa pemberitahuan sama sekali). Klik kanan pil <b>L4</b> miliknya untuk melihat cara menandai kehadiran — di BO asli, klik kanan itulah yang membuka opsi kehadiran.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Tiga pilihan',body:'🟢 <b>Menghadiri</b>, 🔴 <b>Membolos</b> (tanpa pemberitahuan sama sekali), atau 🟡 <b>Absen</b> (keluarga sudah memberi tahu alasannya sebelumnya). Klik <b>Absen</b> untuk melihat apa yang terjadi selanjutnya.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'5 · Pilih alasannya',body:'Ketika ada alasannya, BO akan meminta alasan spesifik agar catatannya akurat. Pilih salah satu opsi.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Selanjutnya giliran Layanan Pelanggan',body:'Kamu sudah menandai ketidakhadirannya — itu bagianmu. Sekarang klik <b>nama Camila Torres</b> untuk melihat apa yang sudah ditinggalkan Layanan Pelanggan di profilnya setelah menghubungi keluarga.',advance:'studentopen',waitFor:'open-student'},
