@@ -176,6 +176,8 @@ tbody tr.clickable{cursor:pointer}
 .evt.avail{background:rgba(52,211,153,.18);color:#7FE8BE;border:1px solid rgba(52,211,153,.35)}
 .evt.lesson{background:var(--accent);color:#fff}
 .evt.lesson:hover{background:var(--accent-d)}
+.evt.extra{background:var(--orange);color:#2a2205}
+.evt.extra:hover{filter:brightness(1.08)}
 /* RATING + INFO TOOLTIP */
 .badge-status{display:inline-block;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:700}
 .ratrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--border)}
@@ -282,7 +284,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="introwrap">
     <div class="intro-eyebrow">🎓 BO Simulation</div>
     <h1>Escalating an Attendance Case in BO 🖥️✨</h1>
-    <p class="lead">In this simulation you'll practice the full protocol for a real case: updating attendance once a family responds, and reporting it correctly through <b>Evaluate the Student</b> — both when a parent asks for an extra class, and when a parent stops replying.</p>
+    <p class="lead">In this simulation you'll practice the full protocol for a real case: updating attendance once a family responds, requesting an extra lesson through the student's <b>Extra Lessons</b> tab, and correctly reporting a case where the client stops replying through <b>Evaluate the Student</b>.</p>
     <p class="lead" style="margin-top:20px">We'll stay inside the Groups section the whole time — the rest of the sidebar isn't covered here.</p>
     <button class="intro-cta" onclick="startTour()">🚀 Start the guided walkthrough</button>
     <div class="intro-note">You're about to go through a replica of BO with completely fictional data. The walkthrough will guide you, step by step, on what to look at and where to click.</div>
@@ -333,7 +335,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="celebrate-box">
     <div class="celebrate-emoji">🎉</div>
     <div class="celebrate-title">Nice work!</div>
-    <div class="celebrate-text">You just practiced the full protocol: updating attendance once the family responds, and reporting both an <b>extra class request</b> and a <b>client not replying</b> case — each with the correct template. Remember: if you started the case, it stays with you until it's resolved. Now go back and continue reading the rest of the training.</div>
+    <div class="celebrate-text">You just practiced the full protocol: updating attendance once the family responds, requesting an <b>extra lesson</b> through its new dedicated tab on the student's profile, and reporting a <b>client not replying</b> case through Evaluate the Student. Remember: if you started the case, it stays with you until it's resolved. Now go back and continue reading the rest of the training.</div>
     <button class="celebrate-close" onclick="restartTour()">🔁 Repeat the walkthrough</button>
   </div>
 </div>
@@ -427,10 +429,12 @@ const PROBLEM_KIND_OPTIONS = [
  'Technical issue, please, get in touch with the student',
  "Client is not replying/ doesn't attend lessons (tutor tried to get in touch first)",
  'Edit the students personal information (Name, email, phone number)',
- 'An extra class is needed',
  'Client wants to change the schedule',
  'Other',
 ];
+const EXTRA_LESSON_REASONS = ['Didn\'t understand the material','Problems with the final project','First module, low activity in class','Extra lesson after a break','Complimentary lesson','Delay due to technical problems'];
+const EXTRA_LESSON_OBJECTIVES = ['Help catch up on the lesson material','Help with the final project'];
+const EXTRA_LESSON_DURATIONS = ['30 minutes','40 minutes','60 minutes','90 minutes'];
 const STUDENTS = [
  {id:1,name:'Sofía Martínez',active:'PRM_DEMO_ATT-01',inactive:'',email:'sofia.demo@example.com',currency:'COP',balance:'32 lessons',region:'LatAm | Colombia',funnel:'LatAm|Parallel+Inst sale demo',crm:'WALLET IS TOP UP',
    age:9,gender:'Female',sen:'No',last:'11.08.2026, 18:20',
@@ -463,7 +467,7 @@ const STUDENTS = [
 const LESSON_MODAL = {topic:'Loops and conditionals', module:5, lesson:12, course:'[1200] Python Programming', group:'PRM_DEMO_MA-01 - 3 students', time:'14:00 - 15:00'};
 
 /* ---------- STATE ---------- */
-let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+let state = {page:'profile', ttab:'groups', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
 
 function tourStudent(){ return STUDENTS.find(s=>s.tourTarget) || STUDENTS[0]; }
 
@@ -488,7 +492,6 @@ function reportContentIssue(lessonId){
 function openEvalModal(){ document.getElementById('evalModal').style.display='flex'; fire('open-evaluate-modal'); }
 function closeEvalModal(){ const m=document.getElementById('evalModal'); if(m) m.style.display='none'; }
 function confirmEvalModal(){ closeEvalModal(); toast('✅ Evaluation sent. Your Team Lead will review it.'); fire('confirm-evaluate-modal'); }
-function requestExtraLesson(){ toast('🧪 This is a simulation — in the real BO this opens the form to schedule the extra lesson. Remember to include a clear justification so your Team Leader can approve it.'); fire('click-add-lesson'); }
 function clickLoginLink(){ toast('🔗 Link copied — it lets the student log into the platform already signed in, useful if they run into a technical issue mid-class.'); fire('click-login-link'); }
 function clickCopyCreds(){ toast('🔒 Student username and password copied to the clipboard.'); fire('click-copy-credentials'); }
 
@@ -518,7 +521,7 @@ function simClick(label){ toast('🧪 This is a simulation — in the real BO, t
 
 /* ---------- RENDER HELPERS ---------- */
 function badge(status){
-  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey'};
+  const map={'Active':'pill-green','WALLET IS TOP UP':'pill-orange','BACKLOG':'pill-grey','FREEZE':'pill-grey','Under review':'pill-orange','Approved':'pill-green'};
   return `<span class="pill ${map[status]||'pill-grey'}">${status}</span>`;
 }
 function info(def,scale){ return `<span class="info-wrap"><span class="info-ic">i</span><span class="info-pop"><span class="def">${def}</span>${scale}</span></span>`; }
@@ -550,8 +553,7 @@ function render(){
       if(sel && state.evalKind) sel.value=state.evalKind;
       const ta=document.getElementById('evalTextarea');
       if(ta){
-        if(state.evalKind==='An extra class is needed') ta.value=TEMPLATE_EXTRA_CLASS;
-        else if(state.evalKind && state.evalKind.indexOf('Client is not replying')===0) ta.value=TEMPLATE_NOT_REPLYING;
+        if(state.evalKind && state.evalKind.indexOf('Client is not replying')===0) ta.value=TEMPLATE_NOT_REPLYING;
       }
     }
   }
@@ -622,6 +624,7 @@ function renderSchedule(){
         if((d==='Tuesday'||d==='Thursday')&&i===0) content=`<div class="evt avail">14:00-18:00<br>Available</div>`;
         if(d==='Saturday'&&i===2) content=`<div class="evt avail">09:00-12:00<br>Available</div>`;
         if(d==='Tuesday'&&i===4) content=`<div class="evt lesson" onclick="openLessonModal()">14:00-15:00 M5L12<br>PRM_DEMO_MA-01</div>`;
+        if(state.extraLessonScheduled&&d==='Wednesday'&&i===3) content=`<div class="evt extra" onclick="simClick('View the scheduled extra lesson details')">11:00-12:00 ✨ Extra Lesson<br>Camila Torres</div>`;
         return `<div class="cell">${content}</div>`;
       }).join('')}`).join('')}
     </div>
@@ -762,6 +765,7 @@ function goGroupTab(t){ state.groupTab=t; render(); fire('open-group-tab-'+t); }
 function copyGroupName(name){ toast('📋 Group name "'+name+'" copied to the clipboard.'); }
 
 function openAttPopup(si,ci,ev){
+  ev.preventDefault();
   ev.stopPropagation();
   state.attTarget={si,ci};
   showFloatingPopup(ev.currentTarget, `
@@ -782,7 +786,6 @@ function showAbsentReasons(ev){
     </div>`;
   fire('open-absence-reasons');
 }
-const TEMPLATE_EXTRA_CLASS = 'Reason for an extra class:\n Has it been discussed with the student?: yes/no\n The student has tried to catch up by watching lesson recordings?: yes/no';
 const TEMPLATE_NOT_REPLYING = 'Please, get in touch with the client.\n Next lesson date:\n When did the student stop attending lessons:\n How and where I tried to contact the client/the result:\n Next lesson module and number (1-1 only):\n Why I wanted to reach the client:';
 function markAttendance(status, reason){
   if(!state.attTarget) return;
@@ -812,8 +815,7 @@ function applyEvalTemplate(){
   const v=document.getElementById('problemKindSel').value;
   const ta=document.getElementById('evalTextarea');
   state.evalKind=v;
-  if(v==='An extra class is needed'){ ta.value=TEMPLATE_EXTRA_CLASS; fire('select-extra-class'); }
-  else if(v.indexOf('Client is not replying')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
+  if(v.indexOf('Client is not replying')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
   else { ta.value=''; }
 }
 function confirmGroupEvalModal(){
@@ -953,7 +955,7 @@ function renderGroupStudentsTab(data){
           </td>
           ${s.cells.map((c,ci)=>`<td><div class="oval-pill-wrap">
             <span class="oval-pill-lbl">${c.lesson}</span>
-            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" onclick="openAttPopup(${si},${ci},event)">${c.score}</span>
+            <span class="oval-pill oval-${c.att} oval-click${s.name==='Camila Torres'&&ci===s.cells.length-1?' tour-att-target':''}" oncontextmenu="openAttPopup(${si},${ci},event)">${c.score}</span>
           </div></td>`).join('')}
           <td>
             <button class="grp-sqbtn" title="Login link to the platform" onclick="clickLoginLink()">${ICONS.lock}</button><br>
@@ -1322,33 +1324,96 @@ function renderProgressTab(s){
 }
 
 function renderExtraTab(s){
+  const rows = state.extraLessonRequests;
   return `
   <div class="tablewrap" id="extraLessonsPanel">
     <div class="tbl-toolbar" style="justify-content:space-between">
       <h3 style="margin:0">Extra Lessons</h3>
-      <button class="btn btn-accent" id="addLessonBtn" onclick="requestExtraLesson()">+ Add Lesson</button>
+      <button class="btn btn-accent" id="addLessonBtn" onclick="openExtraLessonModal('${s.active}')">+ Add Lesson</button>
     </div>
     <table><thead><tr><th>ID</th><th>Request date</th><th>Initiator</th><th>Lesson type</th><th>Status</th><th>Actions</th></tr></thead>
-    <tbody><tr class="empty-row"><td colspan="6">No data available</td></tr></tbody></table>
+    <tbody>${rows.length?rows.map(r=>`<tr><td>${r.id}</td><td>${r.date}</td><td>${r.initiator}</td><td>${r.type}</td><td>${badge(r.status)}</td><td><span class="grp-icbtn" style="cursor:pointer" onclick="simClick('View the extra lesson request details')">👁</span></td></tr>`).join(''):'<tr class="empty-row"><td colspan="6">No data available</td></tr>'}</tbody></table>
+  </div>
+  <div class="modal-back" id="extraLessonModal">
+    <div class="modal-box" style="width:min(480px,92vw)">
+      <h3>✨ Extra Lesson</h3>
+      <label>Lesson type</label>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="btn ${state.extraLessonKind!=='Expert'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Extra')">Extra</button>
+        <button class="btn ${state.extraLessonKind==='Expert'?'btn-accent':'btn-ghost'}" style="flex:1" onclick="setExtraLessonKind('Expert')">Expert</button>
+      </div>
+      <label>Reason *</label>
+      <select id="extraReasonSel"><option value="">Select…</option>${EXTRA_LESSON_REASONS.map(r=>`<option>${r}</option>`).join('')}</select>
+      <label>Lesson Objective *</label>
+      <select id="extraObjectiveSel"><option value="">Select…</option>${EXTRA_LESSON_OBJECTIVES.map(o=>`<option>${o}</option>`).join('')}</select>
+      <label>Group *</label>
+      <select id="extraGroupSel"><option>${s.active}</option></select>
+      <label>Lesson *</label>
+      <select id="extraLessonSel"><option value="">Select…</option><option>M1L5. Review: variables and data types</option><option>M1L6. Operators and expressions</option></select>
+      <label>Duration *</label>
+      <select id="extraDurationSel">${EXTRA_LESSON_DURATIONS.map(d=>`<option${d==='60 minutes'?' selected':''}>${d}</option>`).join('')}</select>
+      <label>Preliminary Date and Time (Student Local Time)</label>
+      <button class="btn btn-ghost" style="width:100%;margin-bottom:14px" onclick="simClick('Pick the preliminary date and time for the extra lesson')">📅 Not Selected</button>
+      <label>Justification *</label>
+      <textarea id="extraJustTextarea" placeholder="E.g.: The family asked to help the student catch up before the next group lesson..."></textarea>
+      <div class="modal-actions">
+        <a onclick="closeExtraLessonModal()">Cancel</a>
+        <button class="btn btn-ghost" onclick="saveExtraLessonDraft()">Save Draft</button>
+        <button class="btn btn-accent" onclick="submitExtraLessonForReview()">Submit For Review</button>
+      </div>
+    </div>
   </div>`;
+}
+function setExtraLessonKind(k){ state.extraLessonKind=k; render(); const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
+function openExtraLessonModal(groupName){
+  state.extraLessonKind='Extra';
+  state.extraLessonGroup=groupName;
+  render();
+  document.getElementById('extraLessonModal').style.display='flex';
+  fire('click-add-lesson');
+}
+function closeExtraLessonModal(){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='none'; }
+function saveExtraLessonDraft(){
+  closeExtraLessonModal();
+  toast('💾 Draft saved — you can finish it later from the Extra Lessons tab.');
+}
+function submitExtraLessonForReview(){
+  const reason=document.getElementById('extraReasonSel').value;
+  closeExtraLessonModal();
+  const id = 'x'+Math.random().toString(16).slice(2,10);
+  state.extraLessonRequests.push({id, date:new Date().toLocaleDateString('en-US')+' '+new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}), initiator:'Camila Reyes (you)', type:state.extraLessonKind||'Extra', status:'Under review'});
+  render();
+  toast('✅ Request submitted — it goes to your Team Lead for approval'+(reason?' ('+reason+').':'.'));
+  fire('submit-extra-lesson');
+  setTimeout(()=>{
+    const r = state.extraLessonRequests.find(x=>x.id===id);
+    if(r) r.status='Approved';
+    state.extraLessonScheduled = true;
+    render();
+    toast('🎉 Your Team Lead approved the lesson — it now appears in your Schedule.');
+    fire('approve-extra-lesson');
+  }, 1600);
 }
 
 /* ---------- GUIDED TOUR ---------- */
 const STEPS = [
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'1 · Camila is absent today',body:'Camila already missed a class recently (yellow) and today she is a <b>no-show</b> (red). You reach out to the family to find out what happened.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · The family replies: it was a technical issue',body:'The family explains the power went out that day. Click Camila\'s red pill to update her attendance.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'2 · The family replies: it was a technical issue',body:'The family explains the power went out that day. <b>Right-click</b> Camila\'s red pill to update her attendance — on the real BO, right-clicking is what opens the attendance options.',advance:'attpopup',waitFor:'open-att-popup',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'3 · Mark it as Absent',body:'Since it\'s now justified, click <b>Absent</b>.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Choose "Technical issues"',body:'Click <b>Technical issues</b> — the power went out that day. Notice BO logs that explanation automatically; the pill turns from red to yellow.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'5 · The next class, still absent',body:'Camila misses the next lesson too (L5, red). From here, two different things could happen with the family.',advance:'next',onEnter:'addNextLesson',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'6 · Case A: the parent asks for an extra class',body:'The parent replies and asks for an extra class. Before confirming anything to them, click the ⭐ star icon on Camila\'s row to request it in BO.',advance:'evalopen',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'7 · Choose "An extra class is needed"',body:'Select this Problem Kind. Notice the comment box fills in with a template for you.',advance:'template1',waitFor:'select-extra-class',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'8 · Fill in the template and confirm',body:'Complete the template honestly, then click <b>Confirm</b>. Meanwhile, send the family the lesson recordings so Camila doesn\'t fall behind while you wait for approval — and remember, contacting your TL first is correct, but the case still stays with you.',advance:'confirmed1',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'9 · Case B: what if the parent never replies?',body:'Now picture the same situation, but the parent never answered any of your messages. Click the ⭐ star icon again.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'10 · Choose "Client is not replying"',body:'Select this option instead — a different template appears.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'11 · Fill it in and confirm',body:'Complete the template, then click <b>Confirm</b> to finish this case.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'12 · One habit worth keeping: check her profile',body:'Before you move on, click <b>Camila Torres\'s name</b> to see what\'s already logged on her profile — cases like this often have more context waiting there than what fits in a BO comment.',advance:'studentopen',waitFor:'open-student'},
- {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'13 · Read the comments',body:'This is where Customer Service (and anyone else who has touched this case) leaves what they know — confirmations, family context, anything relevant. Get in the habit of checking here, whether or not you were the one handling the case.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'14 · That\'s the full protocol',body:'You just practiced escalating a real attendance case from start to finish. Click <b>Finish</b> to wrap up.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Case A: the parent asks for an extra class',body:'The parent replies and asks for an extra class. Extra lessons are no longer requested through Student\'s Evaluation — they now have their own tab on the student\'s profile. Click <b>Camila Torres\'s name</b> to open her profile.',advance:'studentopen',waitFor:'open-student'},
+ {page:'studentDetail',sel:'[data-dtab="extra"]',hl:['[data-dtab="extra"]'],title:'7 · Open the Extra Lessons tab',body:'Click <b>✨ Extra Lessons</b>.',advance:'extratab',waitFor:'open-detail-tab-extra'},
+ {page:'studentDetail',dtab:'extra',sel:'#addLessonBtn',hl:['#addLessonBtn'],title:'8 · Add the lesson',body:'Click <b>+ Add Lesson</b> to open the form.',advance:'extramodal',waitFor:'click-add-lesson'},
+ {page:'studentDetail',dtab:'extra',sel:'#extraLessonModal .modal-box',hl:['#extraLessonModal .btn-accent'],title:'9 · Fill in the form',body:'Choose the <b>Reason</b> (e.g. "Extra lesson after a break") and the <b>Lesson Objective</b>, check the duration (60 minutes is typical), and write an honest <b>Justification</b>. Contacting your TL first is still correct — but now the record and the approval happen here, not through a comment template. Click <b>Submit For Review</b> to finish.',advance:'submitted',waitFor:'submit-extra-lesson',cardPos:'left'},
+ {page:'studentDetail',dtab:'extra',sel:'#extraLessonsPanel',title:'10 · While you wait',body:'Your request shows as <b>Under review</b> in this table while your Team Lead checks it. In this simulation it gets approved on its own after a few seconds. Click <b>Next</b> once you\'re done reading.',advance:'next'},
+ {page:'profile',ttab:'schedule',sel:'.evt.extra',hl:['.evt.extra'],title:'11 · It\'s already in your Schedule',body:'Once approved, the extra lesson appears directly in your Schedule, just like any other scheduled lesson.',advance:'next'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'12 · Case B: what if the parent never replies?',body:'Now picture the same situation, but the parent never answered any of your messages. This one still goes through Student\'s Evaluation — click the ⭐ star icon on Camila\'s row.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'13 · Choose "Client is not replying"',body:'Select this option — a template appears automatically.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'14 · Fill it in and confirm',body:'Complete the template, then click <b>Confirm</b> to finish this case.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'15 · One habit worth keeping: check her profile',body:'Click <b>Camila Torres\'s name</b> again to see what\'s already logged on her profile — cases like this often have more context waiting there than what fits in a BO comment.',advance:'studentopen2',waitFor:'open-student'},
+ {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'16 · Read the comments',body:'This is where Customer Service (and anyone else who has touched this case) leaves what they know — confirmations, family context, anything relevant. Get in the habit of checking here, whether or not you were the one handling the case.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'17 · That\'s the full protocol',body:'You just practiced escalating a real attendance case from start to finish, including requesting an extra lesson through its new tab. Click <b>Finish</b> to wrap up.',advance:'next',cardPos:'left'},
 ];
 let stepIdx = -1;
 
@@ -1362,6 +1427,7 @@ function goToStepPage(){
   const st = STEPS[stepIdx];
   const keepEvalOpen = !!(st.sel && st.sel.indexOf('#evalModal')!==-1);
   const keepLessonOpen = !!(st.sel && st.sel.indexOf('#lessonModal')!==-1);
+  const keepExtraOpen = !!(st.sel && st.sel.indexOf('#extraLessonModal')!==-1);
   if(!keepLessonOpen) closeLessonModal();
   if(!keepEvalOpen) closeEvalModal();
   state.page = st.page;
@@ -1376,6 +1442,7 @@ function goToStepPage(){
   render();
   if(keepEvalOpen){ const m=document.getElementById('evalModal'); if(m) m.style.display='flex'; }
   if(keepLessonOpen){ const m=document.getElementById('lessonModal'); if(m) m.style.display='flex'; }
+  if(keepExtraOpen){ const m=document.getElementById('extraLessonModal'); if(m) m.style.display='flex'; }
   if(st.onEnter && window[st.onEnter]) window[st.onEnter]();
 }
 function showStepCard(){
@@ -1433,7 +1500,7 @@ function closeCelebration(){
 function restartTour(){
   document.getElementById('celebrateBack').style.display='none';
   GROUP_RUNTIME = {};
-  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null};
+  state = {page:'groupDetail', gid:99001, groupTab:'students', sid:null, dtab:'wallet', courseId:null, expandedModuleId:null, extraLessonRequests:[], extraLessonScheduled:false};
   stepIdx = 0;
   goToStepPage();
   showStepCard();

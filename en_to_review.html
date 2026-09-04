@@ -18,6 +18,13 @@
 .qropt.correct{background:var(--ok-bg);border-color:var(--ok-b);color:var(--ok-t);font-weight:700}
 .qrfb{font-size:13px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)}
 .region-tag{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:4px 10px;border-radius:999px;background:var(--hi-bg);color:var(--hi-t);margin-bottom:14px}
+.flow-step.f-red{background:var(--no-bg);border-color:var(--no-b);color:var(--no-t)}
+.flow-step.f-red h4{color:var(--no-t)}
+.flow-step.f-orange{background:#FFF4E5;border-color:#FFD59E;color:#B5620A}
+.flow-step.f-orange h4{color:#B5620A}
+.flow-step.f-purple{background:#F3EEFF;border-color:#D9CCFF;color:#6B3FBF}
+.flow-step.f-purple h4{color:#6B3FBF}
+.rowic{font-size:22px;display:block;margin-bottom:2px}
 </style>
 </head>
 <body>
@@ -82,6 +89,12 @@ function rc(c){
     const li=items=>items.map(i=>`<li>${i}</li>`).join('');
     return`<div class="two-col"><div class="card ok"><h4>${c.left.h}</h4><ul>${li(c.left.items)}</ul></div><div class="card danger"><h4>${c.right.h}</h4><ul>${li(c.right.items)}</ul></div></div>`;
   }
+  if(c.type==='redyellow'){
+    const li=items=>items.map(i=>`<li>${i}</li>`).join('');
+    return`<div class="two-col"><div class="card" style="background:var(--no-bg);border-color:var(--no-b)"><h4 style="color:var(--no-t)">${c.left.h}</h4><ul style="color:var(--no-t)">${li(c.left.items)}</ul></div><div class="card" style="background:var(--cute-bg);border-color:var(--cute-b)"><h4 style="color:var(--cute-t)">${c.right.h}</h4><ul style="color:var(--cute-t)">${li(c.right.items)}</ul></div></div>`;
+  }
+  if(c.type==='yellowbox')return`<div class="card" style="background:var(--cute-bg);border-color:var(--cute-b)">${c.h?`<h4 style="color:var(--cute-t)">${c.h}</h4>`:''}<p style="color:var(--cute-t)">${c.b}</p></div>`;
+  if(c.type==='redbox')return`<div class="card" style="background:var(--no-bg);border-color:var(--no-b)">${c.h?`<h4 style="color:var(--no-t)">${c.h}</h4>`:''}<p style="color:var(--no-t)">${c.b}</p></div>`;
   if(c.type==='flow'){
     const steps=c.steps.map((s,i)=>{
       const arrow=i<c.steps.length-1?'<div class="flow-arrow">→</div>':'';
