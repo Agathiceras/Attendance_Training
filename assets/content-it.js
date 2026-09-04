@@ -494,8 +494,7 @@ const CONTENT={
           "cards": [
             {"type": "list", "h": "Ora una breve checklist — il meccanismo stesso è nella prima sezione sopra", "items": [
               "Imposta il tipo di assenza e il motivo. Giallo più il motivo corrispondente tra i sei gruppi se ti è stato detto perché; rosso se nessuno ti ha detto nulla.",
-              "Aggiungi un commento con ciò che la famiglia ha effettivamente detto. Breve va bene. Questo è ciò che leggono il Servizio Clienti e il Dipartimento Didattico se il caso va in escalation.",
-              "Se stai richiedendo una lezione extra, usa il modello di commento precompilato insieme al link al profilo dello studente."
+              "Aggiungi un commento con ciò che la famiglia ha effettivamente detto. Breve va bene. Questo è ciò che leggono il Servizio Clienti e il Dipartimento Didattico se il caso va in escalation."
             ]}
           ]
         },
@@ -520,8 +519,7 @@ const CONTENT={
               {"ic": "📋", "h": "1 · Apri la Valutazione dello Studente", "b": "Nel BO, seleziona \"È necessaria una lezione aggiuntiva.\" Due o più assenze consecutive sono sufficienti — per i Moduli 1 e 8, basta una sola assenza. Massimo una lezione extra per studente al mese.", "color": "blue"},
               {"ic": "📨", "h": "2 · Il Servizio Clienti se ne occupa", "b": "Il Servizio Clienti esamina la tua valutazione e crea la richiesta di lezione extra per conto dello studente.", "color": "red"},
               {"ic": "🏫", "h": "3 · Il Dipartimento Didattico esamina", "b": "L'approvazione arriva da qui, non direttamente dal tuo TL.", "color": "green"},
-              {"ic": "📞", "h": "4 · Contatta solo dopo l'approvazione", "b": "Una volta approvata, programmi la lezione di 30 minuti con la famiglia, gratuitamente.", "color": "orange"},
-              {"ic": "✅", "h": "5 · Dopo la lezione", "b": "Puoi aggiornare la presenza dello studente a verde nel BO.", "color": "purple"}
+              {"ic": "📞", "h": "4 · Programmata dopo l'approvazione", "b": "Una volta approvata, la lezione (30 minuti, gratuita) viene programmata con la famiglia.", "color": "orange"}
             ]},
             {"type": "text", "h": "🖥️ Provaci Tu Stesso/a", "b": "Richiedere la lezione extra qui non è un flusso che gestisci tu stesso/a — ma controllare cosa è già registrato sul profilo di uno studente sì. Esercita quella parte:"},
             {"type": "simulation", "title": "Simulazione BO — Registrare la Presenza e Leggere le Note del Servizio Clienti", "src": "Simulacion_BO_Attendance_Simplified_IT.html"}

@@ -494,8 +494,7 @@ const CONTENT={
           "cards": [
             {"type": "list", "h": "Teraz krótka lista kontrolna — sam mechanizm znajduje się w pierwszej sekcji powyżej", "items": [
               "Ustaw rodzaj nieobecności i powód. Żółty plus odpowiedni powód z sześciu grup, jeśli powiedziano Ci dlaczego; czerwony, jeśli nikt nic nie powiedział.",
-              "Dodaj komentarz z tym, co rodzina faktycznie powiedziała. Krótko jest w porządku. To właśnie czytają Obsługa Klienta i Dział Dydaktyczny, jeśli sprawa się eskaluje.",
-              "Jeśli prosisz o dodatkową lekcję, użyj gotowego szablonu komentarza razem z linkiem do profilu ucznia."
+              "Dodaj komentarz z tym, co rodzina faktycznie powiedziała. Krótko jest w porządku. To właśnie czytają Obsługa Klienta i Dział Dydaktyczny, jeśli sprawa się eskaluje."
             ]}
           ]
         },
@@ -520,8 +519,7 @@ const CONTENT={
               {"ic": "📋", "h": "1 · Otwórz Ocenę Ucznia", "b": "W BO wybierz „Wymagana jest dodatkowa lekcja”. Kwalifikują się dwie lub więcej kolejnych nieobecności — dla Modułów 1 i 8 wystarczy jedna nieobecność. Maksymalnie jedna dodatkowa lekcja na ucznia w miesiącu.", "color": "blue"},
               {"ic": "📨", "h": "2 · Obsługa Klienta przejmuje sprawę", "b": "OK rozpatruje Twoją ocenę i tworzy prośbę o dodatkową lekcję w imieniu ucznia.", "color": "red"},
               {"ic": "🏫", "h": "3 · Dział Dydaktyczny rozpatruje", "b": "Zatwierdzenie pochodzi stąd, a nie bezpośrednio od Twojego TL.", "color": "green"},
-              {"ic": "📞", "h": "4 · Kontakt dopiero po zatwierdzeniu", "b": "Po zatwierdzeniu planujesz bezpłatną 30-minutową lekcję z rodziną.", "color": "orange"},
-              {"ic": "✅", "h": "5 · Po lekcji", "b": "Możesz zaktualizować obecność ucznia na zieloną w BO.", "color": "purple"}
+              {"ic": "📞", "h": "4 · Zaplanowana po zatwierdzeniu", "b": "Po zatwierdzeniu bezpłatna 30-minutowa lekcja zostaje zaplanowana z rodziną.", "color": "orange"}
             ]},
             {"type": "text", "h": "🖥️ Wypróbuj sam/a", "b": "Proszenie o dodatkową lekcję nie jest tutaj procesem, który przeprowadzasz samodzielnie — ale sprawdzanie tego, co już zostało zapisane na profilu ucznia, owszem. Poćwicz tę część:"},
             {"type": "simulation", "title": "Symulacja BO — Rejestrowanie obecności i czytanie notatek Obsługi Klienta", "src": "Simulacion_BO_Attendance_Simplified_PL.html"}
