@@ -187,14 +187,15 @@ const REGIONS = [
      {type:'redbox',h:'They came back, but they\'re still not really there.',b:'This is the most common outcome of all, and it is easy to file as solved because attendance recovered. It isn\'t solved: the student is now in the room and disengaged, which is a facilitation problem, not an absence problem.<br><br>That case belongs to Modules 2, 3 and 4 — how you open, who you call on, how you close.'},
    ]},
    {t:'🪜 If It Escalates: Requesting an Extra Lesson',cards:[
-     {type:'text',b:'The request always goes through your TL — it\'s routed to them automatically the moment you submit it for review, without a separate private message.'},
+     {type:'text',b:'You don\'t create the request yourself — your part ends at leaving a Student\'s Evaluation. From there, it\'s your TL\'s call.'},
      {type:'flow',steps:[
-       {ic:'📋',h:'1 · Open it from the student\'s profile',b:'Go to the student\'s profile → <strong>Extra Lessons</strong> tab → "Add Lesson". Choose the Reason, the Lesson Objective, the Group, the Lesson, the Duration (60 minutes is typical) and a preliminary date and time, and write an honest Justification. Then "Submit for Review".',color:'blue'},
-       {ic:'✅',h:'2 · Your TL approves it',b:'The request goes automatically to your Team Lead, who approves (or rejects) it and assigns the final date and time.',color:'red'},
-       {ic:'🗓️',h:'3 · It appears in your Schedule',b:'Once approved, the extra lesson appears directly in your Schedule, just like any other scheduled lesson — you get a notification.',color:'green'},
+       {ic:'📋',h:'1 · Leave a Student\'s Evaluation',b:'In BO, select "An additional class is needed" and explain why you think the student needs help catching up.',color:'blue'},
+       {ic:'✅',h:'2 · Your TL decides',b:'Your TL reviews the evaluation and decides whether the extra lesson can be offered to this student.',color:'red'},
+       {ic:'🔀',h:'3 · Two possible paths',b:'If yes, there are two options: your TL either creates the extra-lesson request themselves right away, or sends it to Customer Service, who contacts the parent, discusses the situation, and offers the lesson — only creating the request once the parent is on board.',color:'green'},
+       {ic:'🗓️',h:'4 · It appears in the schedule',b:'Once the request is created and approved, the extra lesson shows up in the tutor\'s schedule, just like any other scheduled lesson.',color:'purple'},
      ]},
      {type:'text',h:'🖥️ Try It Yourself',b:'Time to practice how you\'d handle this in BO with a real case:'},
-     {type:'simulation',title:'BO Simulation — Requesting an Extra Lesson',src:'Simulacion_BO_Attendance_2.html'},
+     {type:'simulation',title:'BO Simulation — Requesting an Extra Lesson',src:'Simulacion_BO_Attendance_2_RU.html'},
    ]},
    {t:'🕳️ The Student Who Never Showed Up At All',cards:[
      {type:'hi',h:'This isn\'t a "missed class" — it\'s a different problem',b:'Some students never connect to a single lesson from day one. Treat a no-show on lesson one as an immediate red flag, not something to wait out — this is exactly the Module 1, Lesson 1 case, so you personally reach out the same day.'},
@@ -207,7 +208,6 @@ const REGIONS = [
   {q:'A brand-new student misses their very first lesson (Module 1, Lesson 1). What do you do?',opts:['Mark it and wait for Customer Service to contact the family, same as any other lesson','Contact the parent yourself, the same day — this is the one case where you reach out personally','Escalate immediately through Student\'s Evaluation without contacting anyone'],c:1,fb:'M1L1 is the one exception: you personally reach out on day one. Every other lesson, Customer Service owns the outreach.'},
   {q:'A student who missed two classes returns and does great work today. How does the tutor use this with the parents?',opts:['Wait until the next scheduled check-in to mention it, to avoid contacting the family too many times in a short period.','Reach out around this class to share the specific achievement, reinforcing the positive turnaround for both student and parent.','Mention it briefly to the student only, since parents are usually more interested in attendance patterns than daily achievements.'],c:1,fb:'Sharing the achievement while it\'s fresh reinforces the turnaround for both student and parent — waiting or keeping it from the parent wastes the moment.'},
   {q:'A student missed Tuesday\'s lesson with no warning, so you marked it red. On Thursday you learn the student had flu. What do you do?',opts:['Leave it red — it was unannounced at the time, and changing it afterwards would misrepresent what happened','Change the absence to yellow, select "Health issues", and add a comment with what you learned','Add a comment with what you learned and leave the absence type as it is'],c:1,fb:'Red means "we don\'t know why". Once you know, change the type, select the reason, and comment. A comment on its own leaves the absence red.'},
-  {q:'Who approves your request for an extra lesson?',opts:['Your TL — the request is routed to them automatically for review as soon as you submit it','Customer Service, after they contact the family','You approve it yourself once the family agrees'],c:0,fb:'A request for an extra lesson always goes through your TL — it\'s routed to them automatically, no separate message needed.'},
  ],
 },
 

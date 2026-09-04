@@ -284,7 +284,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="introwrap">
     <div class="intro-eyebrow">🎓 Симуляция BO</div>
     <h1>Эскалация случая посещаемости в BO 🖥️✨</h1>
-    <p class="lead">В этой симуляции ты потренируешься в полном протоколе для реального случая: обновление посещаемости после ответа семьи, запрос дополнительного занятия через вкладку <b>«Дополнительные занятия»</b> в профиле ученика, и правильное оформление случая «клиент не отвечает» через <b>«Оценить ученика»</b>.</p>
+    <p class="lead">В этой симуляции ты потренируешься в полном протоколе для реального случая: обновление посещаемости после ответа семьи, и правильное оформление отчёта через <b>«Оценить ученика»</b> — как в случае, когда родитель просит дополнительное занятие, так и когда родитель перестаёт отвечать.</p>
     <p class="lead" style="margin-top:20px">Всё время мы будем находиться в разделе «Группы» — остальная часть боковой панели здесь не рассматривается.</p>
     <button class="intro-cta" onclick="startTour()">🚀 Начать пошаговое руководство</button>
     <div class="intro-note">Сейчас ты пройдёшь через копию BO с полностью вымышленными данными. Руководство будет пошагово показывать, куда смотреть и куда нажимать.</div>
@@ -335,7 +335,7 @@ tbody tr.clickable{cursor:pointer}
   <div class="celebrate-box">
     <div class="celebrate-emoji">🎉</div>
     <div class="celebrate-title">Отличная работа!</div>
-    <div class="celebrate-text">Ты только что отработал(а) полный протокол: обновление посещаемости после ответа семьи, запрос <b>дополнительного занятия</b> через новую вкладку в профиле ученика, и оформление случая <b>«клиент не отвечает»</b> через «Оценить ученика». Помни: если ты начал(а) вести случай, он остаётся за тобой до его разрешения. Теперь вернись и продолжи изучение остальной части обучения.</div>
+    <div class="celebrate-text">Ты только что отработал(а) полный протокол: обновление посещаемости после ответа семьи, и оформление отчёта как по <b>запросу дополнительного занятия</b>, так и по случаю <b>«клиент не отвечает»</b> — каждый раз с правильным шаблоном. Помни: если ты начал(а) вести случай, он остаётся за тобой до его разрешения. Теперь вернись и продолжи изучение остальной части обучения.</div>
     <button class="celebrate-close" onclick="restartTour()">🔁 Повторить руководство</button>
   </div>
 </div>
@@ -429,6 +429,7 @@ const PROBLEM_KIND_OPTIONS = [
  'Техническая проблема, пожалуйста, свяжитесь с учеником',
  "Клиент не отвечает/не посещает занятия (тьютор уже пытался связаться первым)",
  'Изменить личные данные ученика (имя, email, номер телефона)',
+ 'Нужно дополнительное занятие',
  'Клиент хочет изменить расписание',
  'Другое',
 ];
@@ -553,7 +554,8 @@ function render(){
       if(sel && state.evalKind) sel.value=state.evalKind;
       const ta=document.getElementById('evalTextarea');
       if(ta){
-        if(state.evalKind && state.evalKind.indexOf('Клиент не отвечает')===0) ta.value=TEMPLATE_NOT_REPLYING;
+        if(state.evalKind==='Нужно дополнительное занятие') ta.value=TEMPLATE_EXTRA_CLASS;
+        else if(state.evalKind && state.evalKind.indexOf('Клиент не отвечает')===0) ta.value=TEMPLATE_NOT_REPLYING;
       }
     }
   }
@@ -786,6 +788,7 @@ function showAbsentReasons(ev){
     </div>`;
   fire('open-absence-reasons');
 }
+const TEMPLATE_EXTRA_CLASS = 'Причина дополнительного занятия:\n Обсуждалось ли это с учеником?: да/нет\n Пытался(-ась) ли ученик наверстать материал, посмотрев записи уроков?: да/нет';
 const TEMPLATE_NOT_REPLYING = 'Пожалуйста, свяжитесь с клиентом.\n Дата следующего урока:\n Когда ученик перестал посещать занятия:\n Как и где я пытался(-ась) связаться с клиентом/результат:\n Модуль и номер следующего урока (только 1-1):\n Почему я хотел(-а) связаться с клиентом:';
 function markAttendance(status, reason){
   if(!state.attTarget) return;
@@ -815,7 +818,8 @@ function applyEvalTemplate(){
   const v=document.getElementById('problemKindSel').value;
   const ta=document.getElementById('evalTextarea');
   state.evalKind=v;
-  if(v.indexOf('Клиент не отвечает')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
+  if(v==='Нужно дополнительное занятие'){ ta.value=TEMPLATE_EXTRA_CLASS; fire('select-extra-class'); }
+  else if(v.indexOf('Клиент не отвечает')===0){ ta.value=TEMPLATE_NOT_REPLYING; fire('select-not-replying'); }
   else { ta.value=''; }
 }
 function confirmGroupEvalModal(){
@@ -1402,19 +1406,15 @@ const STEPS = [
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'3 · Отметь как «Отсутствие»',body:'Поскольку теперь причина уважительная, нажми <b>Отсутствие</b>.',advance:'absreasons',waitFor:'open-absence-reasons',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'#floatingPopup',title:'4 · Выбери «Технические проблемы»',body:'Нажми <b>Технические проблемы</b> — в тот день отключили электричество. Обрати внимание: BO автоматически записывает это объяснение, а отметка меняется с красной на жёлтую.',advance:'reasonpicked',waitFor:'pick-absence-reason',cardPos:'left'},
  {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-att-target',hl:['.tour-att-target'],title:'5 · На следующем уроке снова отсутствие',body:'Камила пропускает и следующий урок тоже (L5, красный). Дальше с семьёй может произойти одно из двух.',advance:'next',onEnter:'addNextLesson',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'6 · Случай A: родитель просит дополнительное занятие',body:'Родитель отвечает и просит дополнительное занятие. Дополнительные занятия больше не запрашиваются через Оценку ученика — теперь у них своя вкладка в профиле ученика. Нажми на <b>имя Camila Torres</b>, чтобы открыть её профиль.',advance:'studentopen',waitFor:'open-student'},
- {page:'studentDetail',sel:'[data-dtab="extra"]',hl:['[data-dtab="extra"]'],title:'7 · Открой вкладку «Дополнительные занятия»',body:'Нажми <b>✨ Дополнительные занятия</b>.',advance:'extratab',waitFor:'open-detail-tab-extra'},
- {page:'studentDetail',dtab:'extra',sel:'#addLessonBtn',hl:['#addLessonBtn'],title:'8 · Добавь занятие',body:'Нажми <b>+ Добавить занятие</b>, чтобы открыть форму.',advance:'extramodal',waitFor:'click-add-lesson'},
- {page:'studentDetail',dtab:'extra',sel:'#extraLessonModal .modal-box',hl:['#extraLessonModal .btn-accent'],title:'9 · Заполни форму',body:'Выбери <b>Причину</b> (например, «Дополнительное занятие после перерыва») и <b>Цель занятия</b>, проверь длительность (обычно 60 минут) и напиши честное <b>Обоснование</b>. Связаться с тимлидом первым делом по-прежнему правильно — но теперь запись и одобрение проходят здесь, а не через шаблон комментария. Нажми <b>Отправить на рассмотрение</b>, чтобы завершить.',advance:'submitted',waitFor:'submit-extra-lesson',cardPos:'left'},
- {page:'studentDetail',dtab:'extra',sel:'#extraLessonsPanel',title:'10 · Пока ты ждёшь',body:'Твоя заявка появляется в этой таблице со статусом <b>На рассмотрении</b>, пока её проверяет твой Team Lead. В этой симуляции она одобряется сама через несколько секунд. Нажми <b>Далее</b>, когда закончишь читать.',advance:'next'},
- {page:'profile',ttab:'schedule',sel:'.evt.extra',hl:['.evt.extra'],title:'11 · Уже появилось в твоём расписании',body:'После одобрения дополнительное занятие появляется прямо в твоём расписании, как любое другое запланированное занятие.',advance:'next'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'12 · Случай B: а что, если родитель так и не ответит?',body:'Теперь представь ту же ситуацию, но родитель так и не ответил ни на одно твоё сообщение. Это по-прежнему проходит через Оценку ученика — нажми на значок ⭐ в строке Камилы.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'13 · Выбери «Клиент не отвечает»',body:'Выбери этот вариант — шаблон появится автоматически.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'14 · Заполни и подтверди',body:'Заполни шаблон, затем нажми <b>Подтвердить</b>, чтобы закрыть этот случай.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'15 · Полезная привычка: проверь её профиль',body:'Нажми на <b>имя Camila Torres</b> ещё раз, чтобы посмотреть, что уже записано в её профиле — в подобных случаях там часто есть больше контекста, чем помещается в комментарий BO.',advance:'studentopen2',waitFor:'open-student'},
- {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'16 · Прочитай комментарии',body:'Именно здесь служба поддержки (Customer Service) и все остальные, кто соприкасался с этим случаем, оставляют то, что им известно — подтверждения, контекст от семьи, любые детали. Возьми за привычку проверять здесь, независимо от того, ты ли вёл(-а) этот случай.',advance:'next',cardPos:'left'},
- {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'17 · Это полный протокол',body:'Ты только что отработал(а) эскалацию реального случая посещаемости от начала до конца, включая запрос дополнительного занятия через новую вкладку. Нажми <b>Далее</b>, чтобы завершить.',advance:'next',cardPos:'left'},
-];
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'6 · Случай A: родитель просит дополнительное занятие',body:'Родитель отвечает и просит дополнительное занятие. Твоя часть — оставить Оценку ученика; решение и создание заявки дальше уже не твои. Нажми на значок ⭐ в строке Камилы.',advance:'evalopen',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'7 · Выбери «Нужно дополнительное занятие»',body:'Выбери этот тип проблемы. Обрати внимание: поле комментария автоматически заполняется шаблоном.',advance:'template1',waitFor:'select-extra-class',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'8 · Заполни шаблон и подтверди',body:'Честно заполни шаблон, затем нажми <b>Подтвердить</b>. Дальше решает твой TL: он либо сразу сам создаёт заявку на дополнительное занятие, либо передаёт её в Службу поддержки, чтобы она сначала обсудила это с родителем и предложила занятие — и только если родитель не против, создаёт заявку. Тем временем отправь семье записи уроков, чтобы Камила не отставала, пока ждёшь решения.',advance:'confirmed1',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-star-target',hl:['.tour-star-target'],title:'9 · Случай B: а что, если родитель так и не ответит?',body:'Теперь представь ту же ситуацию, но родитель так и не ответил ни на одно твоё сообщение. Снова нажми на значок ⭐.',advance:'evalopen2',waitFor:'open-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#problemKindSel',hl:['#problemKindSel'],title:'10 · Выбери «Клиент не отвечает»',body:'На этот раз выбери этот вариант — появится другой шаблон.',advance:'template2',waitFor:'select-not-replying',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'#groupEvalModal .modal-box',hl:['#groupEvalModal .btn-accent'],title:'11 · Заполни и подтверди',body:'Заполни шаблон, затем нажми <b>Подтвердить</b>, чтобы закрыть этот случай.',advance:'confirmed2',waitFor:'confirm-group-eval',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.tour-student-name-target',hl:['.tour-student-name-target'],title:'12 · Полезная привычка: проверь её профиль',body:'Прежде чем двигаться дальше, нажми на <b>имя Camila Torres</b>, чтобы посмотреть, что уже записано в её профиле — в подобных случаях там часто есть больше контекста, чем помещается в комментарий BO.',advance:'studentopen',waitFor:'open-student'},
+ {page:'studentDetail',sel:'.comment',hl:['.comment'],title:'13 · Прочитай комментарии',body:'Именно здесь служба поддержки (Customer Service) и все остальные, кто соприкасался с этим случаем, оставляют то, что им известно — подтверждения, контекст от семьи, любые детали. Возьми за привычку проверять здесь, независимо от того, ты ли вёл(-а) этот случай.',advance:'next',cardPos:'left'},
+ {page:'groupDetail',gid:99001,groupTab:'students',sel:'.grp-header',title:'14 · Это полный протокол',body:'Ты только что отработал(а) эскалацию реального случая посещаемости от начала до конца. Нажми <b>Далее</b>, чтобы завершить.',advance:'next',cardPos:'left'},
 let stepIdx = -1;
 
 function startTour(){
