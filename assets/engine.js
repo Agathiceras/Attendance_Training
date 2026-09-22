@@ -560,6 +560,7 @@ document.addEventListener('click', function(){
 let devKeyBuffer=[];
 document.addEventListener('keydown', function(e){
   if(e.shiftKey && e.key.toLowerCase()==='d'){
+    if(location.search.indexOf('dev=1')===-1) return;
     const now=Date.now();
     devKeyBuffer.push(now);
     devKeyBuffer=devKeyBuffer.filter(t=>now-t<2000);
@@ -595,6 +596,7 @@ function showDevBadge(on){
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
+if(localStorage.getItem('kl-att-devmode')==='1' && location.search.indexOf('dev=1')===-1){ const b=localStorage.getItem('kl-att-devmode-backup'); if(b) localStorage.setItem(PROG_KEY,b); localStorage.removeItem('kl-att-devmode'); }
 if(localStorage.getItem('kl-att-devmode')==='1') showDevBadge(true);
 MODULES=CONTENT.modules; QUIZ=CONTENT.quiz; SORT_ITEMS=CONTENT.sortItems; CHECKLIST=CONTENT.checklist; SELF_QUESTIONS=CONTENT.selfQuestions;
 document.documentElement.lang=LANG; document.documentElement.dir=CONTENT.dir||'ltr';
