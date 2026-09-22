@@ -194,6 +194,7 @@ function renderHome(){
 
   // Checklist card
   const allDone=MODULES.every(m=>isPassed(m.id));
+  if(allDone) notifyMaterialCompleted();
   const chkEl=document.createElement('div');
   chkEl.className='mc'+(allDone?'':' locked');
   chkEl.innerHTML=`<div class="mc-stripe" style="background:var(--blue)"></div>
@@ -530,6 +531,10 @@ function showChecklist(){
   window.scrollTo(0,0);
 }
 
+// --- LMS GATE -------------------------------------------------------------
+// Notifies the LMS (parent frame) that the material has been completed, so it
+// can unlock the test. Outside an iframe (direct link) it does nothing.
+function notifyMaterialCompleted(){ try{ if(window.parent===window) return; if(localStorage.getItem('kl-att-devmode')==='1') return; const avg=Math.round(MODULES.map(m=>getScore(m.id)).reduce((a,b)=>a+b,0)/TOTAL); window.parent.postMessage({source:'kodland-training',event:'completed',score:avg},'*'); }catch(e){} }
 // ─── NAVIGATION ──────────────────────────────────────────────────────────
 function exitQuiz(){
   if(currentModule==='final'){ goDashboard(); return; }
