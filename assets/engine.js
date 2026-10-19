@@ -1,3 +1,20 @@
+// ─── SAFE STORAGE ──────────────────────────────────────────────────────────
+// Inside the LMS iframe the browser treats this site's storage as third-party:
+// Safari and strict privacy settings can block or wipe it. Every value is kept
+// in memory + localStorage + sessionStorage, and reads never throw, so the
+// training keeps working (and keeps progress for the whole visit) even when
+// browser storage is blocked or cleared.
+const STORE=(function(){
+  const mem={};
+  function areas(){ const a=[]; try{ a.push(window.localStorage); }catch(e){} try{ a.push(window.sessionStorage); }catch(e){} return a; }
+  return {
+    get(k){ for(const st of areas()){ try{ const v=st.getItem(k); if(v!==null) return v; }catch(e){} } return Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null; },
+    getAll(k){ const out=[]; for(const st of areas()){ try{ const v=st.getItem(k); if(v!==null) out.push(v); }catch(e){} } if(Object.prototype.hasOwnProperty.call(mem,k)) out.push(mem[k]); return out; },
+    set(k,v){ v=String(v); mem[k]=v; for(const st of areas()){ try{ st.setItem(k,v); }catch(e){} } },
+    remove(k){ delete mem[k]; for(const st of areas()){ try{ st.removeItem(k); }catch(e){} } }
+  };
+})();
+
 // ─── SHARED ENGINE ───────────────────────────────────────────────────────────
 // Extracted verbatim from attendance-training.html (theme toggle, progress storage,
 // module/quiz/sort rendering, dev mode). Only T(), setLang(), and the INIT block were
@@ -106,7 +123,7 @@ const UI_EN={
 // ─── THEME (light/dark) ─────────────────────────────────────────────────────
 const THEME_KEY='kl-att-theme';
 (function(){
-  const saved=localStorage.getItem(THEME_KEY);
+  const saved=STORE.get(THEME_KEY);
   const sys=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
   const t=saved||sys;
   if(t==='dark') document.documentElement.setAttribute('data-theme','dark');
@@ -117,7 +134,7 @@ function toggleTheme(){
   const isDark=document.documentElement.getAttribute('data-theme')==='dark';
   const next=isDark?'light':'dark';
   if(next==='dark') document.documentElement.setAttribute('data-theme','dark'); else document.documentElement.removeAttribute('data-theme');
-  localStorage.setItem(THEME_KEY,next);
+  STORE.set(THEME_KEY,next);
   setThemeIcons(next);
 }
 
@@ -126,7 +143,7 @@ const TOTAL=6;
 let currentModule=null, quizData=[], qi=0, score=0;
 const PROG_KEY='kl-att-progress';
 const LANG_KEY='kl-att-lang';
-let LANG=(typeof PAGE_LANG!=='undefined')?PAGE_LANG:(localStorage.getItem(LANG_KEY)||'en');
+let LANG=(typeof PAGE_LANG!=='undefined')?PAGE_LANG:(STORE.get(LANG_KEY)||'en');
 
 function T(key,vars){
   let s=(CONTENT&&CONTENT.ui&&CONTENT.ui[key]!=null)?CONTENT.ui[key]:UI_EN[key];
@@ -142,13 +159,29 @@ function applyStaticI18n(){
 function setLang(lang){
   const known=['en','es','pt','it','ru','ar','pl','id','tr'];
   if(known.indexOf(lang)===-1) return;
-  localStorage.setItem(LANG_KEY,lang);
-  location.href=lang+'.html';
+  STORE.set(LANG_KEY,lang);
+  // Carry progress in the URL so switching language never loses it, even if storage is blocked.
+  const q=new URLSearchParams(location.search); q.delete('p');
+  q.set('p', JSON.stringify(getProgress()));
+  location.href=lang+'.html?'+q.toString();
 }
 
 // ─── PROGRESS ────────────────────────────────────────────────────────────
-function getProgress(){ try{ return JSON.parse(localStorage.getItem(PROG_KEY)||'{}'); }catch(e){ return {}; } }
-function saveProgress(p){ localStorage.setItem(PROG_KEY, JSON.stringify(p)); }
+// Progress only ever moves forward: a module passed anywhere stays passed, best score wins.
+function mergeProgress(a,b){
+  const out={};
+  [a||{},b||{}].forEach(src=>{ Object.keys(src).forEach(k=>{
+    const v=src[k]||{}; const prev=out[k]||{};
+    out[k]={passed: prev.passed===true||v.passed===true, score: Math.max(Number(prev.score)||0, Number(v.score)||0)};
+  }); });
+  return out;
+}
+function getProgress(){
+  let p={};
+  STORE.getAll(PROG_KEY).forEach(raw=>{ try{ p=mergeProgress(p, JSON.parse(raw||'{}')); }catch(e){} });
+  return p;
+}
+function saveProgress(p){ STORE.set(PROG_KEY, JSON.stringify(p)); lmsSend('progress'); }
 function isPassed(id){ const p=getProgress(); return p[id]?.passed===true; }
 function isDoneColor(id){ const p=getProgress(); return p[id]?.passed===true; }
 function getScore(id){ const p=getProgress(); return p[id]?.score||0; }
@@ -531,10 +564,37 @@ function showChecklist(){
   window.scrollTo(0,0);
 }
 
-// --- LMS GATE -------------------------------------------------------------
-// Notifies the LMS (parent frame) that the material has been completed, so it
-// can unlock the test. Outside an iframe (direct link) it does nothing.
-function notifyMaterialCompleted(){ try{ if(window.parent===window) return; if(localStorage.getItem('kl-att-devmode')==='1') return; const avg=Math.round(MODULES.map(m=>getScore(m.id)).reduce((a,b)=>a+b,0)/TOTAL); window.parent.postMessage({source:'kodland-training',event:'completed',score:avg},'*'); }catch(e){} }
+// --- LMS BRIDGE -----------------------------------------------------------
+// Talks to the LMS (parent frame) via postMessage. Outside an iframe it does nothing.
+// Training -> LMS:  {source:'kodland-training', training, lang, event:'ready'|'progress'|'completed', progress, done, total, score}
+// LMS -> Training:  {source:'kodland-lms', event:'progress', progress:{...}}  (optional: restores saved progress)
+const TRAINING_ID='attendance';
+const IN_LMS=(function(){ try{ return window.parent!==window; }catch(e){ return true; } })();
+let completedSent=false;
+function isDevMode(){ return STORE.get('kl-att-devmode')==='1'; }
+function progressSummary(){
+  const p=getProgress();
+  const done=MODULES.filter(m=>p[m.id]?.passed===true).length;
+  const score=Math.round(MODULES.map(m=>p[m.id]?.score||0).reduce((a,b)=>a+b,0)/TOTAL);
+  return {progress:p, done:done, total:TOTAL, score:score};
+}
+function lmsSend(event){
+  try{
+    if(!IN_LMS || isDevMode() || !MODULES || !MODULES.length) return;
+    window.parent.postMessage(Object.assign({source:'kodland-training', training:TRAINING_ID, lang:LANG, event:event}, progressSummary()), '*');
+  }catch(e){}
+}
+// Sent once per page load (it used to be re-sent on every dashboard render).
+function notifyMaterialCompleted(){ if(completedSent) return; completedSent=true; lmsSend('completed'); }
+window.addEventListener('message', function(e){
+  try{
+    if(!IN_LMS || e.source!==window.parent) return;
+    const d=e.data; if(!d || d.source!=='kodland-lms' || d.event!=='progress' || typeof d.progress!=='object' || !d.progress) return;
+    STORE.set(PROG_KEY, JSON.stringify(mergeProgress(getProgress(), d.progress)));
+    const onPath=document.getElementById('screen-path').classList.contains('active');
+    renderHome(); if(onPath) showScreen('screen-path');
+  }catch(err){}
+});
 // ─── NAVIGATION ──────────────────────────────────────────────────────────
 function exitQuiz(){
   if(currentModule==='final'){ goDashboard(); return; }
@@ -568,17 +628,17 @@ document.addEventListener('keydown', function(e){
   }
 });
 function toggleDevMode(){
-  const isDev=localStorage.getItem('kl-att-devmode')==='1';
+  const isDev=STORE.get('kl-att-devmode')==='1';
   if(!isDev){
-    localStorage.setItem('kl-att-devmode-backup', localStorage.getItem(PROG_KEY)||'{}');
+    STORE.set('kl-att-devmode-backup', STORE.get(PROG_KEY)||'{}');
     const p={}; MODULES.forEach(m=>{p[m.id]={passed:true,score:100};}); p['final']={passed:true,score:100};
     saveProgress(p);
-    localStorage.setItem('kl-att-devmode','1');
+    STORE.set('kl-att-devmode','1');
     showDevBadge(true);
   }else{
-    const backup=localStorage.getItem('kl-att-devmode-backup');
-    if(backup) localStorage.setItem(PROG_KEY, backup);
-    localStorage.removeItem('kl-att-devmode');
+    const backup=STORE.get('kl-att-devmode-backup');
+    if(backup) STORE.set(PROG_KEY, backup);
+    STORE.remove('kl-att-devmode');
     showDevBadge(false);
   }
   renderHome();
@@ -596,12 +656,18 @@ function showDevBadge(on){
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────
-if(localStorage.getItem('kl-att-devmode')==='1' && location.search.indexOf('dev=1')===-1){ const b=localStorage.getItem('kl-att-devmode-backup'); if(b) localStorage.setItem(PROG_KEY,b); localStorage.removeItem('kl-att-devmode'); }
-if(localStorage.getItem('kl-att-devmode')==='1') showDevBadge(true);
+if(STORE.get('kl-att-devmode')==='1' && location.search.indexOf('dev=1')===-1){ const b=STORE.get('kl-att-devmode-backup'); if(b) STORE.set(PROG_KEY,b); STORE.remove('kl-att-devmode'); }
+if(STORE.get('kl-att-devmode')==='1') showDevBadge(true);
 MODULES=CONTENT.modules; QUIZ=CONTENT.quiz; SORT_ITEMS=CONTENT.sortItems; CHECKLIST=CONTENT.checklist; SELF_QUESTIONS=CONTENT.selfQuestions;
 document.documentElement.lang=LANG; document.documentElement.dir=CONTENT.dir||'ltr';
 { const btn=document.getElementById('langBtn'); if(btn) btn.innerHTML=`${CONTENT.flag||'\ud83c\udf10'} ${LANG.toUpperCase()} <span style="font-size:10px">\u25be</span>`; }
 document.querySelectorAll('.lang-item').forEach(it=>{ it.classList.toggle('active', it.getAttribute('data-lang')===LANG); });
 applyStaticI18n();
+{ // progress carried over from a language switch
+  const q=new URLSearchParams(location.search); const raw=q.get('p');
+  if(raw){ try{ STORE.set(PROG_KEY, JSON.stringify(mergeProgress(getProgress(), JSON.parse(raw)))); }catch(e){}
+    q.delete('p'); try{ history.replaceState(null,'',location.pathname+(q.toString()?'?'+q.toString():'')+location.hash); }catch(e){} }
+}
+lmsSend('ready');
 renderHome();
 if(location.search.indexOf('start=1')!==-1){ goDashboard(); }
