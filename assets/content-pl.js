@@ -472,8 +472,9 @@ const CONTENT={
             {"type": "text", "b": "Moduł 1 wprowadził nieobecności 🟡 żółte i 🔴 czerwone. Najważniejszy harmonogram zależy od tego, jak daleko w kursie jest uczeń."},
             {"type": "table", "h": "Gdzie jest uczeń", "head": ["Gdzie jest uczeń", "Co wywołuje eskalację", "Co się dzieje"], "rows": [
               ["Moduł 1", "Pojedyncza nieobecność — Obsługa Klienta już od tego momentu obserwuje", "OK bezpośrednio się kontaktuje; Ty nadal rejestrujesz nieobecność i swój komentarz jak zwykle"],
-              ["Od Modułu 2", "Dwie kolejne nieobecności", "Staje się to sprawą krytyczną — Ocena Ucznia teraz, tak jak gdzie indziej"]
+              ["Od Modułu 2", "Dwie kolejne nieobecności", "Staje się to sprawą krytyczną — system automatycznie tworzy zgłoszenie, które od razu trafia do Obsługi Klienta"]
             ]},
+            {"type": "tip", "txt": "Nie wystawiaj Oceny Ucznia z powodu nieobecności. Gdy uczeń opuści 2 lekcje, system sam tworzy automatyczne zgłoszenie dla Obsługi Klienta — jeśli zgłosisz to również Ty, powstaną duplikaty."},
             {"type": "warn", "txt": "\"Powiedz komuś — nie czekaj na trzecią.\" Dwie kolejne nieobecności od Modułu 2 to dokładnie moment, w którym oddalającego się ucznia można jeszcze odzyskać."}
           ]
         },
@@ -504,7 +505,7 @@ const CONTENT={
             {"type": "text", "b": "Skontaktowałeś/aś się z rodziną i zarejestrowałeś/aś nieobecność. Stąd sytuacja może potoczyć się na dwa sposoby, i każdy wymaga od Ciebie czegoś innego."},
             {"type": "table", "h": "Wracają kontra nie wracają", "head": ["", "✅ Wracają", "❌ Nie wracają"], "rows": [
               ["<span class=\"rowic\">⚡</span>Od razu", "Pokaż mu, że zauważyłeś jego nieobecność — ciepło i prywatnie, nie przy całej grupie.", "Obsługa Klienta już to obsługuje — wysłano automatyczną wiadomość, a OK obserwuje od Modułu 1."],
-              ["<span class=\"rowic\">➡️</span>Potem", "Obserwuj jego obecność, nie tylko frekwencję. Jeśli się pojawia, ale zostaje na 40% w klasie, to Moduły 2–4, nie ten.", "Jeśli osiągnie dwie kolejne nieobecności, automatycznie staje się to sprawą krytyczną — Twoja Ocena Ucznia to potwierdza z Twojej strony."],
+              ["<span class=\"rowic\">➡️</span>Potem", "Obserwuj jego obecność, nie tylko frekwencję. Jeśli się pojawia, ale zostaje na 40% w klasie, to Moduły 2–4, nie ten.", "Jeśli osiągnie dwie kolejne nieobecności, automatycznie staje się to sprawą krytyczną — system tworzy zgłoszenie dla Obsługi Klienta, nie musisz niczego zgłaszać."],
               ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Kogo jeszcze zaangażować", "Twojego TL, jeśli uczeń na tyle zostaje w tyle, że potrzebuje dodatkowej lekcji.", "Obsługę Klienta i Dział Dydaktyczny — już zaangażowanych zgodnie z powyższym harmonogramem."],
               ["<span class=\"rowic\">👨‍👩‍👧</span>Rodzice", "Podziel się jedną konkretną rzeczą, którą uczeń zrobił na lekcji, na którą wrócił.", "Informuj ich na bieżąco i niczego nie obiecuj. Żadna dodatkowa lekcja nie jest oferowana, zanim nie zostanie zatwierdzona."]
             ]},

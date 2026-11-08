@@ -472,8 +472,9 @@ const CONTENT={
             {"type": "text", "b": "Il Modulo 1 ha introdotto le assenze 🟡 gialle e 🔴 rosse. La linea temporale più importante dipende da quanto lo studente è avanti nel corso."},
             {"type": "table", "h": "A che punto è lo studente", "head": ["A che punto è lo studente", "Cosa attiva l'escalation", "Cosa succede"], "rows": [
               ["Modulo 1", "Una singola assenza — il Servizio Clienti sta già osservando da qui", "Il Servizio Clienti contatta direttamente; tu registri comunque l'assenza e il tuo commento come al solito"],
-              ["Dal Modulo 2 in poi", "Due assenze consecutive", "Questo diventa un caso critico — Valutazione dello Studente ora, come altrove"]
+              ["Dal Modulo 2 in poi", "Due assenze consecutive", "Diventa un caso critico — il sistema crea automaticamente un ticket che arriva subito al Servizio Clienti"]
             ]},
+            {"type": "tip", "txt": "Non lasciare una Valutazione dello Studente per le assenze. Quando uno studente perde 2 lezioni, il sistema crea già un ticket automatico per il Servizio Clienti — se lo segnali anche tu, si creano duplicati."},
             {"type": "warn", "txt": "\"Dillo a qualcuno — non aspettare la terza.\" Due assenze consecutive dal Modulo 2 in poi è esattamente il punto in cui uno studente che si sta allontanando può ancora essere recuperato."}
           ]
         },
@@ -504,7 +505,7 @@ const CONTENT={
             {"type": "text", "b": "Hai contattato la famiglia e registrato l'assenza. Da qui la situazione va in una di due direzioni, e richiedono cose diverse da te."},
             {"type": "table", "h": "Tornano contro non tornano", "head": ["", "✅ Tornano", "❌ Non tornano"], "rows": [
               ["<span class=\"rowic\">⚡</span>Subito", "Mostragli che hai notato la sua assenza — con calore, e in privato, non davanti al gruppo.", "Il Servizio Clienti se ne sta già occupando — è partito un messaggio automatico, e il Servizio Clienti osserva fin dal Modulo 1."],
-              ["<span class=\"rowic\">➡️</span>Poi", "Osserva la sua presenza, non solo la sua frequenza. Se si presenta ma resta al 40% in aula, sono i Moduli 2-4, non questo.", "Se arriva a due assenze consecutive, diventa automaticamente un caso critico — la tua Valutazione dello Studente lo conferma dalla tua parte."],
+              ["<span class=\"rowic\">➡️</span>Poi", "Osserva la sua presenza, non solo la sua frequenza. Se si presenta ma resta al 40% in aula, sono i Moduli 2-4, non questo.", "Se arriva a due assenze consecutive, diventa automaticamente un caso critico — il sistema crea un ticket per il Servizio Clienti, non serve nessuna segnalazione da parte tua."],
               ["<span class=\"rowic\">🧑‍🤝‍🧑</span>Chi altro coinvolgere", "Il tuo TL, se lo studente è rimasto abbastanza indietro da aver bisogno di una lezione extra.", "Il Servizio Clienti e il Dipartimento Didattico — già coinvolti secondo la linea temporale sopra."],
               ["<span class=\"rowic\">👨‍👩‍👧</span>I genitori", "Condividi una cosa concreta che lo studente ha fatto nella lezione a cui è tornato.", "Tienili informati, e non prometti nulla. Non viene offerta nessuna lezione extra prima che sia approvata."]
             ]},
