@@ -585,7 +585,8 @@ function lmsSend(event){
   }catch(e){}
 }
 // Sent once per page load (it used to be re-sent on every dashboard render).
-function notifyMaterialCompleted(){ if(completedSent) return; completedSent=true; lmsSend('completed'); }
+// "completed" (unlocks the DST in the LMS) waits for the final survey: window.TD_CAN_COMPLETE comes from assets/surveys.js.
+function notifyMaterialCompleted(){ if(completedSent) return; if(typeof window.TD_CAN_COMPLETE==='function' && !window.TD_CAN_COMPLETE()) return; completedSent=true; lmsSend('completed'); }
 window.addEventListener('message', function(e){
   try{
     if(!IN_LMS || e.source!==window.parent) return;
