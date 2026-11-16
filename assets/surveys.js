@@ -82,6 +82,19 @@
     dirty = true; saveTime();
   }, 5000);
   function min1(sec){ return Math.round((sec || 0) / 6) / 10; }   // seconds → minutes with 1 decimal
+  // Copy of the time row for the Google Sheet "TD Trainings – Time per module" (one tab per training).
+  var CENTRAL_TIME_URL = 'https://script.google.com/macros/s/AKfycbw_9JLpeeQfUniqppJTXbncYW-BVkS4g4astfCwBV8qGTY3vLb6dzbGSEGWzuL4xt0A/exec';
+  function sendCentralTime(body, beacon){
+    if (!CENTRAL_TIME_URL) return;
+    try {
+      var o = JSON.parse(body), st = JSON.parse(store(startKey()) || 'null') || {};
+      o.repo = location.pathname.split('/').filter(Boolean)[0] || ''; o.region = st.region || '';
+      var bk = 'kl-td-browser-id', b = store(bk); if (!b){ b = 'b-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); store(bk, b); }
+      o.browser_id = b; body = JSON.stringify(o);
+    } catch(e){ return; }
+    try { if (beacon && navigator.sendBeacon && navigator.sendBeacon(CENTRAL_TIME_URL, new Blob([body], { type:'text/plain;charset=utf-8' }))) return; } catch(e){}
+    try { fetch(CENTRAL_TIME_URL, { method:'POST', mode:'no-cors', keepalive:true, headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body:body }); } catch(e){}
+  }
   function sendTime(beacon){
     if (!SURVEY_URL || !TIME || !TIME.started_at || devOn() || typeof MODULES === 'undefined') return;   // nothing is sent in developer mode
     var email = ''; try { email = (JSON.parse(store(startKey()) || 'null') || {}).email || ''; } catch(e){}
@@ -89,6 +102,7 @@
     var body = JSON.stringify({ type:'training_time', email:email, training:trainingId(), training_name:TRAINING_NAMES[trainingId()] || trainingId(),
       lang:(typeof LANG !== 'undefined' && LANG) || '', started_at:TIME.started_at, finished_at:TIME.finished_at, completed:!!TIME.finished_at,
       active_min:min1(TIME.total), module_ids:MODULES.map(function(m){ return m.id; }), module_min:MODULES.map(function(m){ return min1(TIME.mods[m.id]); }) });
+    sendCentralTime(body, beacon);
     dirty = false; lastSent = Date.now();
     try { if (beacon && navigator.sendBeacon && navigator.sendBeacon(SURVEY_URL, new Blob([body], { type:'text/plain;charset=utf-8' }))) return; } catch(e){}
     try { fetch(SURVEY_URL, { method:'POST', mode:'no-cors', keepalive:true, headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body:body }); } catch(e){}
