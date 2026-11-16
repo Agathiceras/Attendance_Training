@@ -581,7 +581,7 @@ function progressSummary(){
 function lmsSend(event){
   try{
     if(!IN_LMS || isDevMode() || !MODULES || !MODULES.length) return;
-    window.parent.postMessage(Object.assign({source:'kodland-training', training:TRAINING_ID, lang:LANG, event:event}, progressSummary()), '*');
+    window.parent.postMessage(Object.assign({source:'kodland-training', training:TRAINING_ID, lang:LANG, event:event}, progressSummary(), window.TD_TIME_FIELDS ? window.TD_TIME_FIELDS() : {}), '*');
   }catch(e){}
 }
 // Sent once per page load (it used to be re-sent on every dashboard render).
