@@ -94,9 +94,15 @@
     try { fetch(SURVEY_URL, { method:'POST', mode:'no-cors', keepalive:true, headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body:body }); } catch(e){}
   }
   // Leaving or hiding the page: save the time spent so far (at most once a minute)
-  document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden' && dirty && Date.now() - lastSent > 60000) sendTime(true); });
+  document.addEventListener('visibilitychange', function(){ if (document.visibilityState === 'hidden' && dirty && Date.now() - lastSent > 60000){ sendTime(true); try { if (typeof window.lmsSend === 'function') window.lmsSend('progress'); } catch(e){} } });
   // Read by the engine (notifyMaterialCompleted) before it tells the LMS "completed" (that message unlocks the DST): only after the final survey.
   window.TD_CAN_COMPLETE = function(){ return !!store(finalKey()); };
+  // Time for the LMS: the engine adds these fields to every message it sends (progress / completed).
+  window.TD_TIME_FIELDS = function(){
+    if (!TIME) return {};
+    var mm = {}; if (typeof MODULES !== 'undefined') MODULES.forEach(function(m){ if (m.id === 'final') return; mm[m.id] = min1(TIME.mods[m.id]); });
+    return { time_active_min:min1(TIME.total), time_module_min:mm, time_started_at:TIME.started_at, time_finished_at:TIME.finished_at };
+  };
 
   /* ---------- questions (ids and answer codes go to the Sheet) ---------- */
   var CODES = {
